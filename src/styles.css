@@ -1,1 +1,194 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~swiper/swiper-bundle.css';
+:root {
+    --quicksand: 'Quicksand', sans-serif;
+    --manrope: 'Manrope', sans-serif;
+    --gray : #CCCCCC;
+
+    --dark-gray: #0f0f0f;
+    
+    --purple: #753eef;
+
+    --transparent-white: rgba(255, 255, 255, 0.6);
+    
+
+    
+}
+
+* {
+    font-family: var(--manrope);
+    color: white;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: var(--dark-gray);
+    
+}
+
+.background{
+    background: rgb(0,0,0);
+background: linear-gradient(167deg, rgba(0,0,0,1) 3%, rgba(1,0,1,1) 11%, rgba(15,5,38,1) 15%, rgba(27,6,43,1) 30%, rgba(21,5,43,1) 34%, rgba(20,5,40,1) 37%, rgba(22,5,43,1) 43%, rgba(25,5,42,1) 48%, rgba(27,6,43,1) 54%, rgba(35,7,44,1) 57%, rgba(29,5,36,1) 60%, rgba(29,5,37,1) 63%, rgba(32,6,40,1) 67%, rgba(26,4,30,1) 74%, rgba(19,3,21,1) 79%, rgba(34,7,45,1) 87%, rgba(0,0,0,1) 91%);
+    min-height: 100vh;
+}
+
+.black-background {
+    background-color: black;
+}
+
+.with-padding {
+    padding-left: 3rem; 
+}
+
+
+.no-padding {
+    padding-left: 0;
+}
+
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+
+.quicsand {
+    font-family: var(--quicksand);
+}
+
+.quicsand-600 {
+    font-family: var(--quicksand);
+    font-weight: 600;
+}
+
+.quicsand-800 {
+    font-family: var(--quicksand);
+    font-weight: 600;
+}
+
+.small {
+    font-size: 0.9rem;
+}
+
+.transparent-white {
+    color: var(--transparent-white);
+}
+
+
+
+.swiper-pagination-bullet-active {
+    background-color: #fff !important;
+}
+
+.swiper-pagination-bullet {
+    background-color: #fff !important;
+    width: 6px !important;
+    height: 6px !important;
+    margin: 0 8px !important;
+}
+
+.swiper-button-prev, .swiper-button-next {
+    color: var(--gray) !important;
+    margin: 0 10px;
+    transition: transform 0.3s ease-in-out;
+    transform: scale(0.4);
+    z-index: 2;
+    
+}
+
+.swiper-button-next {
+    right: 0 !important;
+}
+
+.swiper-button-prev {
+    left: 0 !important;
+}
+  
+.swiper-button-prev:hover, .swiper-button-next:hover {
+    transform: scale(0.6);
+    color: white;
+}
+ 
+
+.movie-cover, .poster {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    box-shadow: none;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out !important; 
+}
+
+.movie-cover:hover, .poster:hover, .image-container:hover {
+    box-shadow: 0 0 0 3px var(--purple);
+    cursor: pointer;
+}
+
+.movie-cover:hover .overlay, .poster:hover .overlay, .grid-item:hover .overlay {
+    background-color: transparent;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease-in-out;
+    z-index: 1;
+}
+
+.play-button {
+    display: none;
+    position: absolute;
+    bottom: 0.6rem;
+    right: 0.6rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    background-color: var(--gray);
+    transition: all 0.1s ease-in-out;
+    z-index: 2;
+}
+
+.play-button i {
+    color: black;
+}
+
+.play-button:hover {
+    background-color: #fff;
+    width: 3.1rem;
+    height: 3.1rem;
+}
+
+.swiper-img, .grid-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.movie-cover:hover .play-button, .poster:hover .play-button, .grid-item:hover .play-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.no-scroll {
+    overflow: hidden;
+}
+
+
+@media (max-width: 768px) {
+    .with-padding {
+        padding-left: 2.25rem; 
+    }
+}
+
+@media (max-width: 576px) {
+    .with-padding {
+        padding-left: 1.75rem;
+    }
+}

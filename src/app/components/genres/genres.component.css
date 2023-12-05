@@ -1,0 +1,28 @@
+
+.swiper-slide:hover, .poster:hover {
+    box-shadow: none;
+    cursor:default; 
+
+}
+.swiper-slide{
+    margin: 0.2rem !important;
+    padding: 0;
+
+}
+.gender-button {
+  cursor: pointer;
+  border: 1px solid var(--transparent-white);
+  border-radius: 1rem;
+  padding: 0.2rem 1.6rem;
+  font-size: 0.7rem;
+  transition: all 0.2s ease-in-out;
+}
+.gender-button:hover {
+  border: 1px solid var(--purple);
+}
+
+.gender-button-active {
+  background-color: var(--gray);
+  color: black;
+}
+

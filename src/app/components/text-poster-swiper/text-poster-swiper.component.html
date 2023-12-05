@@ -1,0 +1,31 @@
+<div class="container-fluid p-0">
+   
+    <div class="swiper-text-poster">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide d-flex swiper-slide-first animate__animated  animate__fadeInRightBig"
+            >
+                <div class="d-flex flex-column justify-content-center">
+                  <p class="small my-0">
+                    {{ topText }}
+                  </p>
+                  <p class="fs-2 fw-semibold my-0">
+                    {{ middleText }}
+                  </p>
+                  <p class="small my-0">
+                    {{ bottomText }}
+                  </p>
+                </div>
+            </div>
+            <div class="swiper-slide movie-cover animate__animated  animate__fadeInRightBig" *ngFor=" let value of data ">
+                <div class="overlay"></div>
+                <img [src]=" value.poster_path | poster" class="swiper-img animate__animated animate__fadeIn animate__delay-2s" alt="{{ value.title }}">
+                <a class="play-button btn  rounded-circle text-dark">
+                    <i class="fa-solid fa-play"></i>
+                </a>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+

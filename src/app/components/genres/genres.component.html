@@ -1,0 +1,19 @@
+<div class="container-fluid p-0">
+   
+    <div class="swiper-genre">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide py-3 text-center" 
+            *ngFor=" let genre of genres ">
+                <a class="fw-semibold gender-button"
+                    (click)=" searchByGenre( genre.id ) "
+                    [ngClass]="{'gender-button-active': selectedGenre === genre.id }">
+                    {{ genre.name | cut: 1 }}
+                </a>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+
+

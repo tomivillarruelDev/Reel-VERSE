@@ -1,0 +1,21 @@
+
+.image-container {
+    position: relative;
+    border-radius: 2px;
+    transition: box-shadow 0.3s ease-in-out !important;
+}
+
+.image-container:hover {
+    box-shadow: 0 0 0 3px var(--purple);
+    cursor: pointer;
+}
+
+.image-border {
+    position: relative;
+    border-radius: 2px;
+}
+
+.grid-img {
+    height: 10.5rem;
+}
+

@@ -1,0 +1,27 @@
+.swiper-slide {
+        height: auto !important;
+}
+
+@media screen and (max-width: 440px) {
+    .swiper-slide img {
+        height: calc((100vw - 20px) / 1.5 * 1.5);
+    }
+}
+
+@media screen and (min-width: 441px) and (max-width: 600px) {
+    .swiper-slide img {
+        height: calc((100vw - 30px) / 2 * 1.5);
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1100px) {
+    .swiper-slide img {
+        height: calc((100vw - 40px) / 3 * 1.5);
+    }
+}
+
+@media screen and (min-width: 1101px) {
+    .swiper-slide img {
+        height: calc((100vw - 120px) / 4 * 1.5);
+    }
+}

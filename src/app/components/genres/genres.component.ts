@@ -1,0 +1,126 @@
+import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+
+import { Result } from 'src/app/interfaces/API-response.interface';
+import { Genre } from 'src/app/interfaces/genres.interface';
+
+import { MoviesService } from 'src/app/services/movies.service';
+import { SeriesService } from 'src/app/services/series.service';
+
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
+
+@Component({
+  selector: 'app-genres',
+  templateUrl: './genres.component.html',
+  styleUrls: ['./genres.component.css']
+})
+export class GenresComponent implements OnInit, AfterViewInit {
+
+  @Input() genres!: Genre[];
+
+  @Input() type!: string;
+  
+  @Output() genreSelected = new EventEmitter<Result[]>();
+
+  public selectedGenre = 0;
+
+  private page = 1;
+  
+  private swiper!: Swiper;
+  
+    constructor( private moviesService: MoviesService,
+                 private seriesService: SeriesService) { }
+  
+    ngOnInit(): void {
+    }
+  
+    ngAfterViewInit(): void {
+      setTimeout(() => {
+        this.swiper = new Swiper('.swiper-genre', {
+          modules: [Navigation],
+          loop: false,
+          slidesPerView: 11,
+          
+          //responsive
+          breakpoints: {
+            320: {
+              slidesPerView: 2,
+            },
+            480: {
+              slidesPerView: 6,
+            },
+            640: {
+              slidesPerView: 8,
+            },
+            768: {
+              slidesPerView: 6,
+            },
+            1024: {
+              slidesPerView: 8,
+            },
+            1200: {
+              slidesPerView: 11,
+            },
+          },
+          spaceBetween: 1,
+          freeMode: true,
+        });
+      }, 0 );
+    }
+  
+  
+
+    public async searchByGenre( genre: number, page: number = 1 ): Promise<void> {
+      switch (this.type) {
+        case 'movie':
+          this.selectedGenre = genre;
+          const resp = await this.moviesService.getMoviesByGenre( genre, 0, page );
+          const results: Result[] = resp.results;
+          this.genreSelected.emit(results);
+          
+          break;
+        
+        case 'serie':
+          this.selectedGenre = genre;
+          const resp2 = await this.seriesService.getSeriesByGenre( genre, 0, page );
+          const results2: Result[] = resp2.results;
+          this.genreSelected.emit(results2);
+          break;
+      
+        default:
+            this.selectedGenre = genre;
+            const respMovies = await this.moviesService.getMoviesByGenre( genre, 0, page );
+            const movieResults: Result[] = respMovies.results;
+            const respSeries = await this.seriesService.getSeriesByGenre( genre, 0, page);
+            const seriesResults: Result[] = respSeries.results;
+            const allResults: Result[] = [...movieResults, ...seriesResults];
+            this.genreSelected.emit(allResults);
+            break;
+      }
+    }
+
+    private async getGenres(): Promise<void> {
+      switch (this.type) {
+        case 'movie': 
+          const resp = await this.moviesService.getMovieGenres();
+          this.genres = resp.genres;
+          break;
+
+        case 'serie':
+          const resp2 = await this.seriesService.getSerieGenres();
+          this.genres = resp2.genres;
+          break;
+        
+        default:
+          const resp3 = await this.moviesService.getMovieGenres();
+          const resp4 = await this.seriesService.getSerieGenres();
+          let genres = [...resp3.genres, ...resp4.genres];
+          genres.sort(() => Math.random() - 0.5);
+          this.genres = genres;
+
+          break;
+      }
+
+    }
+
+}

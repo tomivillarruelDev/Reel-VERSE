@@ -1,0 +1,53 @@
+<div class="container-fluid with-padding py-5 background">
+
+    <div class="row py-3 justify-content-center py-4">
+        <div class="col search-container">
+            <form *ngIf="form" [formGroup]="form">
+                <input class="searchInput rounded-1" type="search" name="searchInput" placeholder="¿Qué estas buscando?" formControlName="searchInput"
+                [ngClass]="{ 'search-active': search }">
+                <i class="fa fa-search search-icon"></i>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <app-genres
+            *ngIf=" genres.length > 0 "
+            [genres]="genres"
+            (genreSelected)="onGenreSelected($event)"
+            ></app-genres>
+        </div>
+    </div>
+
+    <div class="row py-3"
+        *ngIf=" !search">
+        <div class="col">
+            <p class="fw-bold mb-2">
+                Nuevas y populares
+            </p>
+        </div>
+        <div class="col-12"> 
+            <app-poster-grid
+            *ngIf=" trendingAll.length > 0 "
+            [data]="trendingAll"
+            ></app-poster-grid>
+        </div>
+    </div>
+
+    <div class="row py-3"
+    *ngIf=" search ">
+        <div class="col"> 
+            <app-backdrop-grid
+            *ngIf=" results.length > 0; else noResults"
+            [data]=" results "
+            ></app-backdrop-grid>
+
+            <ng-template #noResults>
+                <div class="no-results">
+                    <p>No encontramos nada relacionado con "{{ searchInput }}". Puedes buscar por título, género, actores, directores y guionistas</p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

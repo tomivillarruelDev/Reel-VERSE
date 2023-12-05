@@ -1,0 +1,83 @@
+ .navbar-scrolled {
+    background-color: rgba(16, 16, 16, 0.9);
+    transition: background-color 0.5s ease-in-out;
+}
+
+nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    transition: all 0.3s ease-in-out;
+
+    & a, .navbar-toggler {
+        font-size: 0.8rem;
+        border: none;
+        outline: none;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+        color: var(--gray);
+    
+        &:hover {
+            color: white;
+        }
+    }
+
+    .fa-search {
+        font-size: 1.2rem;
+        color: var(--gray);
+        transition: color 0.3s ease-in-out;
+    
+        &:hover {
+            color: white;
+        }
+    }
+} 
+
+.navbar-toggler .navbar-toggler-icon {
+    border: none;
+    outline: none;
+  }
+
+.logo{
+    position: absolute; 
+    left: 50%; 
+    transform: translateX(-50%);
+
+    .navbar-icon{
+        font-size: 1.2rem;
+        color: var(--gray);
+        transition: color 0.3s ease-in-out;
+        &:hover {
+            color: white;
+        }
+        width: 9rem;
+    }
+}
+
+
+.offcanvas-navbar {
+    background-color: var(--dark-gray);
+    width: 25%;
+}
+
+
+@media (max-width: 992px) {
+    .offcanvas-navbar {
+        width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .offcanvas-navbar {
+        width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .offcanvas-navbar {
+        width: 75%;
+    }
+}

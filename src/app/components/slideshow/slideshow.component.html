@@ -1,0 +1,31 @@
+<div class="swiper no-padding" >
+    <div class="swiper-wrapper animate__animated  animate__fadeInRightBig">
+
+        <div class="swiper-slide large-screen"
+        *ngFor="let value of data.slice(0, 7)"
+        [ngStyle]="{
+        'background-image': 'url(https://image.tmdb.org/t/p/original' + (isLargeScreen ? value.backdrop_path : value.poster_path) + ')'
+        }">
+            <div class="movie-description">
+                <div class="text">
+                    <p class="display-6 fw-semibold my-0">
+                        {{ (value.title ? value.title : value.name) | cut }}
+                    </p>
+                    <p class="small transparent-white">
+                        {{ value.overview | cut:8 }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <div class="swiper-pagination"></div>
+  
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  
+
+</div>

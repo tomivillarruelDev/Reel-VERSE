@@ -1,0 +1,287 @@
+<div class="animate__animated animate__fadeIn animate__delay-1s" >
+    
+    <div id="home">
+        <app-slideshow
+        [data]="playingNowMovies"></app-slideshow>
+    </div>
+
+    <div class="container-fluid background with-padding">
+
+        <div class="row pt-5 pb-3" #recommendedElement>
+            <div class="col" 
+                *ngIf=" recommendedMovies.length > 0">
+                <p class="fw-bold mb-2">
+                    Solo para ti
+                </p>
+            </div>
+            <div class="col">
+                <app-backdrop-swiper
+                *ngIf=" recommendedMovies.length > 0"
+                [data]="recommendedMovies"></app-backdrop-swiper>
+            </div>
+        </div>
+
+        <div class="row py-1 " #popularElement>
+            <div class="col" 
+                *ngIf=" popularMovies.length > 0">
+                <p class="fw-bold mb-2">
+                    Nuevas y populares
+                </p>
+            </div>
+            <div class="col"> 
+                <app-square-poster-swiper
+                *ngIf=" popularMovies.length > 0 "
+                [data]="popularMovies"
+                ></app-square-poster-swiper>
+            </div>
+        </div>
+
+        <div class="row py-3 " #seriesElement>
+            <div class="col" 
+                *ngIf=" series.length > 0">
+                <p class="fw-bold my-0">
+                    Solo en reelVERSE
+                </p>
+                <p class="small transparent-white mb-2">
+                    Streaming exclusivo del mejor contenido, solo aquí.
+                </p>
+            </div>
+            <div class="col">
+                <app-poster-swiper 
+                *ngIf=" series.length > 0"
+                [data]="series"></app-poster-swiper>
+            </div>
+        </div>
+        
+        <div class="row py-md-2" #topElement>
+            <div class="col" 
+                *ngIf=" topMovies.length > 0">
+                <p class="fw-bold mb-2">
+                    Películas Top
+                </p>
+            </div>
+            <div class="col"> 
+                <app-backdrop-swiper
+                *ngIf=" topMovies.length > 0"
+                [data]="topMovies"
+                ></app-backdrop-swiper>
+            </div>
+        </div>
+
+        <div class="row py-1 " #justAddedElement>
+            <div class="col" 
+                *ngIf=" justAdded.length > 0">
+                <p class="fw-bold my-0">
+                    Recién añadidos.
+                </p>
+                <p class="small transparent-white mb-2">
+                    No seas el último en verlos.
+                </p>
+            </div>
+            <div class="col"> 
+                <app-large-poster-swiper
+                *ngIf=" justAdded.length > 0"
+                [data]="justAdded"
+                ></app-large-poster-swiper>
+            </div>
+        </div>
+
+        <div class="row py-5" #trendingElement>
+            <div class="col" 
+                *ngIf=" trendingAll.length > 0">
+                <app-text-poster-swiper 
+                *ngIf=" trendingAll.length > 0"
+                [data]="trendingAll"
+                [topText]="'NUESTRO TOP 10'"
+                [middleText]="'En tendencia'"
+                [bottomText]="'Las películas y series mas vistas en los últimos días,¡no te las pierdas!'">
+                </app-text-poster-swiper>
+            </div>
+        </div>
+
+        <div class="row py-1">
+            <div class="col" 
+                *ngIf=" playingNowMovies.length > 0">
+                <p class="fw-bold mb-2">
+                    Del cine a tu casa
+                </p>
+            </div>
+            <div class="col">
+                <app-poster-swiper 
+                *ngIf=" playingNowMovies.length > 0"
+                [data]="playingNowMovies"></app-poster-swiper>
+            </div>
+        </div>
+
+        <div class="row py-2 py-md-4 " #upComingElement>
+            <div class="col" 
+                *ngIf=" upComingMovies.length > 0">
+                <p class="fw-bold mb-2">
+                    Próximamente
+                </p>
+            </div>
+            <div class="col"> 
+                <app-backdrop-swiper
+                *ngIf=" upComingMovies.length > 0"
+                [data]="upComingMovies"
+                ></app-backdrop-swiper>
+            </div>
+        </div>
+
+        <div class="row pb-md-4 " #kidsElement>
+            <div class="col" 
+                *ngIf=" kidsSeries.length > 0">
+                <p class="fw-bold my-0">
+                    Zona de juegos
+                </p>
+                <p class="transparent-white small mb-2">
+                    !Series que te dejaran asombrado!
+                </p>
+            </div>
+            <div class="col"> 
+                <app-poster-swiper
+                *ngIf=" kidsSeries.length > 0"
+                [data]="kidsSeries"
+                ></app-poster-swiper>
+            </div>
+        </div>
+
+        <div class="row py-1 py-md-4 " #heroesElement>
+            <div class="col" 
+                *ngIf=" heroesMovies.length > 0">
+                <p class="fw-bold my-0">
+                    ¡Salvar el mundo puede ser muy divertido!
+                </p>
+                <p class="transparent-white small mb-2">
+                    !Están salvando al mundo antes de poder dirigirlo!
+                </p>
+            </div>
+            <div class="col"> 
+                <app-poster-swiper
+                *ngIf=" heroesMovies.length > 0"
+                [data]="heroesMovies"
+                ></app-poster-swiper>
+            </div>
+        </div>
+
+        <div class="row py-4 " #sciFiAndFantasyElement>
+            <div class="col" 
+                *ngIf=" sciFiAndFantasySeries.length > 0">
+                <p class="fw-bold my-0">
+                    Fantasía y Sci-Fi a la carta
+                </p>
+                <p class="transparent-white small mb-2">
+                    Siéntate, relájate y deja que tus sueños más increíbles se hagan realidad
+                </p>
+                <app-large-poster-swiper
+                *ngIf=" sciFiAndFantasySeries.length > 0"
+                [data]="sciFiAndFantasySeries">
+                </app-large-poster-swiper>
+            </div>
+        </div>
+
+        <div class="row py-1 py-md-4 " #actionElement>
+            <div class="col" 
+                *ngIf=" actionMovies.length > 0">
+                <p class="fw-bold my-0">
+                    Acción pura
+                </p>
+                <p class="transparent-white small mb-2">
+                    Si quieres adrenalina y desenfreno, es por aquí.
+                </p>
+            </div>
+            <div class="col"> 
+                <app-poster-swiper
+                *ngIf=" actionMovies.length > 0"
+                [data]="actionMovies"
+                ></app-poster-swiper>
+            </div>
+        </div>
+
+        <!-- 
+        <div class="row py-4 "
+            *ngIf=" recommended.length > 0">
+            <div class="col-11">
+                <p class="fw-bold my-0">
+                    Grandes estrellas
+                </p>
+                <p class="small">
+                    Éxitos de tus actrices, actores y directores de cine favoritos.
+                </p>
+            </div>
+            <div class="col-12"> 
+                <app-large-poster-swiper
+                *ngIf=" movies.length > 0"
+                [data]="movies"
+                ></app-large-poster-swiper>
+            </div>
+        </div> -->
+
+        <!-- <div class="row py-4 " #harryPotterElement>
+            <div class="col" 
+                *ngIf=" harryPotterMovies.length > 0">
+                <p class="fw-bold my-0">
+                    Bienvenidos al mundo Mágico
+                </p>
+                <p class="transparent-white small mb-2">
+                    !Hogwarts en 4k! Disfruta la saga de Harry Potter completa en la mejor calidad!
+                </p>
+            </div>
+            <div class="col"> 
+                <app-poster-swiper
+                *ngIf=" harryPotterMovies.length > 0"
+                [data]="harryPotterMovies"
+                ></app-poster-swiper>
+            </div>
+        </div> -->
+
+        <div class="row py-1" #comedyElement>
+            <div class="col" 
+                *ngIf=" comedySeries.length > 0">
+                <p class="fw-bold my-0">
+                    Comedias que mejoraran tu ánimo.
+                </p>
+                <p class="transparent-white small mb-2">
+                    Deja todas las preocupaciones atrás, este es tu espacio seguro.
+                </p>
+            </div>
+            <div class="col"> 
+                <app-backdrop-swiper
+                *ngIf=" comedySeries.length > 0"
+                [data]="comedySeries"
+                ></app-backdrop-swiper>
+            </div>
+        </div>
+
+        <div class="row pb-md-4 " #horrorElement>
+            <div class="col" 
+                *ngIf=" horrorMovies.length > 0">
+                <p class="fw-bold myb-2">
+                    Una de terror siempre es una opción
+                </p>
+            </div>
+            <div class="col"> 
+                <app-large-poster-swiper
+                *ngIf=" horrorMovies.length > 0"
+                [data]="horrorMovies"
+                ></app-large-poster-swiper>
+            </div>
+        </div>
+
+        <div class="row py-4 " #crimeElement>
+            <div class="col" 
+                *ngIf=" crimeSeries.length > 0">
+                <p class="fw-bold mb-2">
+                    Crónicas criminales
+                </p>
+            </div>
+            <div class="col"> 
+                <app-poster-swiper
+                *ngIf=" crimeSeries.length > 0"
+                [data]="crimeSeries"
+                ></app-poster-swiper>
+            </div>
+        </div>
+
+    </div>
+</div>

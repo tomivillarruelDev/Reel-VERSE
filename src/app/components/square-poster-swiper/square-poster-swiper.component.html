@@ -1,0 +1,25 @@
+<div class="container-fluid p-0">
+   
+    <div class="swiper-square-poster">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide grid-item animate__animated  animate__fadeInRightBig" *ngFor=" let value of data ">
+                <div class="image-container">
+                    <div class="overlay"></div>
+                    <div class="image-border">
+                        <img [src]="value.backdrop_path| poster" class="swiper-img animate__animated animate__fadeIn animate__delay-2s" alt="{{ value.title }}">
+                      </div>
+                    <a class="play-button btn  rounded-circle text-dark">
+                        <i class="fa-solid fa-play"></i>
+                    </a>
+                </div>
+                <div class="movie-title fw-semibold">
+                    <p class="m-0 transparent-white">{{ ( value.title ? value.title: value.name ) | cut:4 }}</p>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+
+
