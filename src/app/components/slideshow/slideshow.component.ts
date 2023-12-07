@@ -25,6 +25,7 @@ export class SlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
   
 
   ngOnInit(): void {
+
     this.checkScreenSize();
     this.resizeSubscription = fromEvent(window, 'resize')
       .pipe(debounceTime(1000))
@@ -61,7 +62,7 @@ export class SlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  checkScreenSize(): void {
+  private checkScreenSize(): void {
     this.isLargeScreen = window.innerWidth > 600;
     this.cdRef.detectChanges();
   }

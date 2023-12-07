@@ -1,5 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 import { Result } from 'src/app/interfaces/API-response.interface';
 
 import { Genre, GenreResponse } from 'src/app/interfaces/genres.interface';
@@ -73,7 +74,9 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
 
   private subscribeToInputChanges(): void {
 
-    this.form.get('searchInput')?.valueChanges.subscribe(async value => {
+    this.form.get('searchInput')?.valueChanges.pipe(
+      debounceTime(1000)
+    ).subscribe(async value => {
       if (value.length) {
         this.search = true;
         this.results = await this.getSearchResults(value);

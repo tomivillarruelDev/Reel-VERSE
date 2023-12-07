@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription, debounceTime, fromEvent } from 'rxjs';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Cast } from 'src/app/interfaces/cast-response.interface';
 import { Episode } from 'src/app/interfaces/episode-serie-response.interface';
@@ -18,45 +19,47 @@ export class SerieComponent implements OnInit, OnDestroy {
 
   public serie!: SerieDetailResponse;
 
+  public isLargeScreen = window.innerWidth > 400;
+
+  private resizeSubscription!: Subscription;
+
   public episodes: Episode[] = [];
 
   public recommendedSeries: Result[] = [];
 
-  public cast: Cast[] = [];
-
-  public producers: Cast[] = [];
-
-  public directors: Cast[] = [];
 
   constructor( private activatedRoute: ActivatedRoute,
-               private  loadingService: LoadingService,
-               private seriesService: SeriesService ) { }
+               private loadingService: LoadingService,
+               private seriesService: SeriesService,
+               private cdRef: ChangeDetectorRef ) { }
 
   async ngOnInit(): Promise<void> {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if ( id ) {
-      try{
-        const [ serie, episodes, recommended, cast, producer, directors] = await Promise.all([
-          this.getSerieDetails( id ),
-          this.getAllEpisodes( id ),
-          this.getRecommendedSeries( id ),
-          this.getSerieCast( id ),
-          this.getSerieProducers( id ),
-          this.getSerieDirectors( id )
-        ]);
-        this.serie = serie;
-        this.episodes = episodes;
-
-        this.recommendedSeries = recommended;
-        this.cast = cast;
-        this.producers = producer;
-        this.directors = directors;
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.loadingService.setLoading(false);
+    this.activatedRoute.paramMap.subscribe( async paramMap => {
+      this.loadingService.setLoading(true);
+      const id = paramMap.get('id');
+      if (id === null) {
+        return;
+      } else {
+        try {
+          this.checkScreenSize();
+          this.resizeSubscription = fromEvent(window, 'resize')
+          .pipe(debounceTime(1000))
+          .subscribe(() => this.checkScreenSize());
+          const [serie, episodes, recommendedSeries] = await Promise.all([
+            this.getSerieDetails( id ),
+            this.getAllEpisodes( id ),
+            this.getRecommendedSeries( id ),
+          ]);
+          this.serie = serie;
+          this.episodes = episodes;
+          this.recommendedSeries = recommendedSeries;
+        } catch (error) {
+          console.error(error);
+        } finally {
+          this.loadingService.setLoading(false);
+        }
       }
-    }
+    });
   }
 
   ngOnDestroy(): void {
@@ -66,6 +69,11 @@ export class SerieComponent implements OnInit, OnDestroy {
   private async getSerieDetails( id: string ): Promise<SerieDetailResponse> {
     const resp = await this.seriesService.getSerieDetails( id );
     return resp;
+  }
+
+  private checkScreenSize(): void {
+    this.isLargeScreen = window.innerWidth > 400;
+    this.cdRef.detectChanges();
   }
 
   private async getAllEpisodes( id: string ): Promise<Episode[]> {
@@ -80,24 +88,5 @@ export class SerieComponent implements OnInit, OnDestroy {
     return resp.results;
   }
 
-  private async getSerieCast( id: string ): Promise<Cast[]> {
-    const resp = await this.seriesService.getSerieCast( id );
-    const cast = resp.cast.slice(0 ,7);
-    return cast;
 
-  }
-
-  private async getSerieProducers( id: string ): Promise<Cast[]> {
-    const resp = await this.seriesService.getSerieCast( id );
-    const producers = resp.crew.filter( producer => producer.known_for_department === 'Production' ).slice(0, 2);
-    return  producers ;
-
-  }
-
-  private async getSerieDirectors( id: string ): Promise<Cast[]> {
-    const resp = await this.seriesService.getSerieCast( id );
-    const directors = resp.crew.filter( director => director.known_for_department === 'Directing'  ).slice(0, 1);
-    return directors;
-
-  }
 }

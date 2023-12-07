@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription, debounceTime, fromEvent } from 'rxjs';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Cast } from 'src/app/interfaces/cast-response.interface';
 import { MovieDetailResponse } from 'src/app/interfaces/movie-detail-response.interface';
@@ -15,6 +16,10 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   public movie!: MovieDetailResponse;
 
+  public isLargeScreen = window.innerWidth > 400;
+
+  private resizeSubscription!: Subscription;
+
   public recommendedMovies: Result[] = [];
 
   public cast: Cast[] = [];
@@ -25,7 +30,8 @@ export class MovieComponent implements OnInit, OnDestroy {
   
   constructor( private activatedRoute: ActivatedRoute,
                private loadingService: LoadingService,
-               private moviesService: MoviesService ) { }
+               private moviesService: MoviesService,
+               private cdRef: ChangeDetectorRef ) { }
 
   async ngOnInit(): Promise<void> {
 
@@ -36,6 +42,10 @@ export class MovieComponent implements OnInit, OnDestroy {
         return;
       } else {
         try{
+          this.checkScreenSize();
+          this.resizeSubscription = fromEvent(window, 'resize')
+            .pipe(debounceTime(1000))
+            .subscribe(() => this.checkScreenSize());
           const [ movie, recommendedMovies, cast, producer, directors] = await Promise.all([
             this.getMovieDetails( id ),
             this.getRecommendedMovies( id ),
@@ -59,11 +69,20 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.loadingService.setLoading(true);
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
   }
 
   private async getMovieDetails( id: string ): Promise<MovieDetailResponse> {
     const resp = await this.moviesService.getMovieDetails( id );
     return resp;
+  }
+
+  private checkScreenSize(): void {
+    this.isLargeScreen = window.innerWidth > 400;
+    this.cdRef.detectChanges();
+
   }
 
   private async getRecommendedMovies( id: string ): Promise<Result[]> {
