@@ -1,9 +1,7 @@
 <div class="container-fluid ps-0">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
-    <div class="col-3 grid-item animate__animated  animate__fadeInRightBig mb-3" *ngFor="let value of data">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+    <div class="col grid-item animate__animated  animate__fadeInRightBig mb-3" *ngFor="let value of data">
       <div class="image-container">
-        
-        
           <ng-container *ngIf="isResult(value)">
             <div class="overlay"  
                 (click)="onRedirectToDetailPage( value )">
@@ -36,7 +34,7 @@
           <p class="fs-6 transparent-white-75 fw-semibold m-0">
             {{value.episode_number}}. {{  value.name | cut:5 }}
           </p>
-          <p class="small transparent-white fw-ligth">{{ value.runtime | hoursMinutes }}</p>
+          <p class="small transparent-white fw-ligth m-0">{{ value.runtime | hoursMinutes }}</p>
         </ng-container>
       </div>
     </div>
