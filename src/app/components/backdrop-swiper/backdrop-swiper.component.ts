@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
@@ -10,7 +11,7 @@ import { Navigation } from 'swiper/modules';
 })
 export class BackdropSwiperComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  constructor( private router: Router) { }
 
   @Input() data!: Result[];
   swiper!: Swiper;
@@ -50,6 +51,17 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
         },
       });
     }, 0);
+  }
+
+  onRedirectToDetailPage( object: Result ){
+    if ( object ) {
+      if (object.title) {
+        this.router.navigate([ '/movie', object.id ]);
+
+      } else if (object.name) {
+        this.router.navigate([ '/serie', object.id ]);
+      }
+    }
   }
 
 }

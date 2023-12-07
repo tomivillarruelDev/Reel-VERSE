@@ -1,6 +1,5 @@
 @import '~swiper/swiper-bundle.css';
 :root {
-    --quicksand: 'Quicksand', sans-serif;
     --manrope: 'Manrope', sans-serif;
     --gray : #CCCCCC;
 
@@ -9,6 +8,8 @@
     --purple: #753eef;
 
     --transparent-white: rgba(255, 255, 255, 0.6);
+
+    --transparent-white-75: rgba(255, 255, 255, 0.75);
     
 
     
@@ -22,16 +23,17 @@
 body {
     overflow-x: hidden;
     background-color: var(--dark-gray);
+    font-size: 1.2rem;
     
 }
 
 .background{
     background: rgb(0,0,0);
-background: linear-gradient(167deg, rgba(0,0,0,1) 3%, rgba(1,0,1,1) 11%, rgba(15,5,38,1) 15%, rgba(27,6,43,1) 30%, rgba(21,5,43,1) 34%, rgba(20,5,40,1) 37%, rgba(22,5,43,1) 43%, rgba(25,5,42,1) 48%, rgba(27,6,43,1) 54%, rgba(35,7,44,1) 57%, rgba(29,5,36,1) 60%, rgba(29,5,37,1) 63%, rgba(32,6,40,1) 67%, rgba(26,4,30,1) 74%, rgba(19,3,21,1) 79%, rgba(34,7,45,1) 87%, rgba(0,0,0,1) 91%);
+    background: linear-gradient(167deg, rgba(0,0,0,1) 3%, rgba(1,0,1,1) 11%, rgba(15,5,38,1) 15%, rgba(27,6,43,1) 30%, rgba(21,5,43,1) 34%, rgba(20,5,40,1) 37%, rgba(22,5,43,1) 43%, rgba(25,5,42,1) 48%, rgba(27,6,43,1) 54%, rgba(35,7,44,1) 57%, rgba(29,5,36,1) 60%, rgba(29,5,37,1) 63%, rgba(32,6,40,1) 67%, rgba(26,4,30,1) 74%, rgba(19,3,21,1) 79%, rgba(34,7,45,1) 87%, rgba(0,0,0,1) 91%);
     min-height: 100vh;
 }
 
-.black-background {
+.background-black {
     background-color: black;
 }
 
@@ -51,19 +53,7 @@ a {
 }
 
 
-.quicsand {
-    font-family: var(--quicksand);
-}
 
-.quicsand-600 {
-    font-family: var(--quicksand);
-    font-weight: 600;
-}
-
-.quicsand-800 {
-    font-family: var(--quicksand);
-    font-weight: 600;
-}
 
 .small {
     font-size: 0.9rem;
@@ -71,6 +61,10 @@ a {
 
 .transparent-white {
     color: var(--transparent-white);
+}
+
+.transparent-white-75 {
+    color: var(--transparent-white-75);
 }
 
 

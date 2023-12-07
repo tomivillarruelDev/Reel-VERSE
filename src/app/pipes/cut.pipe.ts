@@ -20,3 +20,4 @@ export class CutPipe implements PipeTransform {
   }
 
 }
+

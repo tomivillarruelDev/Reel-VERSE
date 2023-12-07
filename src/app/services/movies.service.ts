@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { NowPlayingResponse} from '../interfaces/now-playing-response.interface';
 import { Person, PersonResponse } from '../interfaces/person.interface';
 import { Genre, GenreResponse } from '../interfaces/genres.interface';
 import { APIResponse } from '../interfaces/API-response.interface';
+import { MovieDetailResponse } from '../interfaces/movie-detail-response.interface';
+import { CastResponse } from '../interfaces/cast-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -128,6 +129,27 @@ export class MoviesService {
         primary_release_year: targetYear,
         page : page
       }
+    }));
+    return resp;
+  }
+
+  public async getMovieDetails( id: string ): Promise<MovieDetailResponse> {
+    const resp = await firstValueFrom( this.http.get<MovieDetailResponse>(`${ this.url }movie/${ id }?`,{
+      params: this.params
+    }));
+    return resp;
+  }
+
+  public async getSimilarMovies( id: string ): Promise<APIResponse> {
+    const resp = await firstValueFrom( this.http.get<APIResponse>(`${ this.url }movie/${ id }/similar?`,{
+      params: this.params
+    }));
+    return resp;
+  }
+
+  public async getMovieCast( id: string ): Promise<CastResponse> {
+    const resp = await firstValueFrom( this.http.get<CastResponse>(`${ this.url }movie/${ id }/credits?`,{
+      params: this.params
     }));
     return resp;
   }

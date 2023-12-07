@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Person } from 'src/app/interfaces/person.interface';
 import Swiper from 'swiper';
@@ -15,7 +16,7 @@ export class LargePosterSwiperComponent implements OnInit, AfterViewInit {
   @Input() people!: Person[];
   swiper!: Swiper;
 
-  constructor() { }
+  constructor( private router: Router) { }
 
   ngOnInit(): void {}
 
@@ -49,6 +50,18 @@ export class LargePosterSwiperComponent implements OnInit, AfterViewInit {
         }
       });
     }, 0)
+  }
+
+  
+  onRedirectToDetailPage( object: Result ){
+    if ( object ) {
+      if (object.title) {
+        this.router.navigate([ '/movie', object.id ]);
+
+      } else if (object.name) {
+        this.router.navigate([ '/serie', object.id ]);
+      }
+    }
   }
 
 }

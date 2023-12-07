@@ -23,7 +23,7 @@ export interface Result {
     vote_count:        number;
     name:             string;
     original_name?:    string;
-    first_air_date?:   Date;
+    first_air_date?:   string;
     origin_country?:   string[];
 }
 
@@ -34,5 +34,7 @@ export enum MediaType {
 
 export enum OriginalLanguage {
     En = "en",
+    Hi = "hi",
     Ja = "ja",
+    Ko = "ko",
 }

@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Result } from 'src/app/interfaces/API-response.interface';
-import { Movie, NowPlayingResponse } from 'src/app/interfaces/now-playing-response.interface';
 import { Person, PersonResponse } from 'src/app/interfaces/person.interface';
 
 import { LoadingService } from 'src/app/services/loading.service';
@@ -110,7 +109,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getPopularMovies();
       }
     }, {
-      rootMargin: '50px 0px'
+      rootMargin: '0px 0px',
     }
     );
     popularMoviesObserver.observe( this.popularElement.nativeElement );

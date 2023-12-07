@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
@@ -14,7 +15,7 @@ export class PosterSwiperComponent  implements AfterViewInit {
   
   swiper!: Swiper;
 
-  constructor() {}
+  constructor( private router: Router ) {}
 
   ngAfterViewInit(): void {
     setTimeout( () => {
@@ -48,4 +49,16 @@ export class PosterSwiperComponent  implements AfterViewInit {
       });
     }, 0);
   }
-} 
+
+  onRedirectToDetailPage( object: Result ){
+    if ( object ) {
+      if (object.title) {
+        this.router.navigate([ '/movie', object.id ]);
+
+      } else if (object.name) {
+        this.router.navigate([ '/serie', object.id ]);
+      }
+    }
+  } 
+
+}

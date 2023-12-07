@@ -1,1 +1,108 @@
-<p>movie works!</p>
+<div class="container-fluid m-0 p-0 background-black" >
+    
+    <div class="animate__animated  animate__fadeIn"         
+        *ngIf="movie">
+        <div class="row" >
+            <div class="image-detail animate__animated  animate__fadeIn animate__delay-1s"  
+            [ngStyle]="{'background-image': ' url(http://image.tmdb.org/t/p/original' + movie.backdrop_path + ')'}">
+            </div>
+        </div>
+        <div class="row row-cols-1  with-padding">
+            <div class="col-6 col-md-3">
+                <p class="display-6">
+                    {{ movie.title }}
+                </p>
+            </div>
+            <div class="col mb-3">
+                <ul class="list-unstyled d-flex flex-row">
+                    <li class="me-3 transparent-white small fw-medium">
+                        {{movie.runtime | hoursMinutes}} 
+                    </li>
+                    <li class="me-3 transparent-white small text-uppercase fw-medium">
+                        {{ movie.genres[0].name }}
+                    </li>
+                    <li class="me-3 transparent-white small fw-medium">
+                        {{movie.release_date | date: 'yyyy'}}
+                    </li>
+                    <li class="me-3 transparent-white small fw-medium">
+                        HD
+                    </li>
+                    <li class="me-3 transparent-white small fw-medium">
+                        {{movie.vote_average | number: '1.1-1'}}
+                    </li>
+                  </ul>
+            </div>
+            <div class="col-7 pb-2">
+                <p class="transparent-white-75 fw-medium fs-6">
+                    {{ movie.overview }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row with-padding py-5">
+        <div class="col">
+            <div class="row">
+                <div class="col" 
+                    *ngIf=" recommendedMovies.length > 0">
+                    <p class="fw-bold mb-2">
+                        Más contenido como este
+                    </p>
+                </div>
+                <div class="col">
+                    <app-poster-swiper
+                    *ngIf=" recommendedMovies.length > 0"
+                    [data]="recommendedMovies"></app-poster-swiper>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row with-padding gap-4 py-5">
+        <div class="col-10 col-md-5">
+            <p class="fw-semibold mb-2">
+                Elenco y equipo
+            </p>
+            <div class="row" *ngFor="let character of cast">
+                <div class="col-6 d-flex" >
+                    <p class="transparent-white fw-medium small mb-1">{{ character.character }}</p>
+                </div>
+                <div class="col-6">
+                    <p class="transparent-white fw-medium small mb-1">{{ character.name }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-10 col-md-5">
+            <p class="fw-semibold mb-2">
+                Productores
+            </p>
+            <div class="row" *ngFor="let producer of producers">
+                <div class="col-6">
+                    <p class="transparent-white fw-medium small mb-1">
+                        Productor
+                    </p>
+                </div>
+                <div class="col-6">
+                    <p class="transparent-white fw-medium small mb-1">
+                        {{ producer.name }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-10 col-md-5">
+            <p class="fw-semibold mb-2">
+                Directores
+            </p>
+            <div class="row" *ngFor="let director of directors">
+                <div class="col-6">
+                    <p class="transparent-white fw-medium small mb-1">
+                        Director
+                    </p>
+                </div>
+                <div class="col-6">
+                    <p class="transparent-white fw-medium small mb-1">
+                        {{ director.name }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

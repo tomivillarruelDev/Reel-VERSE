@@ -1,0 +1,62 @@
+<div class="container-fluid m-0 p-0 background-black" >
+    
+    <div class="animate__animated  animate__fadeIn" 
+        *ngIf="serie">
+        <div class="row" >
+            <div class="image-detail animate__animated  animate__fadeIn animate__delay-1s"  
+            [ngStyle]="{'background-image': ' url(http://image.tmdb.org/t/p/original' + serie.backdrop_path + ')'}">
+            </div>
+        </div>
+        <div class="row row-cols-1  with-padding">
+            <div class="col-6 col-md-4">
+                <p class="display-6">
+                    {{ serie.name | cut }}
+                </p>
+            </div>
+            <div class="col mb-3">
+                <ul class="list-unstyled d-flex flex-row">
+                    <li class="me-3 transparent-white small text-uppercase fw-medium">
+                        {{ serie.genres[0].name }}
+                    </li>
+                    <li class="me-3 transparent-white small fw-medium">
+                        {{serie.first_air_date | date: 'yyyy'}}
+                    </li>
+                    <li class="me-3 transparent-white small fw-medium">
+                        HD
+                    </li>
+                    <li class="me-3 transparent-white small fw-medium">
+                        {{serie.vote_average | number: '1.1-1'}}
+                    </li>
+                  </ul>
+            </div>
+            <div class="col-7 pb-2">
+                <p class="transparent-white-75 fw-medium fs-6">
+                    {{ serie.overview }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row with-padding">
+        <app-backdrop-grid
+        [data]="episodes"
+        
+        ></app-backdrop-grid>
+    </div>
+    <div class="row with-padding py-5">
+        <div class="col">
+            <div class="row">
+                <div class="col" 
+                    *ngIf=" recommendedSeries.length > 0">
+                    <p class="fw-bold mb-2">
+                        Más contenido como este
+                    </p>
+                </div>
+                <div class="col">
+                    <app-poster-swiper
+                    *ngIf=" recommendedSeries.length > 0"
+                    [data]="recommendedSeries"></app-poster-swiper>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

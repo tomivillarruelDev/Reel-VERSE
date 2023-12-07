@@ -1,20 +1,44 @@
-<div class="container-fluid">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-      <div class="col-2 grid-item animate__animated  animate__fadeInRightBig mb-3" *ngFor="let value of data">
-        <div class="image-container">
-          <div class="overlay"></div>
-          <div class="image-border">
-            <img [src]=" value.backdrop_path | poster " class="grid-img animate__animated animate__fadeIn animate__delay-2s" alt="{{ value.title }}">
-          </div>
-          <a class="play-button rounded-circle">
-            <i class="fa-solid fa-play"></i>
-          </a>
-        </div>
-        <div class="title">
-          <p class="fw-semibold">
-            {{ (value.title ? value.title : value.name) | cut }}
+<div class="container-fluid ps-0">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
+    <div class="col-3 grid-item animate__animated  animate__fadeInRightBig mb-3" *ngFor="let value of data">
+      <div class="image-container">
+        
+        
+          <ng-container *ngIf="isResult(value)">
+            <div class="overlay"  
+                (click)="onRedirectToDetailPage( value )">
+            </div>
+            <div class="image-border">
+              <img [src]="value.backdrop_path | poster " class="grid-img animate__animated animate__fadeIn animate__delay-2s" alt="{{  (value.title ? value.title : value.name) }}">
+            </div>
+          </ng-container>
+          
+          <ng-container *ngIf="isEpisode(value)">
+            <div class="overlay"></div>
+            <div class="image-border">
+              <img [src]="value.still_path  | poster" class="grid-img animate__animated animate__fadeIn animate__delay-2s" alt="{{ value.name }}">
+            </div>
+          </ng-container>
+
+          
+        
+        <a class="play-button rounded-circle">
+          <i class="fa-solid fa-play"></i>
+        </a>
+      </div>
+      <div class="title">
+        <ng-container *ngIf="isResult(value)">
+          <p class="fs-6 transparent-white-75 fw-semibold m-0">
+            {{ (value.title ? value.title : value.name) | cut:5 }}
           </p>
-        </div>
+        </ng-container>
+        <ng-container *ngIf="isEpisode(value)">
+          <p class="fs-6 transparent-white-75 fw-semibold m-0">
+            {{value.episode_number}}. {{  value.name | cut:5 }}
+          </p>
+          <p class="small transparent-white fw-ligth">{{ value.runtime | hoursMinutes }}</p>
+        </ng-container>
       </div>
     </div>
+  </div>
 </div>

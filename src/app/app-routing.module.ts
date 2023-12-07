@@ -5,6 +5,7 @@ import { MovieComponent } from './pages/movie/movie.component';
 import { SearchMultiComponent } from './pages/search-multi/search-multi.component';
 import { SeriesComponent } from './pages/series/series.component';
 import { MoviesComponent } from './pages/movies/movies.component';
+import { SerieComponent } from './pages/serie/serie.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'series',
     component: SeriesComponent
+  },
+  {
+    path: 'serie/:id',
+    component: SerieComponent
   },
   {
     path: 'search',
