@@ -1,4 +1,4 @@
-<div class="container-fluid m-0 p-0 background-black" >
+<div class="container-fluid background-black" >
     
     <div class="animate__animated  animate__fadeIn"         
         *ngIf="movie">
@@ -40,20 +40,16 @@
         </div>
     </div>
     <div class="row with-padding py-5">
+        <div class="col" 
+            *ngIf=" recommendedMovies.length > 0">
+            <p class="fw-bold mb-2">
+                Más contenido como este
+            </p>
+        </div>
         <div class="col">
-            <div class="row">
-                <div class="col" 
-                    *ngIf=" recommendedMovies.length > 0">
-                    <p class="fw-bold mb-2">
-                        Más contenido como este
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper
-                    *ngIf=" recommendedMovies.length > 0"
-                    [data]="recommendedMovies"></app-poster-swiper>
-                </div>
-            </div>
+            <app-poster-swiper
+            *ngIf=" recommendedMovies.length > 0"
+            [data]="recommendedMovies"></app-poster-swiper>
         </div>
     </div>
     <div class="row with-padding gap-4 py-5">

@@ -1,4 +1,4 @@
-<div class="container-fluid m-0 p-0 background-black" >
+<div class="container-fluid background-black" >
     
     <div class="animate__animated  animate__fadeIn" 
         *ngIf="serie">
@@ -38,25 +38,20 @@
     </div>
     <div class="row with-padding">
         <app-backdrop-grid
-        [data]="episodes"
-        
-        ></app-backdrop-grid>
+        [data]="episodes">
+        </app-backdrop-grid>
     </div>
     <div class="row with-padding py-5">
+        <div class="col" 
+            *ngIf=" recommendedSeries.length > 0">
+            <p class="fw-bold mb-2">
+                Más contenido como este
+            </p>
+        </div>
         <div class="col">
-            <div class="row">
-                <div class="col" 
-                    *ngIf=" recommendedSeries.length > 0">
-                    <p class="fw-bold mb-2">
-                        Más contenido como este
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper
-                    *ngIf=" recommendedSeries.length > 0"
-                    [data]="recommendedSeries"></app-poster-swiper>
-                </div>
-            </div>
+            <app-poster-swiper
+            *ngIf=" recommendedSeries.length > 0"
+            [data]="recommendedSeries"></app-poster-swiper>
         </div>
     </div>
 </div>

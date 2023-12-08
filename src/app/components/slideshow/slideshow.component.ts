@@ -34,7 +34,7 @@ export class SlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.swiper = new Swiper('.swiper', {
+      this.swiper = new Swiper('.swiper-large-screen', {
         modules: [Navigation, Pagination, Autoplay, EffectFade],
         loop: true,
         freeMode: true,

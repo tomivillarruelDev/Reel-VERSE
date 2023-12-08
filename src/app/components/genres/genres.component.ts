@@ -39,9 +39,6 @@ export class GenresComponent implements OnInit, AfterViewInit {
         this.swiper = new Swiper('.swiper-genre', {
           modules: [Navigation],
           loop: false,
-          slidesPerView: 11,
-          
-          //responsive
           breakpoints: {
             320: {
               slidesPerView: 2,

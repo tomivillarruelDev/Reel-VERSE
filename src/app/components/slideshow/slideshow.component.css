@@ -4,6 +4,10 @@
   
 }
 
+.swiper-wrapper{
+  padding: 0;
+}
+
 .swiper-slide {
   background-size: cover;
 

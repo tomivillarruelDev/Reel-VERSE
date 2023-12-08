@@ -21,7 +21,7 @@
 }
 
 body {
-    overflow-x: hidden;
+
     background-color: var(--dark-gray);
     font-size: 1.2rem;
     
@@ -51,7 +51,6 @@ a {
     color: white;
     text-decoration: none;
 }
-
 
 
 
@@ -101,8 +100,11 @@ a {
     transform: scale(0.6);
     color: white;
 }
- 
 
+
+.swiper-wrapper {
+    padding: 0.2rem;
+}
 .movie-cover, .poster {
     position: relative;
     display: flex;
