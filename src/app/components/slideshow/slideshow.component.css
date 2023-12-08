@@ -1,15 +1,11 @@
 
-.swiper  {
-  height: 86vh;
-  
-}
-
 .swiper-wrapper{
   padding: 0;
 }
 
 .swiper-slide {
   background-size: cover;
+  height: 86vh;
 
 }
 
