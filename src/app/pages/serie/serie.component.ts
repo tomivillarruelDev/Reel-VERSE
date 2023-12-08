@@ -19,7 +19,7 @@ export class SerieComponent implements OnInit, OnDestroy {
 
   public serie!: SerieDetailResponse;
 
-  public isLargeScreen = window.innerWidth > 400;
+  public isLargeScreen = window.innerWidth > 600;
 
   private resizeSubscription!: Subscription;
 
@@ -72,7 +72,7 @@ export class SerieComponent implements OnInit, OnDestroy {
   }
 
   private checkScreenSize(): void {
-    this.isLargeScreen = window.innerWidth > 400;
+    this.isLargeScreen = window.innerWidth > 600;
     this.cdRef.detectChanges();
   }
 
