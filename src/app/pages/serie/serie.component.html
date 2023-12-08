@@ -4,7 +4,7 @@
         *ngIf="serie">
         <div class="row" >
             <div class="image-detail animate__animated  animate__fadeIn animate__delay-1s"  
-            [ngStyle]="{'background-image': ' url(http://image.tmdb.org/t/p/original' + serie.backdrop_path + ')'}">
+            [ngStyle]="{'background-image': ' url(http://image.tmdb.org/t/p/original' + (isLargeScreen ? serie.backdrop_path : serie.poster_path) + ')'}">
             </div>
         </div>
         <div class="row row-cols-1  with-padding">
