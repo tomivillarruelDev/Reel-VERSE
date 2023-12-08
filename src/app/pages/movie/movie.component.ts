@@ -16,7 +16,7 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   public movie!: MovieDetailResponse;
 
-  public isLargeScreen = window.innerWidth > 400;
+  public isLargeScreen = window.innerWidth > 600;
 
   private resizeSubscription!: Subscription;
 
@@ -80,7 +80,7 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   private checkScreenSize(): void {
-    this.isLargeScreen = window.innerWidth > 400;
+    this.isLargeScreen = window.innerWidth > 600;
     this.cdRef.detectChanges();
 
   }

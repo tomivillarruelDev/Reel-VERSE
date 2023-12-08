@@ -51,8 +51,7 @@ export class SlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
         autoplay: {
           delay: 5000,
           disableOnInteraction: false,
-        },
-        slidesPerGroup: 5,
+        }, 
       });
     }, 0);
   }
