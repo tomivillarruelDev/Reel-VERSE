@@ -64,6 +64,9 @@ export class SerieComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.loadingService.setLoading(true);
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
   }
 
   private async getSerieDetails( id: string ): Promise<SerieDetailResponse> {
