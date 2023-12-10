@@ -1,5 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { debounceTime } from 'rxjs';
 import { Result } from 'src/app/interfaces/API-response.interface';
 
@@ -45,11 +46,13 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
   constructor( private searchService: SearchService,
                private moviesService: MoviesService,
                private fb: FormBuilder,
-               private loadingService: LoadingService ) {}
+               private loadingService: LoadingService,
+               private titleService: Title ) {}
 
   async ngOnInit(): Promise<void> {
     this.createInputSearch();
     try {
+      this.titleService.setTitle('Búsqueda • Reel VERSE');
       const [ genres, trendingAll ] = await Promise.all([
         this.getGenres(), 
         this.getTrendingAll(this.page)

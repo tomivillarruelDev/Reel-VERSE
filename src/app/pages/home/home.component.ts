@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Person, PersonResponse } from 'src/app/interfaces/person.interface';
 
@@ -6,10 +7,6 @@ import { LoadingService } from 'src/app/services/loading.service';
 
 import { MoviesService } from 'src/app/services/movies.service';
 import { SeriesService } from 'src/app/services/series.service';
-
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-
 
 @Component({
   selector: 'app-home',
@@ -46,7 +43,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('crimeElement', {read: ElementRef}) crimeElement!: ElementRef;
 
-  public playingNowMovies: Result[] = []; //slider
+  public playingNowMovies: Result[] = [];
 
   public recommendedMovies: Result[] = [];
 
@@ -80,10 +77,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor( private moviesService: MoviesService,
                private seriesService: SeriesService,
-               private loadingService: LoadingService ) {}
+               private loadingService: LoadingService,
+               private titleService: Title ) {}
 
   async ngOnInit(): Promise<void> {
     try{
+      this.titleService.setTitle('Reel VERSE');
       const resp = await this.getPlayingNowMovies();
         // this.getRecommended('953'), 
     } catch (error) {

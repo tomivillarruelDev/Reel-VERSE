@@ -1,9 +1,12 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
+
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Cast } from 'src/app/interfaces/cast-response.interface';
 import { MovieDetailResponse } from 'src/app/interfaces/movie-detail-response.interface';
+
 import { LoadingService } from 'src/app/services/loading.service';
 import { MoviesService } from 'src/app/services/movies.service';
 
@@ -18,8 +21,6 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   public isLargeScreen = window.innerWidth > 600;
 
-  private resizeSubscription!: Subscription;
-
   public recommendedMovies: Result[] = [];
 
   public cast: Cast[] = [];
@@ -27,10 +28,13 @@ export class MovieComponent implements OnInit, OnDestroy {
   public producers: Cast[] = [];
 
   public directors: Cast[] = [];
+
+  private resizeSubscription!: Subscription;
   
   constructor( private activatedRoute: ActivatedRoute,
                private loadingService: LoadingService,
                private moviesService: MoviesService,
+               private titleService: Title,
                private cdRef: ChangeDetectorRef ) { }
 
   async ngOnInit(): Promise<void> {
@@ -54,6 +58,7 @@ export class MovieComponent implements OnInit, OnDestroy {
             this.getMovieDirectors( id )
           ]);
           this.movie = movie;
+          this.titleService.setTitle( movie.title + ' • Reel VERSE');
           this.recommendedMovies = recommendedMovies;
           this.cast = cast;
           this.producers = producer;

@@ -1,10 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
+
 import { Result } from 'src/app/interfaces/API-response.interface';
-import { Cast } from 'src/app/interfaces/cast-response.interface';
 import { Episode } from 'src/app/interfaces/episode-serie-response.interface';
 import { SerieDetailResponse } from 'src/app/interfaces/serie-detail-response.interface';
+
 import { LoadingService } from 'src/app/services/loading.service';
 import { SeriesService } from 'src/app/services/series.service';
 
@@ -14,8 +16,6 @@ import { SeriesService } from 'src/app/services/series.service';
   styleUrls: ['./serie.component.css']
 })
 export class SerieComponent implements OnInit, OnDestroy {
-
-  @ViewChild('recommendedElement', {read: ElementRef})recommendedElement!: ElementRef;
 
   public serie!: SerieDetailResponse;
 
@@ -27,10 +27,10 @@ export class SerieComponent implements OnInit, OnDestroy {
 
   public recommendedSeries: Result[] = [];
 
-
   constructor( private activatedRoute: ActivatedRoute,
                private loadingService: LoadingService,
                private seriesService: SeriesService,
+               private titleService: Title,
                private cdRef: ChangeDetectorRef ) { }
 
   async ngOnInit(): Promise<void> {
@@ -51,6 +51,7 @@ export class SerieComponent implements OnInit, OnDestroy {
             this.getRecommendedSeries( id ),
           ]);
           this.serie = serie;
+          this.titleService.setTitle(this.serie.name + ' • Reel VERSE');
           this.episodes = episodes;
           this.recommendedSeries = recommendedSeries;
         } catch (error) {

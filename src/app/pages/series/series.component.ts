@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Genre } from 'src/app/interfaces/genres.interface';
 
@@ -11,6 +12,8 @@ import { SeriesService } from 'src/app/services/series.service';
   styleUrls: ['./series.component.css']
 })
 export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  public title: string = 'Series';
 
   public topRatedSeries: Result[] = [];
 
@@ -60,10 +63,12 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   constructor( private loadingService: LoadingService,
-               private seriesService: SeriesService ) {}
+               private seriesService: SeriesService,
+               private titleService: Title ) {}
 
   async ngOnInit() {
     try{
+      this.titleService.setTitle(this.title + ' • Reel VERSE');
       const [ topRatedSeries, genres ] = await Promise.all([
         this.getTopRatedSeries(),
         this.getGenres()

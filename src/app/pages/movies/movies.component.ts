@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Genre } from 'src/app/interfaces/genres.interface';
 
@@ -11,6 +12,8 @@ import { MoviesService } from 'src/app/services/movies.service';
   styleUrls: ['./movies.component.css']
 })
 export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  public title: string = 'Películas';
 
   public actionMovies: Result[] = [];
 
@@ -52,10 +55,12 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   constructor( private loadingService: LoadingService,
-               private moviesService: MoviesService ) {}
+               private moviesService: MoviesService,
+               private titleService: Title ) {}
 
   async ngOnInit(): Promise<void> {
     try{
+      this.titleService.setTitle(this.title + ' • Reel VERSE');
       const [ actionMovies, genres ] = await Promise.all([
         this.getActionMovies(),
         this.getGenres()
