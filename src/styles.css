@@ -1,6 +1,9 @@
 @import '~swiper/swiper-bundle.css';
 :root {
     --manrope: 'Manrope', sans-serif;
+
+    --light-gray: rgb(44, 41, 48);
+
     --gray : #CCCCCC;
 
     --dark-gray: #0f0f0f;
@@ -10,9 +13,7 @@
     --transparent-white: rgba(255, 255, 255, 0.6);
 
     --transparent-white-75: rgba(255, 255, 255, 0.75);
-    
 
-    
 }
 
 * {
@@ -105,8 +106,6 @@ a {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    z-index: 3;
-
 }
 
 .swiper-button-next {
@@ -122,7 +121,6 @@ a {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    z-index: 3;
 }
 .swiper-button-prev {
     left: 0 !important;

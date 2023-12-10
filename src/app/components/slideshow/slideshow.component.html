@@ -6,14 +6,24 @@
         [ngStyle]="{
         'background-image': 'url(https://image.tmdb.org/t/p/original' + (isLargeScreen ? value.backdrop_path : value.poster_path) + ')'
         }">
-            <div class="movie-description">
-                <div class="text">
+            <div class="movie-description with-padding">
+                <div class="movie-description__title">
                     <p class="display-6 fw-semibold my-0">
                         {{ (value.title ? value.title : value.name) | cut }}
                     </p>
-                    <p class="small transparent-white">
-                        {{ value.overview | cut:8 }}
+                </div>
+                <div class="movie-description__overview">
+                    <p class="small transparent-white-75">
+                        {{ value.overview | cut:16 }}
                     </p>
+                </div>
+                <div class="buttons-container">
+                    <a href="" class="buttons-container__button-play rounded-circle">
+                        <i class="fa-solid fa-play"></i>
+                    </a>
+                    <a class="buttons-container__button-more-info rounded-1 fw-semibold">
+                        Más info
+                    </a>
                 </div>
             </div>
         </div>
