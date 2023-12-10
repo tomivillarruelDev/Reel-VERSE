@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Result } from 'src/app/interfaces/API-response.interface';
-import { Person, PersonResponse } from 'src/app/interfaces/person.interface';
+import { Person } from 'src/app/interfaces/person.interface';
 
 import { LoadingService } from 'src/app/services/loading.service';
 
