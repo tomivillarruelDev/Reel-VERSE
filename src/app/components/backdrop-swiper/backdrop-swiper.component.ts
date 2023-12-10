@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Result } from 'src/app/interfaces/API-response.interface';
+
 import Swiper from 'swiper';
-import { Navigation } from 'swiper/modules';
 
 @Component({
   selector: 'app-backdrop-swiper',
@@ -21,15 +22,9 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     setTimeout( () => {
       this.swiper = new Swiper('.swiper-backdrop', {
-        modules: [Navigation],
         loop: false,
-        slidesPerView: 4,
-        spaceBetween: 20,
-        freeMode: true,
-        navigation: {
-          nextEl: '.backdrop-next',
-          prevEl: 'backdrop-prev',
-        },
+        freeMode: false,
+        speed: 800, 
         breakpoints: {
           0: {
             slidesPerView: 1.5,
@@ -44,6 +39,7 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
             spaceBetween: 10,
           },
           1100: {
+            slidesPerGroup: 2,
             slidesPerView: 4,
             spaceBetween: 10,
           }

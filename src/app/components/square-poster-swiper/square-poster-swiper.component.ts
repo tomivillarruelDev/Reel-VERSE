@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Result } from 'src/app/interfaces/API-response.interface';
+
 import Swiper from 'swiper';
-import {  Navigation } from 'swiper/modules';
 
 @Component({
   selector: 'app-square-poster-swiper',
@@ -22,15 +23,8 @@ export class SquarePosterSwiperComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout( () => {
       this.swiper = new Swiper('.swiper-square-poster', {
-        modules: [Navigation],
         loop: false,
-        slidesPerView: 6,
-        spaceBetween: 20,
-        freeMode: true,
-        navigation: {
-          nextEl: '.square-poster-next',
-          prevEl: 'square-poster-prev',
-        },
+        freeMode: false,
         breakpoints: {
           0: {
             slidesPerView: 2,

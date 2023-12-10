@@ -18,13 +18,15 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
 
   public form!: FormGroup;
 
-  public search: boolean = false;
+  public showSearch: boolean = false;
 
   public searchInput: string = '';
 
   public genres: Genre[] = [];
 
   public trendingAll: Result[] = [];
+
+  public loading = false;
   
   public results: Result[] = [];
 
@@ -35,7 +37,7 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
     const position = (document.documentElement.scrollTop || document.body.scrollTop) + 1800; 
     const max = (document.documentElement.scrollHeight || document.body.scrollHeight);
 
-    if ( position > max && !this.search ) {
+    if ( position > max && !this.showSearch ) {
       const resp = await this.getTrendingAll(++this.page);   
     }
   }
@@ -63,7 +65,6 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.loadingService.setLoading(true);
   }
-
  
   private createInputSearch(): void {
     this.form = this.fb.group({
@@ -73,18 +74,24 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToInputChanges(): void {
-
     this.form.get('searchInput')?.valueChanges.pipe(
       debounceTime(1000)
     ).subscribe(async value => {
       if (value.length) {
-        this.search = true;
-        this.results = await this.getSearchResults(value);
+        this.showSearch = true;
+        this.search(value)
         this.searchInput = value;
       } else {
-        this.search = false;
+        this.showSearch = false;
       }
     });
+  }
+
+  private async search(value: string): Promise<void> {
+      this.loading = true;
+      this.results = await this.getSearchResults(value);
+      this.loading = false;
+    
   }
   
   private async getGenres(): Promise<void> {
@@ -93,13 +100,12 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
   }
 
   public onGenreSelected(results: Result[]): void {
-    this.search = true;
+    this.showSearch = true;
     this.results = results;
     
   }
 
   private async getTrendingAll(page: number): Promise<void> {
-    
     const resp = await this.moviesService.getTrendingAll(page);
     this.trendingAll.push(...resp.results);
 

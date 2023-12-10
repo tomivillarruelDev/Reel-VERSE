@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Result } from 'src/app/interfaces/API-response.interface';
+
 import Swiper from 'swiper';
 
 @Component({
@@ -24,9 +26,8 @@ export class TextPosterSwiperComponent implements AfterViewInit {
     setTimeout( () => {
       this.swiper = new Swiper('.swiper-text-poster', {
         loop: false,
-        slidesPerView: 6,
-        freeMode: true,
-        spaceBetween: 10,
+        freeMode: false,
+        speed: 800,
         breakpoints: {
           0: {
             slidesPerView: 2,
@@ -44,7 +45,6 @@ export class TextPosterSwiperComponent implements AfterViewInit {
             slidesPerView: 6,
             spaceBetween: 10,
           }
-          
         },
       });
     },0)

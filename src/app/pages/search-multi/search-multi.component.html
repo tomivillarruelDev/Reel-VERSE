@@ -4,7 +4,7 @@
         <div class="col search-container">
             <form *ngIf="form" [formGroup]="form">
                 <input class="searchInput rounded-1" type="search" name="searchInput" placeholder="¿Qué estas buscando?" formControlName="searchInput"
-                [ngClass]="{ 'search-active': search }">
+                [ngClass]="{ 'search-active': showSearch }">
                 <i class="fa fa-search search-icon"></i>
             </form>
         </div>
@@ -21,7 +21,7 @@
     </div>
 
     <div class="row py-3"
-        *ngIf=" !search">
+        *ngIf=" !showSearch">
         <div class="col">
             <p class="fw-bold mb-2">
                 Nuevas y populares
@@ -36,7 +36,7 @@
     </div>
 
     <div class="row py-3"
-    *ngIf=" search ">
+    *ngIf=" showSearch ">
         <div class="col"> 
             <app-backdrop-grid
             *ngIf=" results.length > 0; else noResults"
@@ -44,7 +44,7 @@
             ></app-backdrop-grid>
 
             <ng-template #noResults>
-                <div class="no-results">
+                <div class="no-results" *ngIf="!loading">
                     <p>No encontramos nada relacionado con "{{ searchInput }}". Puedes buscar por título, género, actores, directores y guionistas</p>
                 </div>
             </ng-template>

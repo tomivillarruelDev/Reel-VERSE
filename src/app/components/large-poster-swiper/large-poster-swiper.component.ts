@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Person } from 'src/app/interfaces/person.interface';
+
 import Swiper from 'swiper';
-import { Navigation } from 'swiper/modules';
+
 
 @Component({
   selector: 'app-large-poster-swiper',
@@ -23,13 +25,9 @@ export class LargePosterSwiperComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout( () => {
       this.swiper = new Swiper('.swiper-large-poster', {
-        modules: [Navigation],
         loop: false,
-        freeMode: true,
-        navigation: {
-          nextEl: '.large-poster-next',
-          prevEl: 'large-poster-prev',
-        },
+        freeMode: false,
+        speed: 800,
         breakpoints: {
           0: {
             slidesPerView: 1.5,

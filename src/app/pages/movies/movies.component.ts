@@ -147,40 +147,31 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.results = results;
   }
 
-  //2 tendencias
   async getTrendingMovies(): Promise<void> {
     const resp = await this.moviesService.getTrendingMovies();
     this.trendingMovies = resp.results;
-  } // 
+  } 
 
-  //3 exitos en holliwood
   async getTopRatedMovies(): Promise<void> {
     const resp = await this.moviesService.getTopRatedMovies();
     this.topRatedMovies = resp.results;
   }
 
-  //4 familia
   async getFamilyMovies(): Promise<void> {
     const resp = await this.moviesService.getMoviesByGenre(10751, 4);
     this.familyMovies = resp.results;
   }
 
-  //5 comedia
   async getComedyMovies(): Promise<void> {
     const resp = await this.moviesService.getMoviesByGenre(35, 1);
     this.comedyMovies = resp.results;
   }
 
-  //6 terror
   async getHorrorMovies(): Promise<void> {
     const resp = await this.moviesService.getMoviesByGenre(27);
     this.horrorMovies = resp.results;
   }
 
-  //7 harry potter
-
-
-  //9 dramas 
   async getDramaMovies(): Promise<void> {
     const resp = await this.moviesService.getMoviesByGenre(18, 1);
     this.dramaMovies = resp.results;

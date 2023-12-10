@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Genre } from 'src/app/interfaces/genres.interface';
@@ -7,7 +7,7 @@ import { MoviesService } from 'src/app/services/movies.service';
 import { SeriesService } from 'src/app/services/series.service';
 
 import Swiper from 'swiper';
-import { Navigation } from 'swiper/modules';
+
 
 @Component({
   selector: 'app-genres',
@@ -37,8 +37,10 @@ export class GenresComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
       setTimeout(() => {
         this.swiper = new Swiper('.swiper-genre', {
-          modules: [Navigation],
           loop: false,
+          freeMode: false,
+          speed: 800,
+          spaceBetween: 1,
           breakpoints: {
             320: {
               slidesPerView: 2,
@@ -59,19 +61,17 @@ export class GenresComponent implements OnInit, AfterViewInit {
               slidesPerView: 11,
             },
           },
-          spaceBetween: 1,
-          freeMode: true,
         });
       }, 0 );
     }
   
   
 
-    public async searchByGenre( genre: number, page: number = 1 ): Promise<void> {
+    public async searchByGenre( genre: number): Promise<void> {
       switch (this.type) {
         case 'movie':
           this.selectedGenre = genre;
-          const resp = await this.moviesService.getMoviesByGenre( genre, 0, page );
+          const resp = await this.moviesService.getMoviesByGenre( genre, 0 );
           const results: Result[] = resp.results;
           this.genreSelected.emit(results);
           
@@ -79,16 +79,16 @@ export class GenresComponent implements OnInit, AfterViewInit {
         
         case 'serie':
           this.selectedGenre = genre;
-          const resp2 = await this.seriesService.getSeriesByGenre( genre, 0, page );
+          const resp2 = await this.seriesService.getSeriesByGenre( genre, 0 );
           const results2: Result[] = resp2.results;
           this.genreSelected.emit(results2);
           break;
       
         default:
             this.selectedGenre = genre;
-            const respMovies = await this.moviesService.getMoviesByGenre( genre, 0, page );
+            const respMovies = await this.moviesService.getMoviesByGenre( genre, 0 );
             const movieResults: Result[] = respMovies.results;
-            const respSeries = await this.seriesService.getSeriesByGenre( genre, 0, page);
+            const respSeries = await this.seriesService.getSeriesByGenre( genre, 0 );
             const seriesResults: Result[] = respSeries.results;
             const allResults: Result[] = [...movieResults, ...seriesResults];
             this.genreSelected.emit(allResults);
@@ -96,7 +96,7 @@ export class GenresComponent implements OnInit, AfterViewInit {
       }
     }
 
-    private async getGenres(): Promise<void> {
+     async getGenres(): Promise<void> {
       switch (this.type) {
         case 'movie': 
           const resp = await this.moviesService.getMovieGenres();
@@ -115,7 +115,7 @@ export class GenresComponent implements OnInit, AfterViewInit {
           genres.sort(() => Math.random() - 0.5);
           this.genres = genres;
 
-          break;
+        
       }
 
     }

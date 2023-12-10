@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Result } from 'src/app/interfaces/API-response.interface';
+
 import Swiper from 'swiper';
-import { Navigation } from 'swiper/modules';
+
 
 @Component({
   selector: 'app-poster-swiper',
@@ -20,13 +22,9 @@ export class PosterSwiperComponent  implements AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout( () => {
       this.swiper = new Swiper('.swiper-poster-grid', {
-        modules: [Navigation],
         loop: false,
-        freeMode: true,
-        navigation: {
-          nextEl: '.post-swiper-next',
-          prevEl: 'post-swiper-prev',
-        },
+        freeMode: false,
+        speed: 800,
         breakpoints: {
           0: {
             slidesPerView: 2,

@@ -70,8 +70,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public actionMovies: Result[] = [];
 
-  public harryPotterMovies: Result[] = [];
-
   public comedySeries: Result[] = [];
 
   public horrorMovies: Result[] = [];
@@ -192,7 +190,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       rootMargin: '50px 0px'
     });
     actionMoviesObserver.observe( this.actionElement.nativeElement );
-    //falta harry aca
+
     const comedySeriesObserver= new IntersectionObserver( entries => {
       if (entries[0].isIntersecting && this.comedySeries.length === 0){
         this.getComedySeries();
