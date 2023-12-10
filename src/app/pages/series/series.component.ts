@@ -85,7 +85,6 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     const trendingSeriesObserver = new IntersectionObserver( entries => {
       if (entries[0].isIntersecting && this.trendingSeries.length === 0){
         this.getTrendingSeries();
-        console.log('trending')
       }
     });
     trendingSeriesObserver.observe( this.trendingElement.nativeElement );

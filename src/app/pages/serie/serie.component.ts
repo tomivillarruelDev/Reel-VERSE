@@ -82,7 +82,6 @@ export class SerieComponent implements OnInit, OnDestroy {
 
   private async getAllEpisodes( id: string ): Promise<Episode[]> {
     const resp = await this.seriesService.getAllEpisodes( id );
-    console.log(resp);
     return resp.episodes;
 
   }

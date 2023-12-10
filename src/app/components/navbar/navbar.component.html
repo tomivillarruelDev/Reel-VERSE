@@ -28,45 +28,9 @@
         </div>
 
 
-    <div class="row justify-content-center"
-        *ngIf=" sectionTitle ">
-        <div class="col-11 position-relative">
-            <div class="position-center">
-                <p class="section-title" 
-                    [ngClass]="{ 'animate__animated animate__fadeOutUp': isScrolled }">
-                    {{ sectionTitle }}
-                </p>
-            </div>
-        </div>
-    </div>
+    
     
 </nav> -->
-
-<!-- <nav class="navbar navbar-dark py-3 with-padding fixed-top" [ngClass]="{ 'navbar-scrolled': isScrolled }">
-  <div class="container-fluid d-flex justify-content-between p-0">
-    <div class="d-flex justify-content-between w-100">
-      <div class="d-none d-lg-flex">
-        <a routerLink="/movies" class="fs-5 fw-normal me-4">
-          Películas
-        </a>
-        <a routerLink="/series" class="fs-5 fw-normal me-4">
-          Series
-        </a>
-      </div>
-      <a routerLink="/home" class="logo d-lg-none">
-        <img src="./assets/reelVERSE.svg" alt="" class="navbar-icon">
-      </a>
-      <button class="btn btn-link search ms-auto" (click)="goToSearch()">
-        <i class="fa fa-search m-0 p-0"></i>
-      </button>
-    </div>
-    <a routerLink="/home" class="logo d-none d-lg-block">
-      <img src="./assets/reelVERSE.svg" alt="" class="navbar-icon">
-    </a>
-  </div>
-</nav> -->
-
-
 
 <nav class="navbar navbar-dark py-3 with-padding"
     [ngClass]="{ 'navbar-scrolled': isScrolled }">
@@ -117,27 +81,22 @@
       <i class="fa fa-search m-0 p-0"></i>
     </button>
   </div>
-
-  <a routerLink="/home" class="logo">
-    <img src="./assets/reelVERSE.svg" alt="" class="navbar-icon">
-  </a>
-
+  <div class="logo py-3">
+    <a routerLink="/home" class="">
+      <img src="./assets/reelVERSE.svg" alt="" class="navbar-icon">
+    </a>
+  </div>
+ 
+   
+  
+<div class="position-absolute top-100 start-50 translate-middle my-4"
+    *ngIf="sectionTitle">
+  <p class="fw-bold fs-4"
+    [ngClass]="{ 'animate__animated animate__fadeOutUp': isScrolled }">
+    {{ sectionTitle }}
+  </p>
+</div>
+  
   
 
 </nav> 
-<!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid position-relative">
-    <a class="navbar-brand position-absolute top-50 start-50 translate-middle" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Features</a>
-        <a class="nav-link" href="#">Pricing</a>
-        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-      </div>
-    </div>
-  </div>
-</nav> -->
