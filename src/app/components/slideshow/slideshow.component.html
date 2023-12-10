@@ -18,12 +18,14 @@
                     </p>
                 </div>
                 <div class="buttons-container">
-                    <a href="" class="buttons-container__button-play rounded-circle">
+                    <p href="" class="buttons-container__button-play rounded-circle" 
+                        (click)="onRedirectToDetailPage( value )">
                         <i class="fa-solid fa-play"></i>
-                    </a>
-                    <a class="buttons-container__button-more-info rounded-1 fw-semibold">
+                    </p>
+                    <p class="buttons-container__button-more-info rounded-1 fw-semibold"
+                        (click)="onRedirectToDetailPage( value )">
                         Más info
-                    </a>
+                    </p>
                 </div>
             </div>
         </div>

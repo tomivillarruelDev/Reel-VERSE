@@ -1,4 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import Swiper from 'swiper';
@@ -21,7 +22,8 @@ export class SlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private swiper!: Swiper;
 
-  constructor( private cdRef: ChangeDetectorRef ) {}
+  constructor( private cdRef: ChangeDetectorRef,
+               private router: Router ) {}
   
 
   ngOnInit(): void {
@@ -64,6 +66,17 @@ export class SlideshowComponent implements OnInit, AfterViewInit, OnDestroy {
   private checkScreenSize(): void {
     this.isLargeScreen = window.innerWidth > 600;
     this.cdRef.detectChanges();
+  }
+
+  onRedirectToDetailPage( object: Result ){
+    if ( object ) {
+      if (object.title) {
+        this.router.navigate([ '/movie', object.id ]);
+
+      } else if (object.name) {
+        this.router.navigate([ '/serie', object.id ]);
+      }
+    }
   }
   
 
