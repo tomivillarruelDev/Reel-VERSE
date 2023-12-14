@@ -98,20 +98,6 @@ export class MoviesService {
     return resp;
   }
 
-  public async getPeople(): Promise<PersonResponse> {
-    const resp = await firstValueFrom( this.http.get<PersonResponse>(`${ this.url }person/popular?`,{
-      params: this.params
-    }));
-    return resp;
-  }
-
-  public async getPerson( id: string ): Promise<Person> {
-    const resp = await firstValueFrom( this.http.get<Person>(`${ this.url }person/${ id }?`,{
-      params: this.params
-    }));
-    return resp;
-  }
-
   public async getMovieGenres(): Promise<GenreResponse> {
     const resp = await firstValueFrom( this.http.get<GenreResponse>(`${ this.url }genre/movie/list` ,{
       params: this.params
