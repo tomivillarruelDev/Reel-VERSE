@@ -20,7 +20,7 @@ export class BackdropGridComponent {
   }
   
   isEpisode(value: Result | Episode): value is Episode {
-    return (value as Episode).still_path !== undefined;
+    return (value as Episode).still_path !== undefined; 
   }
 
   onRedirectToDetailPage( object: Result ){

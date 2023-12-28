@@ -17,17 +17,17 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public topRatedSeries: Result[] = [];
 
-  public genres: Genre[] = []; 
+  public genres: Genre[] = [];
 
   public search: boolean = false;
-  
-  public trendingSeries: Result[] = [];  
 
-  public newEpisodes: Result[] = []; 
+  public trendingSeries: Result[] = [];
+
+  public newEpisodes: Result[] = [];
 
   public discoverSeries: Result[] = [];
 
-  public actionSeries: Result[] = []; 
+  public actionSeries: Result[] = [];
 
   public latamSeries: Result[] = [];
 
@@ -169,12 +169,12 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   async getTopRatedSeries(): Promise<void> {
     const resp = await this.seriesService.getTopRatedSeries();
     this.topRatedSeries = resp.results;
-  } 
+  }
 
   async getGenres(): Promise<void> {
     const resp = await this.seriesService.getSerieGenres();
     this.genres = resp.genres;
-  } 
+  }
 
   public onGenreSelected(results: Result[]): void {
     this.search = true;
@@ -184,17 +184,17 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   async getTrendingSeries(): Promise<void> {
     const resp = await this.seriesService.getTrendingSeries();
     this.trendingSeries = resp.results;
-  } 
+  }
 
   async getNewEpisodes(): Promise<void> {
     const resp = await this.seriesService.getSeriesFromNYearsAgo(2);
     this.newEpisodes = resp.results;
-  } 
-  
+  }
+
   async getDiscoverSeries(): Promise<void> {
     const resp = await this.seriesService.getSeriesFromNYearsAgo(1);
     this.discoverSeries = resp.results;
-  } 
+  }
 
   async getActionSeries(): Promise<void> {
     const resp = await this.seriesService.getSeriesByGenre(10759);
@@ -204,27 +204,27 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   async getFamilySeries(): Promise<void> {
     const resp = await this.seriesService.getSeriesByGenre(10751);
     this.familySeries = resp.results;
-  } 
+  }
 
   async getLatamSeries(): Promise<void> {
     const resp = await this.seriesService.getSeriesByRegion('ARG');
     this.latamSeries = resp.results;
-  } 
+  }
 
   async getDramaSeries(): Promise<void> {
     const resp = await this.seriesService.getSeriesByGenre(18);
     this.dramaSeries = resp.results;
-  } 
+  }
 
   async getSciFiAndFantasySeries(): Promise<void> {
     const resp = await this.seriesService.getSeriesByGenre(10765);
     this.sciFiAndFantasySeries = resp.results;
-  } 
+  }
 
   async getWarAndPoliticsSeries(): Promise<void> {
     const resp = await this.seriesService.getSeriesByGenre(10768);
     this.warAndPoliticsSeries = resp.results;
-  } 
+  }
 
 }
 

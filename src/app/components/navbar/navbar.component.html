@@ -7,7 +7,7 @@
     </button>
     <div class="offcanvas offcanvas-navbar offcanvas-start p-0 m-0" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-body">
-        
+
         <ul class="navbar-nav flex-grow-1 ps-5">
           <li class="py-3">
             <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -41,28 +41,28 @@
     <a routerLink="/series" class="d-none d-lg-block">
       Series
     </a>
-    
-    <button class="btn btn-link search ms-auto" 
+
+    <button class="btn btn-link search ms-auto"
     (click)="goToSearch()">
       <i class="fa fa-search m-0 p-0"></i>
     </button>
   </div>
   <div class="logo py-3">
-    <a routerLink="/home" class="">
+    <a routerLink="/home">
       <img src="./assets/reelVERSE.svg" alt="" class="navbar-icon">
     </a>
   </div>
- 
-   
-  
+
+
+
 <div class="position-absolute top-100 start-50 translate-middle my-4"
     *ngIf="sectionTitle">
-  <p class="fw-bold fs-4"
+  <p class="fw-bold fs-4" id="sectionTitle"
     [ngClass]="{ 'animate__animated animate__fadeOutUp': isScrolled }">
     {{ sectionTitle }}
   </p>
 </div>
-  
-  
 
-</nav> 
+
+
+</nav>

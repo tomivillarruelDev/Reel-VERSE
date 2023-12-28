@@ -20,7 +20,7 @@ nav{
         text-decoration: none;
         transition: all 0.3s ease-in-out;
         color: var(--gray);
-    
+
         &:hover {
             color: white;
         }
@@ -30,12 +30,12 @@ nav{
         font-size: 1.2rem;
         color: var(--gray);
         transition: color 0.3s ease-in-out;
-    
+
         &:hover {
             color: white;
         }
     }
-} 
+}
 
 .navbar-toggler .navbar-toggler-icon {
     border: none;
@@ -43,10 +43,11 @@ nav{
   }
 
 .logo{
-    position: absolute; 
-    left: 50%; 
+    position: absolute;
+    left: 50%;
     top:0;
     transform: translateX(-50%);
+    z-index: 10;
 
     .navbar-icon{
         font-size: 1.2rem;
@@ -56,7 +57,7 @@ nav{
         &:hover {
             color: white;
         }
-        
+
     }
 }
 
@@ -64,7 +65,7 @@ nav{
 .offcanvas-navbar {
     background-color: var(--dark-gray);
     width: 25%;
-} 
+}
 
 @media (max-width: 992px) {
     .offcanvas-navbar {
