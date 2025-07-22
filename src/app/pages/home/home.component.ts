@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Person } from 'src/app/interfaces/person.interface';
@@ -11,37 +18,42 @@ import { SeriesService } from 'src/app/services/series.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('recommendedElement', { read: ElementRef })
+  recommendedElement!: ElementRef;
 
-  @ViewChild('recommendedElement', {read: ElementRef}) recommendedElement!: ElementRef;
+  @ViewChild('popularElement', { read: ElementRef })
+  popularElement!: ElementRef;
 
-  @ViewChild('popularElement', {read: ElementRef}) popularElement!: ElementRef;
+  @ViewChild('seriesElement', { read: ElementRef }) seriesElement!: ElementRef;
 
-  @ViewChild('seriesElement', {read: ElementRef}) seriesElement!: ElementRef;
+  @ViewChild('topElement', { read: ElementRef }) topElement!: ElementRef;
 
-  @ViewChild('topElement', {read: ElementRef}) topElement!: ElementRef;
+  @ViewChild('justAddedElement', { read: ElementRef })
+  justAddedElement!: ElementRef;
 
-  @ViewChild('justAddedElement', {read: ElementRef}) justAddedElement!: ElementRef;
+  @ViewChild('trendingElement', { read: ElementRef })
+  trendingElement!: ElementRef;
 
-  @ViewChild('trendingElement', {read: ElementRef}) trendingElement!: ElementRef;
+  @ViewChild('upComingElement', { read: ElementRef })
+  upComingElement!: ElementRef;
 
-  @ViewChild('upComingElement', {read: ElementRef}) upComingElement!: ElementRef;
+  @ViewChild('kidsElement', { read: ElementRef }) kidsElement!: ElementRef;
 
-  @ViewChild('kidsElement', {read: ElementRef}) kidsElement!: ElementRef;
+  @ViewChild('heroesElement', { read: ElementRef }) heroesElement!: ElementRef;
 
-  @ViewChild('heroesElement', {read: ElementRef}) heroesElement!: ElementRef;
+  @ViewChild('sciFiAndFantasyElement', { read: ElementRef })
+  sciFiAndFantasyElement!: ElementRef;
 
-  @ViewChild('sciFiAndFantasyElement', {read: ElementRef}) sciFiAndFantasyElement!: ElementRef;
+  @ViewChild('actionElement', { read: ElementRef }) actionElement!: ElementRef;
 
-  @ViewChild('actionElement', {read: ElementRef}) actionElement!: ElementRef;
+  @ViewChild('comedyElement', { read: ElementRef }) comedyElement!: ElementRef;
 
-  @ViewChild('comedyElement', {read: ElementRef}) comedyElement!: ElementRef;
+  @ViewChild('horrorElement', { read: ElementRef }) horrorElement!: ElementRef;
 
-  @ViewChild('horrorElement', {read: ElementRef}) horrorElement!: ElementRef;
-
-  @ViewChild('crimeElement', {read: ElementRef}) crimeElement!: ElementRef;
+  @ViewChild('crimeElement', { read: ElementRef }) crimeElement!: ElementRef;
 
   public playingNowMovies: Result[] = [];
 
@@ -75,148 +87,188 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public people: Person[] = [];
 
-  constructor( private moviesService: MoviesService,
-               private seriesService: SeriesService,
-               private loadingService: LoadingService,
-               private titleService: Title ) {}
+  constructor(
+    private moviesService: MoviesService,
+    private seriesService: SeriesService,
+    private loadingService: LoadingService,
+    private titleService: Title
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    try{
-      this.titleService.setTitle('Reel VERSE');
-      const resp = await this.getPlayingNowMovies();
-        // this.getRecommended('953'), 
+    try {
+      this.titleService.setTitle('ReelVERSE');
+      await this.getPlayingNowMovies();
     } catch (error) {
       console.error(error);
     } finally {
       this.loadingService.setLoading(false);
     }
-    
   }
 
   ngAfterViewInit(): void {
-    const recommendedMoviesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.recommendedMovies.length === 0){
-        this.getRecommended('953');
+    const recommendedMoviesObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && this.recommendedMovies.length === 0) {
+        const movieId = this.getRotatingMovieId();
+        this.getRecommended(movieId);
       }
     });
-    recommendedMoviesObserver.observe( this.recommendedElement.nativeElement );
-    
-    const popularMoviesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.popularMovies.length === 0){
-        this.getPopularMovies();
+    recommendedMoviesObserver.observe(this.recommendedElement.nativeElement);
+
+    const popularMoviesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.popularMovies.length === 0) {
+          this.getPopularMovies();
+        }
+      },
+      {
+        rootMargin: '0px 0px',
       }
-    }, {
-      rootMargin: '0px 0px',
-    }
     );
-    popularMoviesObserver.observe( this.popularElement.nativeElement );
+    popularMoviesObserver.observe(this.popularElement.nativeElement);
 
-    const seriesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.series.length === 0){
-        this.getSeries();
+    const seriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.series.length === 0) {
+          this.getSeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    seriesObserver.observe( this.seriesElement.nativeElement );
+    );
+    seriesObserver.observe(this.seriesElement.nativeElement);
 
-    const topMoviesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.topMovies.length === 0){
-        this.getTopRatedMovies();
+    const topMoviesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.topMovies.length === 0) {
+          this.getTopRatedMovies();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    topMoviesObserver.observe( this.topElement.nativeElement );
+    );
+    topMoviesObserver.observe(this.topElement.nativeElement);
 
-    const justAddedObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.justAdded.length === 0){
-        this.getJustAdded();
+    const justAddedObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.justAdded.length === 0) {
+          this.getJustAdded();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    justAddedObserver.observe( this.justAddedElement.nativeElement );
+    );
+    justAddedObserver.observe(this.justAddedElement.nativeElement);
 
-    const trendingAllObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.trendingAll.length === 0){
-        this.getTrendingAll();
+    const trendingAllObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.trendingAll.length === 0) {
+          this.getTrendingAll();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    trendingAllObserver.observe( this.trendingElement.nativeElement );
-    
-    const upComingMoviesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.upComingMovies.length === 0){
-        this.getUpComingMovies();
-      }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    upComingMoviesObserver.observe( this.upComingElement.nativeElement );
+    );
+    trendingAllObserver.observe(this.trendingElement.nativeElement);
 
-    const kidsSeriesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.kidsSeries.length === 0){
+    const upComingMoviesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.upComingMovies.length === 0) {
+          this.getUpComingMovies();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
+      }
+    );
+    upComingMoviesObserver.observe(this.upComingElement.nativeElement);
+
+    const kidsSeriesObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && this.kidsSeries.length === 0) {
         this.getKidsSeries();
       }
     });
-    kidsSeriesObserver.observe( this.kidsElement.nativeElement );
+    kidsSeriesObserver.observe(this.kidsElement.nativeElement);
 
-    const heroesMoviesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.heroesMovies.length === 0){
-        this.getHeroesMovies();
+    const heroesMoviesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.heroesMovies.length === 0) {
+          this.getHeroesMovies();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    heroesMoviesObserver.observe( this.heroesElement.nativeElement );
+    );
+    heroesMoviesObserver.observe(this.heroesElement.nativeElement);
 
-    const sciFiAndFantasySeriesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.sciFiAndFantasySeries.length === 0){
-        this.getSciFiAndFantasySeries();
+    const sciFiAndFantasySeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          this.sciFiAndFantasySeries.length === 0
+        ) {
+          this.getSciFiAndFantasySeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    sciFiAndFantasySeriesObserver.observe( this.sciFiAndFantasyElement.nativeElement );
+    );
+    sciFiAndFantasySeriesObserver.observe(
+      this.sciFiAndFantasyElement.nativeElement
+    );
 
-    const actionMoviesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.actionMovies.length === 0){
-        this.getActionMovies();
+    const actionMoviesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.actionMovies.length === 0) {
+          this.getActionMovies();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    actionMoviesObserver.observe( this.actionElement.nativeElement );
+    );
+    actionMoviesObserver.observe(this.actionElement.nativeElement);
 
-    const comedySeriesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.comedySeries.length === 0){
-        this.getComedySeries();
+    const comedySeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.comedySeries.length === 0) {
+          this.getComedySeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    comedySeriesObserver.observe( this.comedyElement.nativeElement );
+    );
+    comedySeriesObserver.observe(this.comedyElement.nativeElement);
 
-    const horrorMoviesObserver= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.horrorMovies.length === 0){
-        this.getHorrorMovies();
+    const horrorMoviesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.horrorMovies.length === 0) {
+          this.getHorrorMovies();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    horrorMoviesObserver.observe( this.horrorElement.nativeElement );
+    );
+    horrorMoviesObserver.observe(this.horrorElement.nativeElement);
 
-    const crimeSeries= new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.crimeSeries.length === 0){
-        this.getCrimeSeries();
+    const crimeSeries = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.crimeSeries.length === 0) {
+          this.getCrimeSeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    crimeSeries.observe( this.crimeElement.nativeElement );
-  
+    );
+    crimeSeries.observe(this.crimeElement.nativeElement);
   }
 
   ngOnDestroy(): void {
@@ -228,8 +280,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.playingNowMovies = resp.results;
   }
 
-  private async getRecommended( id: string ): Promise<void> {
-    const resp = await this.moviesService.getRecommendedMovies( id );
+  private async getRecommended(id: string): Promise<void> {
+    const resp = await this.moviesService.getRecommendedMovies(id);
     this.recommendedMovies = resp.results;
   }
 
@@ -297,5 +349,30 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const resp = await this.seriesService.getSeriesByGenre(80, 1);
     this.crimeSeries = resp.results;
   }
-  
+
+  private getRotatingMovieId(): string {
+    // Lista de IDs de películas populares para rotar
+    const movieIds = [
+      '1061474',
+      '1087192',
+      '575265',
+      '1234821',
+      '950387',
+      '1232546',
+      '496243',
+    ];
+
+    // Calcula el índice basado en intervalos de 2 meses
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth(); // 0-11
+
+    // Calcula el número total de períodos de 2 meses desde una fecha base
+    const baseYear = 2025; // Año base para calcular
+    const totalMonths = (year - baseYear) * 12 + month;
+    const intervalIndex = Math.floor(totalMonths / 2);
+    const rotationIndex = intervalIndex % movieIds.length;
+
+    return movieIds[rotationIndex];
+  }
 }

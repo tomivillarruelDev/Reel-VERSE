@@ -9,7 +9,7 @@ import { NavigationStart, Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'moviesApp';
+  title = 'reelVERSE';
 
   isLoading: Observable<boolean>;
 

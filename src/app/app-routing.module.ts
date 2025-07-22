@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { MovieComponent } from './pages/movie/movie.component';
+import { MovieComponent } from './pages/movie-detail/movie.component';
 import { SearchMultiComponent } from './pages/search-multi/search-multi.component';
 import { SeriesComponent } from './pages/series/series.component';
 import { MoviesComponent } from './pages/movies/movies.component';
@@ -10,42 +10,42 @@ import { SerieComponent } from './pages/serie/serie.component';
 const routes: Routes = [
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'movies',
-    component: MoviesComponent
+    component: MoviesComponent,
   },
   {
     path: 'movie/:id',
-    component: MovieComponent
+    component: MovieComponent,
   },
-  
+
   {
     path: 'series',
-    component: SeriesComponent
+    component: SeriesComponent,
   },
   {
     path: 'serie/:id',
-    component: SerieComponent
+    component: SerieComponent,
   },
   {
     path: 'search',
-    component: SearchMultiComponent
+    component: SearchMultiComponent,
   },
   {
     path: 'search/:text',
-    component: SearchMultiComponent
+    component: SearchMultiComponent,
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'home'
-  }
+    redirectTo: 'home',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,49 +1,97 @@
-
-.swiper-wrapper{
+.swiper-wrapper {
   padding: 0;
+}
+
+.swiper-large-screen {
+  min-height: 100vh;
 }
 
 .swiper-slide {
   background-size: cover;
-  height: 86vh;
+  height: 100vh;
+}
 
+/* Contenedor para título/logo, centrar y limitar ancho */
+.slide-content__title {
+  height: 120px;
+  max-width: 100%;
+  width: auto;
+  display: flex;
+  align-items: end;
+  justify-content: start;
+}
+
+/* Ajuste de la imagen de logo dentro del contenedor */
+.slide-content__title img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .swiper-slide::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: inset 100px 0px 120px 140px rgba(0, 0, 0, 0.7); 
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 100%);
-}  
+  box-shadow: inset 100px 0px 120px 140px rgba(0, 0, 0, 0.7);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
 
-.movie-description {
+.slide-content {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 1rem;
+  gap: 0.8rem;
   width: 29rem;
   height: 100%;
   position: relative;
   padding-bottom: 4rem;
   z-index: 2;
   cursor: default;
-  
 }
 
-.buttons-container{
+.slide-content__info-text {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.slide-content__info__description {
+  width: 21rem;
+}
+
+/* Truncar descripción a máximo 3 líneas */
+.slide-content__info__description p {
+  display: -webkit-box;
+  text-align: left;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  /* Propiedad estándar para compatibilidad */
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Altura mínima para 3 líneas */
+  min-height: calc(1.2em * 3);
+  margin: 0;
+}
+
+.buttons-container {
   display: flex;
   align-items: center;
   gap: 1rem;
   width: 100%;
   z-index: 10;
-
 }
 
-.buttons-container__button-play{
+.buttons-container__button-play {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,68 +99,89 @@
   height: 3rem;
   padding: 1.6rem;
   border: 2px solid white;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.buttons-container__button-more-info{
+.buttons-container__button-more-info {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.6rem 1.8rem;
+  padding: 0.6rem 1rem;
   background-color: var(--light-gray);
   border: 2px solid var(--light-gray);
-  transition: all 0.1s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.buttons-container__button-play i, .buttons-container__button-more-info{
+.buttons-container__button-play i,
+.buttons-container__button-more-info {
   font-size: 1.1rem;
   text-transform: uppercase;
 }
 
-.buttons-container__button-play:hover, .buttons-container__button-more-info:hover{
+.buttons-container__button-play:hover,
+.buttons-container__button-more-info:hover {
   cursor: pointer;
   background-color: rgba(15, 15, 15, 0.98);
   border: 2px solid var(--purple);
 }
 
-
-
-
-
- 
 @media (max-width: 600px) {
-
-  .buttons-container{
+  .buttons-container {
     display: none;
   }
-  
   .swiper-slide::after {
-    box-shadow: inset 0 -120px 100px rgba(0, 0, 0, 1); 
+    /* Sombreado superior e inferior en mobile */
+    box-shadow: inset 0 100px 80px rgba(0, 0, 0, 0.7),
+      inset 0 -200px 100px rgba(0, 0, 0, 1);
     background: none;
   }
-  .movie-description {
+  .slide-content {
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     text-align: center;
     padding-left: 0rem;
     width: 100%;
-    padding-bottom: 2.2rem;
+    padding-bottom: 3rem;
   }
 
-  .movie-description__title{
-    font-size: 1.8rem;
-    width: 12rem;
-
+  .slide-content__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
   }
 
-  .movie-description__overview{
-    font-size: 1.2rem;
-    width: 24rem;
-
+  .slide-content__info__description {
+    width: 18rem;
   }
 
-  
+  .slide-content__info__description p {
+    font-size: 0.7rem;
+    display: -webkit-box;
+    text-align: center;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    /* Propiedad estándar para compatibilidad */
+    line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Altura mínima para 3 líneas */
+    min-height: calc(1.2em * 3);
+  }
 
+  .slide-content__title {
+    font-size: 14rem;
+    align-items: end;
+    height: 120px;
+    max-width: 50%;
+    width: auto;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+  }
 
+  .swiper-button-container {
+    display: none;
+  }
 }

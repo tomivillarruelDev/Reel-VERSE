@@ -1,47 +1,88 @@
-<div class="swiper swiper-large-screen no-padding" >
-    <div class="swiper-wrapper animate__animated  animate__fadeInRightBig">
-
-        <div class="swiper-slide large-screen"
-        *ngFor="let value of data.slice(0, 7)"
-        [ngStyle]="{
-        'background-image': 'url(https://image.tmdb.org/t/p/original' + (isLargeScreen ? value.backdrop_path : value.poster_path) + ')'
-        }">
-            <div class="movie-description with-padding">
-                <div class="movie-description__title">
-                    <p class="display-6 fw-semibold my-0">
-                        {{ (value.title ? value.title : value.name) | cut }}
-                    </p>
-                </div>
-                <div class="movie-description__overview">
-                    <p class="small transparent-white-75">
-                        {{ value.overview | cut:16 }}
-                    </p>
-                </div>
-                <div class="buttons-container">
-                    <p href="" class="buttons-container__button-play rounded-circle" 
-                        (click)="onRedirectToDetailPage( value )">
-                        <i class="fa-solid fa-play"></i>
-                    </p>
-                    <p class="buttons-container__button-more-info rounded-1 fw-semibold"
-                       (click)="onRedirectToDetailPage( value )">
-                        Más info
-                    </p>
-                </div>
-            </div>
+<div class="swiper swiper-large-screen no-padding">
+  <div
+    class="swiper-wrapper animate__animated animate__fadeInRightBig"
+    *ngIf="slideDataLoaded"
+  >
+    <div
+      class="swiper-slide large-screen"
+      *ngFor="let value of data"
+      [ngStyle]="{
+        'background-image':
+          'url(https://image.tmdb.org/t/p/original' +
+          (isLargeScreen ? value.backdrop_path : value.poster_path) +
+          ')'
+      }"
+    >
+      <div class="slide-content with-padding">
+        <div class="slide-content__title">
+          <ng-container *ngIf="value.logo_path; else showTitle">
+            <img
+              [src]="'https://image.tmdb.org/t/p/original' + value.logo_path"
+              [alt]="value.title"
+            />
+          </ng-container>
+          <ng-template #showTitle>
+            <p class="display-6 fw-semibold my-0">
+              {{ (value.title ? value.title : value.name) | cut }}
+            </p>
+          </ng-template>
         </div>
-        
-    </div>
 
-    
-    <div class="swiper-pagination"></div>
-  
-    <!-- If we need navigation buttons -->
+        <div class="slide-content__info">
+          <p class="slide-content__info-text text-xs text-transparent-white-80">
+            <span>
+              {{ value.release_date | date : "yyyy" }}
+            </span>
+            <span>
+              {{ value.genre_name }}
+            </span>
+          </p>
+          <div class="slide-content__info__description">
+            <p class="text-white text-sm">
+              {{ value.overview | cut : 22 }}
+            </p>
+          </div>
+        </div>
+        <div class="buttons-container">
+          <span
+            class="buttons-container__button-play rounded-circle"
+            (click)="onRedirectToDetailPage(value)"
+          >
+            <i class="fa-solid fa-play"></i>
+          </span>
+          <span
+            class="buttons-container__button-more-info rounded-1"
+            (click)="onRedirectToDetailPage(value)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              style="width: 1.2rem; height: 1.2rem"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="swiper-pagination" *ngIf="slideDataLoaded"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-container" *ngIf="slideDataLoaded">
     <div class="swiper-button-prev-container">
-        <div class="swiper-button-prev"></div>
+      <div class="swiper-button-prev"></div>
     </div>
     <div class="swiper-button-next-container">
-        <div class="swiper-button-next"></div>
+      <div class="swiper-button-next"></div>
     </div>
-  
-
+  </div>
 </div>

@@ -7,10 +7,8 @@ import { SearchMultiComponent } from './search-multi/search-multi.component';
 import { SeriesComponent } from './series/series.component';
 import { MoviesComponent } from './movies/movies.component';
 import { SerieComponent } from './serie/serie.component';
-import { MovieComponent } from './movie/movie.component';
+import { MovieComponent } from './movie-detail/movie.component';
 import { PipesModule } from '../pipes/pipes.module';
-
-
 
 @NgModule({
   declarations: [
@@ -21,11 +19,6 @@ import { PipesModule } from '../pipes/pipes.module';
     SerieComponent,
     MovieComponent,
   ],
-  imports: [
-    CommonModule,
-    ComponentsModule,
-    ReactiveFormsModule,
-    PipesModule
-  ]
+  imports: [CommonModule, ComponentsModule, ReactiveFormsModule, PipesModule],
 })
-export class PagesModule { }
+export class PagesModule {}
