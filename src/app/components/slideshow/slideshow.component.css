@@ -28,7 +28,7 @@
 }
 
 .swiper-slide::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -118,7 +118,7 @@
 .buttons-container__button-more-info:hover {
   cursor: pointer;
   background-color: rgba(15, 15, 15, 0.98);
-  border: 2px solid var(--purple);
+  transform: scale(1.05);
 }
 
 @media (max-width: 600px) {
@@ -127,11 +127,11 @@
   }
 
   .swiper-slide::after {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.2) 40%,
-    rgba(10, 10, 10, 1) 86%
-  );
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.2) 40%,
+      rgba(10, 10, 10, 1) 86%
+    );
   }
   .slide-content {
     flex-direction: column;

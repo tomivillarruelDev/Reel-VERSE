@@ -9,7 +9,7 @@ export class PosterPipe implements PipeTransform {
     if ( poster ) {
       return `https://image.tmdb.org/t/p/original${ poster }`;
     } else {
-      return './assets/no-image.jpg';
+      return './assets/no-image.png';
     }
   }
 
