@@ -168,8 +168,6 @@ export class SlideshowComponent
     this.slideDataLoaded = true;
     this.cdRef.detectChanges();
 
-    console.log('Logos y géneros cargados:', this.data);
-
     // Iniciar Swiper ahora que el DOM está listo
     setTimeout(() => {
       this.initSwiper();

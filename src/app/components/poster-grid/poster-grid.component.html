@@ -1,22 +1,22 @@
-
-<div class="container-fluid">   
-    <div class="row">
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4 animate__animated  animate__fadeIn" 
-            *ngFor=" let value of data ">
-            <div class="poster" >
-                <div class="overlay"  
-                    (click)="onRedirectToDetailPage( value )">
-                </div>
-                <img [src]=" value.poster_path | poster" class="swiper-img animate__animated animate__fadeIn animate__delay-2s" alt="{{ value.title }}" >
-                <a class="play-button rounded-circle">
-                    <i class="fa-solid fa-play"></i>
-                </a>
-            </div>
-        </div>
+<div class="w-full px-4">
+  <div
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+  >
+    <div
+      class="mb-4 animate__animated animate__fadeIn"
+      *ngFor="let value of data"
+    >
+      <div class="poster">
+        <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
+        <img
+          [src]="value.poster_path | poster"
+          class="swiper-img animate__animated animate__fadeIn animate__delay-2s"
+          alt="{{ value.title }}"
+        />
+        <a class="play-button rounded-full">
+          <i class="fa-solid fa-play"></i>
+        </a>
+      </div>
     </div>
+  </div>
 </div>
-
-
-
-
-

@@ -1,68 +1,57 @@
-<nav class="navbar navbar-dark py-3 with-padding"
-    [ngClass]="{ 'navbar-scrolled': isScrolled }">
-  <div class="container-fluid d-flex justify-content-start p-0">
-
-    <button class="navbar-toggler fs-6 p-0 me-lg-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="offcanvas offcanvas-navbar offcanvas-start p-0 m-0" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-      <div class="offcanvas-body">
-
-        <ul class="navbar-nav flex-grow-1 ps-5">
-          <li class="py-3">
-            <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </li>
-          <li class="py-2">
-            <a routerLink="/home" class="fs-5 fw-normal">
-              Inicio
-            </a>
-          </li>
-          <li class="py-2">
-            <a routerLink="/movies" class="fs-5 fw-normal">
-              Películas
-            </a>
-          </li>
-          <li class="py-2">
-            <a routerLink="/series" class="fs-5 fw-normal">
-              Series
-            </a>
-          </li>
-          <li class="py-2">
-            <a routerLink="/search" class="fs-5 fw-normal">
-              Buscar
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <a routerLink="/movies" class="d-none d-lg-block me-lg-3">
-      Películas
-    </a>
-    <a routerLink="/series" class="d-none d-lg-block">
-      Series
-    </a>
-
-    <button class="btn btn-link search ms-auto"
-    (click)="goToSearch()">
-      <i class="fa fa-search m-0 p-0"></i>
-    </button>
-  </div>
-  <div class="logo py-3">
+<nav
+  class="fixed top-0 left-0 right-0 z-10 transition-all duration-300 text-white"
+  [ngClass]="{
+    'bg-gradient-to-b from-black/50 to-transparent': !isScrolled,
+    'navbar-scrolled': isScrolled
+  }"
+>
+  <div class="flex items-center justify-between px-4 py-6 relative">
+    <!-- Logo -->
     <a routerLink="/home">
-      <img src="./assets/reelVERSE.svg" alt="" class="navbar-icon">
+      <img
+        src="./assets/reelVERSE.svg"
+        alt="Logo"
+        class="h-6 md:h-7 transition-all duration-300"
+      />
     </a>
+
+    <!-- Menú centrado -->
+    <ul
+      class="flex gap-6 text-sm md:text-base font-semibold absolute left-1/2 -translate-x-1/2"
+    >
+      <li>
+        <a
+          routerLink="/home"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="hover:text-white text-gray-300 transition"
+          >Inicio</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/movies"
+          routerLinkActive="active-link"
+          class="hover:text-white text-gray-300 transition"
+          >Películas</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/series"
+          routerLinkActive="active-link"
+          class="hover:text-white text-gray-300 transition"
+          >Series</a
+        >
+      </li>
+    </ul>
+
+    <!-- Búsqueda -->
+    <button
+      (click)="goToSearch()"
+      class="text-gray-400 hover:text-white transition"
+    >
+      <i class="fa fa-search text-lg"></i>
+    </button>
   </div>
-
-
-
-<div class="position-absolute top-100 start-50 translate-middle my-4"
-    *ngIf="sectionTitle">
-  <p class="fw-bold fs-4" id="sectionTitle"
-    [ngClass]="{ 'animate__animated animate__fadeOutUp': isScrolled }">
-    {{ sectionTitle }}
-  </p>
-</div>
-
-
-
 </nav>
