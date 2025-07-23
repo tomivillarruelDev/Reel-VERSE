@@ -14,6 +14,7 @@
               [src]="value.backdrop_path | poster"
               class="grid-img animate__animated animate__fadeIn animate__delay-2s"
               alt="{{ value.title ? value.title : value.name }}"
+              loading="lazy"
             />
           </div>
         </ng-container>
@@ -25,6 +26,7 @@
               [src]="value.still_path | poster"
               class="grid-img animate__animated animate__fadeIn animate__delay-2s"
               alt="{{ value.name }}"
+              loading="lazy"
             />
           </div>
         </ng-container>

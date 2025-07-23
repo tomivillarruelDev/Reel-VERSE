@@ -1,19 +1,21 @@
 <div class="container-fluid p-0">
-
-    <div class="swiper swiper-large-poster">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide movie-cover animate__animated  animate__fadeInRightBig" *ngFor=" let value of data ">
-                <div class="overlay"
-                    (click)="onRedirectToDetailPage( value )">
-                </div>
-                <img [src]=" value.poster_path | poster" class="swiper-img animate__animated animate__fadeIn animate__delay-2s" alt="{{ value.title }}">
-                <a class="play-button rounded-full">
-                    <i class="fa-solid fa-play"></i>
-                </a>
-            </div>
-        </div>
+  <div class="swiper swiper-large-poster">
+    <div class="swiper-wrapper">
+      <div
+        class="swiper-slide movie-cover animate__animated animate__fadeInRightBig"
+        *ngFor="let value of data"
+      >
+        <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
+        <img
+          [src]="value.poster_path | poster"
+          class="swiper-img animate__animated animate__fadeIn animate__delay-2s"
+          alt="{{ value.title }}"
+          loading="lazy"
+        />
+        <a class="play-button rounded-full">
+          <i class="fa-solid fa-play"></i>
+        </a>
+      </div>
     </div>
+  </div>
 </div>
-
-
-
