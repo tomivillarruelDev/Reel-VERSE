@@ -1,183 +1,199 @@
-<div class="animate__animated animate__fadeIn animate__delay-1s" id="seriesPage">
+<div
+  class="animate__animated animate__fadeIn animate__delay-1s"
+  id="seriesPage"
+>
+  <div>
+    <app-slideshow [data]="topRatedSeries"></app-slideshow>
+  </div>
 
-    <div>
-        <app-slideshow 
-        [data]="topRatedSeries"></app-slideshow>
-    </div>
-    
-    <div class="container-fluid with-padding background"> 
-    
-        <div class="row">
-            <div class="col">
-                <app-genres
-                *ngIf=" genres.length > 0 "
-                [genres]="genres"
-                [type]="'serie'"
-                (genreSelected)="onGenreSelected($event)"
-                ></app-genres>
-            </div>
-        </div>
-    
-        <div *ngIf=" !search ">
-            <div class="row py-2" #trendingElement>
-            <div class="col" 
-                *ngIf=" trendingSeries.length > 0">
-                <p class="fw-bold mb-2">
-                    Lo que todos están viendo
-                </p>
-            </div>
-            <div class="col">
-                <app-poster-swiper 
-                *ngIf=" trendingSeries.length > 0"
-                [data]="trendingSeries"></app-poster-swiper>
-            </div>
-            </div>
-    
-            <div class="row pb-1 pt-3" #newElement>
-                <div class="col"
-                    *ngIf=" newEpisodes.length > 0">
-                    <p class="fw-bold mb-2">
-                        Nuevos episodios esta semana
-                    </p>
-                </div>
-                <div class="col">
-                    <app-backdrop-swiper
-                    *ngIf=" newEpisodes.length > 0"
-                    [data]="newEpisodes"></app-backdrop-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-2" #discoverElement>
-                <div class="col"
-                    *ngIf=" discoverSeries.length > 0">
-                    <p class="fw-bold my-0">
-                        Descubre algo nuevo
-                    </p>
-                    <p class="small transparent-white mb-2">
-                        Entre estas joyas ocultas puede estar tu próxima obsesión.
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper 
-                    *ngIf=" discoverSeries.length > 0"
-                    [data]="discoverSeries"></app-poster-swiper>
-                </div>
-            </div>
-            
-            <div class="row py-3" #actionElement>
-                <div class="col"
-                    *ngIf=" actionSeries.length > 0">
-                    <p class="fw-bold mb-2">
-                        Acción emocionante
-                    </p>
-                </div>
-                <div class="col"> 
-                    <app-poster-swiper
-                    *ngIf=" actionSeries.length > 0"
-                    [data]="actionSeries"
-                    ></app-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-4" *ngIf=" topRatedSeries.length > 0" #topElement>
-                <div class="col" >
-                    <app-text-poster-swiper 
-                    *ngIf=" topRatedSeries.length > 0"
-                    [data]="topRatedSeries"
-                    [topText]="'NUESTRO TOP 10'"
-                    [middleText]="'En tendencia'"
-                    [bottomText]="'Las series mas vistas en los últimos días,¡no te las pierdas!'">
-                    </app-text-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-3 " #latamElement>
-                <div class="col" 
-                    *ngIf=" latamSeries.length > 0">
-                    <p class="fw-bold my-0">
-                        Hits de Latinoamérica
-                    </p>
-                    <p class="small transparent-white mb-2">
-                        Disfruta lo mejor de nuestra región.
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper 
-                    *ngIf=" latamSeries.length > 0"
-                    [data]="latamSeries"></app-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-3 " #familyElement>
-                <div class="col" 
-                    *ngIf=" familySeries.length > 0">
-                    <p class="fw-bold mb-2">
-                        Para toda la familia
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper 
-                    *ngIf=" familySeries.length > 0"
-                    [data]="familySeries"></app-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-4" #dramaElement>
-                <div class="col" 
-                    *ngIf="dramaSeries.length > 0">
-                    <app-text-poster-swiper 
-                    *ngIf="dramaSeries.length > 0"
-                    [data]="dramaSeries"
-                    [topText]="'¡LAS SERIES DE DRAMA QUE TE HARÁN LLORAR!'"
-                    [middleText]="'¿Listo para un maratón emocional?'"
-                    [bottomText]="'¡Prepárate para las montañas rusas de emociones con estas series de drama!'">
-                    </app-text-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-3 " #sciFiAndFantasYElement>
-                <div class="col" 
-                    *ngIf="sciFiAndFantasySeries.length > 0">
-                    <p class="fw-bold my-0">
-                        Descubre lo indescubrible
-                    </p>
-                    <p class="small transparent-white mb-2">
-                        ¿Quién necesita la realidad cuando puedes explorar galaxias lejanas y reinos mágicos?
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper
-                    [data]="sciFiAndFantasySeries"></app-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-5 " #warAndPoliticsElement>
-                <div class="col" 
-                    *ngIf="warAndPoliticsSeries.length > 0">
-                    <p class="fw-bold my-0">
-                        BATALLAS Y ESTRATEGIAS
-                    </p>
-                    <p class="small transparent-white mb-2">
-                        Sumérgete en el mundo de la estrategia, el poder y los conflictos.
-                    </p>
-                </div>
-                <div class="col">
-                    <app-square-poster-swiper
-                    [data]="warAndPoliticsSeries"></app-square-poster-swiper>
-                </div>
-            </div>
-    
-        </div>
-    
-        <div class="row py-3 "
-        *ngIf=" search ">
-            <div class="col"> 
-                <app-poster-grid
-                *ngIf=" results.length > 0 "
-                [data]=" results "
-                ></app-poster-grid>
-            </div>
-        </div>
+  <div class="container-fluid with-padding background">
+    <div class="">
+      <div class="">
+        <app-genres
+          *ngIf="genres.length > 0"
+          [genres]="genres"
+          [type]="'serie'"
+          (genreSelected)="onGenreSelected($event)"
+        ></app-genres>
+      </div>
     </div>
 
+    <div *ngIf="!search">
+      <div class="py-2" #trendingElement>
+        <div class="" *ngIf="trendingSeries.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
+          >
+            Lo que todos están viendo
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="trendingSeries.length > 0"
+            [data]="trendingSeries"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="pb-1 pt-3" #newElement>
+        <div class="" *ngIf="newEpisodes.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
+          >
+            Nuevos episodios esta semana
+          </p>
+        </div>
+        <div class="">
+          <app-backdrop-swiper
+            *ngIf="newEpisodes.length > 0"
+            [data]="newEpisodes"
+          ></app-backdrop-swiper>
+        </div>
+      </div>
+
+      <div class="py-2" #discoverElement>
+        <div class="" *ngIf="discoverSeries.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0"
+          >
+            Descubre algo nuevo
+          </p>
+          <p class="text-sm text-white text-opacity-65 mb-1">
+            Entre estas joyas ocultas puede estar tu próxima obsesión.
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="discoverSeries.length > 0"
+            [data]="discoverSeries"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-3" #actionElement>
+        <div class="" *ngIf="actionSeries.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
+          >
+            Acción emocionante
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="actionSeries.length > 0"
+            [data]="actionSeries"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-4" *ngIf="topRatedSeries.length > 0" #topElement>
+        <div class="">
+          <app-text-poster-swiper
+            *ngIf="topRatedSeries.length > 0"
+            [data]="topRatedSeries"
+            [topText]="'NUESTRO TOP 10'"
+            [middleText]="'En tendencia'"
+            [bottomText]="
+              'Las series mas vistas en los últimos días,¡no te las pierdas!'
+            "
+          >
+          </app-text-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-3" #latamElement>
+        <div class="" *ngIf="latamSeries.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0"
+          >
+            Hits de Latinoamérica
+          </p>
+          <p class="text-sm text-white text-opacity-65 mb-1">
+            Disfruta lo mejor de nuestra región.
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="latamSeries.length > 0"
+            [data]="latamSeries"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-3" #familyElement>
+        <div class="" *ngIf="familySeries.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
+          >
+            Para toda la familia
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="familySeries.length > 0"
+            [data]="familySeries"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-4" #dramaElement>
+        <div class="" *ngIf="dramaSeries.length > 0">
+          <app-text-poster-swiper
+            *ngIf="dramaSeries.length > 0"
+            [data]="dramaSeries"
+            [topText]="'¡LAS SERIES DE DRAMA QUE TE HARÁN LLORAR!'"
+            [middleText]="'¿Listo para un maratón emocional?'"
+            [bottomText]="
+              '¡Prepárate para las montañas rusas de emociones con estas series de drama!'
+            "
+          >
+          </app-text-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-3" #sciFiAndFantasYElement>
+        <div class="" *ngIf="sciFiAndFantasySeries.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0"
+          >
+            Descubre lo indescubrible
+          </p>
+          <p class="text-sm text-white text-opacity-65 mb-1">
+            ¿Quién necesita la realidad cuando puedes explorar galaxias lejanas
+            y reinos mágicos?
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper [data]="sciFiAndFantasySeries"></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-5" #warAndPoliticsElement>
+        <div class="" *ngIf="warAndPoliticsSeries.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0"
+          >
+            BATALLAS Y ESTRATEGIAS
+          </p>
+          <p class="text-sm text-white text-opacity-65 mb-1">
+            Sumérgete en el mundo de la estrategia, el poder y los conflictos.
+          </p>
+        </div>
+        <div class="">
+          <app-square-poster-swiper
+            [data]="warAndPoliticsSeries"
+          ></app-square-poster-swiper>
+        </div>
+      </div>
+    </div>
+
+    <div class="py-3" *ngIf="search">
+      <div class="">
+        <app-poster-grid
+          *ngIf="results.length > 0"
+          [data]="results"
+        ></app-poster-grid>
+      </div>
+    </div>
+  </div>
 </div>

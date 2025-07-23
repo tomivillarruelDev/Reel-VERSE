@@ -1,40 +1,51 @@
 <div class="container-fluid ps-0">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-    <div class="col p-2 grid-item animate__animated  animate__fadeIn mb-3" *ngFor="let value of data">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+  >
+    <div
+      class="p-2 grid-item animate__animated animate__fadeIn mb-3"
+      *ngFor="let value of data"
+    >
       <div class="image-container">
-          <ng-container *ngIf="isResult(value)">
-            <div class="overlay"  
-                (click)="onRedirectToDetailPage( value )">
-            </div>
-            <div class="image-border">
-              <img [src]="value.backdrop_path | poster " class="grid-img animate__animated animate__fadeIn animate__delay-2s" alt="{{  (value.title ? value.title : value.name) }}">
-            </div>
-          </ng-container>
-          
-          <ng-container *ngIf="isEpisode(value)">
-            <div class="overlay"></div>
-            <div class="image-border">
-              <img [src]="value.still_path  | poster" class="grid-img animate__animated animate__fadeIn animate__delay-2s" alt="{{ value.name }}">
-            </div>
-          </ng-container>
+        <ng-container *ngIf="isResult(value)">
+          <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
+          <div class="image-border">
+            <img
+              [src]="value.backdrop_path | poster"
+              class="grid-img animate__animated animate__fadeIn animate__delay-2s"
+              alt="{{ value.title ? value.title : value.name }}"
+            />
+          </div>
+        </ng-container>
 
-          
-        
-        <a class="play-button rounded-circle">
+        <ng-container *ngIf="isEpisode(value)">
+          <div class="overlay"></div>
+          <div class="image-border">
+            <img
+              [src]="value.still_path | poster"
+              class="grid-img animate__animated animate__fadeIn animate__delay-2s"
+              alt="{{ value.name }}"
+            />
+          </div>
+        </ng-container>
+
+        <a class="play-button rounded-full">
           <i class="fa-solid fa-play"></i>
         </a>
       </div>
       <div class="title">
         <ng-container *ngIf="isResult(value)">
-          <p class="fs-6 transparent-white-75 fw-semibold m-0">
-            {{ (value.title ? value.title : value.name) | cut:5 }}
+          <p class="text-base text-white text-opacity-75 font-semibold m-0">
+            {{ (value.title ? value.title : value.name) | cut : 5 }}
           </p>
         </ng-container>
         <ng-container *ngIf="isEpisode(value)">
-          <p class="fs-6 transparent-white-75 fw-semibold m-0">
-            {{value.episode_number}}. {{  value.name | cut:5 }}
+          <p class="text-base text-white text-opacity-75 font-semibold m-0">
+            {{ value.episode_number }}. {{ value.name | cut : 5 }}
           </p>
-          <p class="small transparent-white fw-ligth m-0">{{ value.runtime | hoursMinutes }}</p>
+          <p class="text-sm text-white font-light m-0">
+            {{ value.runtime | hoursMinutes }}
+          </p>
         </ng-container>
       </div>
     </div>

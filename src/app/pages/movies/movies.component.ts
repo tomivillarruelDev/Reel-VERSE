@@ -60,7 +60,7 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     try{
-      this.titleService.setTitle(this.title + ' • Reel VERSE');
+      this.titleService.setTitle(this.title + ' • ReelVERSE');
       const [ actionMovies, genres ] = await Promise.all([
         this.getActionMovies(),
         this.getGenres()

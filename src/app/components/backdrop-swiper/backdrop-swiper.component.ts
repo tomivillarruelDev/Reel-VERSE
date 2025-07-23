@@ -8,11 +8,10 @@ import Swiper from 'swiper';
 @Component({
   selector: 'app-backdrop-swiper',
   templateUrl: './backdrop-swiper.component.html',
-  styleUrls: ['./backdrop-swiper.component.css']
+  styleUrls: ['./backdrop-swiper.component.css'],
 })
 export class BackdropSwiperComponent implements OnInit, AfterViewInit {
-
-  constructor( private router: Router) { }
+  constructor(private router: Router) {}
 
   @Input() data!: Result[];
   swiper!: Swiper;
@@ -20,17 +19,17 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    setTimeout( () => {
+    setTimeout(() => {
       this.swiper = new Swiper('.swiper-backdrop', {
         loop: false,
         freeMode: false,
-        speed: 800, 
+        speed: 800,
         breakpoints: {
           0: {
             slidesPerView: 1.5,
             spaceBetween: 10,
           },
-          440:{
+          440: {
             slidesPerView: 2,
             spaceBetween: 10,
           },
@@ -42,22 +41,19 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
             slidesPerGroup: 2,
             slidesPerView: 4,
             spaceBetween: 10,
-          }
-          
+          },
         },
       });
     }, 0);
   }
 
-  onRedirectToDetailPage( object: Result ){
-    if ( object ) {
+  onRedirectToDetailPage(object: Result) {
+    if (object) {
       if (object.title) {
-        this.router.navigate([ '/movie', object.id ]);
-
+        this.router.navigate(['/movie', object.id]);
       } else if (object.name) {
-        this.router.navigate([ '/serie', object.id ]);
+        this.router.navigate(['/serie', object.id]);
       }
     }
   }
-
 }

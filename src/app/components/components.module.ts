@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-
 import { PipesModule } from '../pipes/pipes.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SlideshowComponent } from './slideshow/slideshow.component';
@@ -16,7 +15,7 @@ import { PosterSwiperComponent } from './poster-swiper/poster-swiper.component';
 import { GenresComponent } from './genres/genres.component';
 import { BackdropGridComponent } from './backdrop-grid/backdrop-grid.component';
 import { LoadingComponent } from './loading/loading.component';
-
+import { SeeNowButtonComponent } from './see-now-button/see-now-button.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +31,7 @@ import { LoadingComponent } from './loading/loading.component';
     GenresComponent,
     BackdropGridComponent,
     LoadingComponent,
+    SeeNowButtonComponent,
   ],
   exports: [
     NavbarComponent,
@@ -46,11 +46,8 @@ import { LoadingComponent } from './loading/loading.component';
     GenresComponent,
     BackdropGridComponent,
     LoadingComponent,
+    SeeNowButtonComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    PipesModule
-  ]
+  imports: [CommonModule, RouterModule, PipesModule],
 })
-export class ComponentsModule { }
+export class ComponentsModule {}

@@ -1,57 +1,81 @@
-<div class="container-fluid background-black" >
-    
-    <div class="animate__animated  animate__fadeIn" 
-        *ngIf="serie">
-        <div class="row" >
-            <div class="image-detail animate__animated  animate__fadeIn animate__delay-1s"  
-            [ngStyle]="{'background-image': ' url(http://image.tmdb.org/t/p/original' + (isLargeScreen ? serie.backdrop_path : serie.poster_path) + ')'}">
-            </div>
-        </div>
-        <div class="row row-cols-1  with-padding">
-            <div class="col-6 col-md-4">
-                <p class="display-6">
-                    {{ serie.name | cut }}
-                </p>
-            </div>
-            <div class="col mb-3">
-                <ul class="list-unstyled d-flex flex-row">
-                    <li class="me-3 transparent-white small text-uppercase fw-medium">
-                        {{ serie.genres[0].name }}
-                    </li>
-                    <li class="me-3 transparent-white small fw-medium">
-                        {{serie.first_air_date | date: 'yyyy'}}
-                    </li>
-                    <li class="me-3 transparent-white small fw-medium">
-                        HD
-                    </li>
-                    <li class="me-3 transparent-white small fw-medium">
-                        {{serie.vote_average | number: '1.1-1'}}
-                    </li>
-                  </ul>
-            </div>
-            <div class="col-9 col-md-7 pb-2">
-                <p class="transparent-white-75 fw-medium fs-6">
-                    {{ serie.overview }}
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="row with-padding">
-        <app-backdrop-grid
-        [data]="episodes">
-        </app-backdrop-grid>
-    </div>
-    <div class="row with-padding py-5">
-        <div class="col" 
-            *ngIf=" recommendedSeries.length > 0">
-            <p class="fw-bold mb-2">
-                Más contenido como este
+<div class="container-fluid background-black">
+  <div class="animate__animated animate__fadeIn" *ngIf="serie">
+    <div>
+      <div
+        class="image-detail animate__animated animate__fadeIn animate__delay-1s flex justify-start items-end"
+        [ngStyle]="{
+          'background-image':
+            ' url(http://image.tmdb.org/t/p/original' +
+            (isLargeScreen ? serie.backdrop_path : serie.poster_path) +
+            ')'
+        }"
+      >
+        <div class="slide-content__title with-padding">
+          <ng-container *ngIf="serie.logo_path; else showTitle">
+            <img
+              [src]="'https://image.tmdb.org/t/p/original' + serie.logo_path"
+              alt="{{ serie.name }}"
+              loading="lazy"
+              class="slide-content__title__logo z-10"
+            />
+          </ng-container>
+          <ng-template #showTitle>
+            <p class="text-5xl font-semibold mb-2 z-10">
+              {{ serie.name | cut }}
             </p>
+          </ng-template>
         </div>
-        <div class="col">
-            <app-poster-swiper
-            *ngIf=" recommendedSeries.length > 0"
-            [data]="recommendedSeries"></app-poster-swiper>
-        </div>
+      </div>
     </div>
+
+    <div class="grid grid-cols-1 gap-4 max-w-2xl with-padding">
+      <div class="mb-3 flex flex-col">
+        <ul class="flex flex-row">
+          <li
+            class="me-3 text-xs text-uppercase font-normal text-white text-opacity-70"
+          >
+            {{ serie.genres[0].name }}
+          </li>
+          <li class="me-3 text-xs font-normal text-white text-opacity-70">
+            {{ serie.first_air_date | date : "yyyy" }}
+          </li>
+          <li class="me-3 text-xs font-normal text-white text-opacity-70">
+            HD
+          </li>
+          <li class="me-3 text-xs font-normal text-white text-opacity-70">
+            {{ serie.vote_average | number : "1.1-1" }}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <app-see-now-button link="{{ serie.homepage }}"></app-see-now-button>
+      </div>
+      <div class="pb-2">
+        <p class="font-normal text-sm text-white text-opacity-85">
+          {{ serie.overview }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row with-padding">
+    <app-backdrop-grid [data]="episodes"> </app-backdrop-grid>
+  </div>
+
+
+    <div class="with-padding py-5">
+    <div *ngIf="recommendedSeries.length > 0">
+      <div class="flex items-center gap-4 mb-4">
+        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-0">
+          Más contenido como este
+        </p>
+        <div class="flex-1 h-[1px] bg-white"></div>
+      </div>
+    </div>
+    <div>
+      <app-poster-swiper
+        *ngIf="recommendedSeries.length > 0"
+        [data]="recommendedSeries"
+      ></app-poster-swiper>
+    </div>
+  </div>
 </div>

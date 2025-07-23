@@ -5,22 +5,21 @@ import { Result } from 'src/app/interfaces/API-response.interface';
 
 import Swiper from 'swiper';
 
-
 @Component({
   selector: 'app-poster-swiper',
   templateUrl: './poster-swiper.component.html',
-  styleUrls: ['./poster-swiper.component.css']
+  styleUrls: ['./poster-swiper.component.css'],
 })
-export class PosterSwiperComponent  implements AfterViewInit {
-
+export class PosterSwiperComponent implements AfterViewInit {
   @Input() data!: Result[];
-  
-  swiper!: Swiper;
 
-  constructor( private router: Router ) {}
+  swiper!: Swiper;
+  
+
+  constructor(private router: Router) {}
 
   ngAfterViewInit(): void {
-    setTimeout( () => {
+    setTimeout(() => {
       this.swiper = new Swiper('.swiper-poster-grid', {
         loop: false,
         freeMode: false,
@@ -30,7 +29,7 @@ export class PosterSwiperComponent  implements AfterViewInit {
             slidesPerView: 2,
             spaceBetween: 10,
           },
-          440:{
+          440: {
             slidesPerView: 3,
             spaceBetween: 10,
           },
@@ -42,21 +41,19 @@ export class PosterSwiperComponent  implements AfterViewInit {
           1100: {
             slidesPerView: 6,
             spaceBetween: 20,
-          }
-        }
+          },
+        },
       });
     }, 0);
   }
 
-  onRedirectToDetailPage( object: Result ){
-    if ( object ) {
+  onRedirectToDetailPage(object: Result) {
+    if (object) {
       if (object.title) {
-        this.router.navigate([ '/movie', object.id ]);
-
+        this.router.navigate(['/movie', object.id]);
       } else if (object.name) {
-        this.router.navigate([ '/serie', object.id ]);
+        this.router.navigate(['/serie', object.id]);
       }
     }
-  } 
-
+  }
 }

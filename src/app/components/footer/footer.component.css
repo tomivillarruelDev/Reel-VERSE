@@ -1,7 +1,6 @@
 .copyright{
     color: var(--transparent-white);
     text-align: end;
-    font-size: 0.8rem;
 }
 ul {
   list-style: none;
@@ -9,7 +8,6 @@ ul {
   margin: 0;
 }
 .footer-size {
-  font-size: 0.8rem;
   color: var(--transparent-white);
   text-decoration: none;
   transition: all 0.3s ease-in-out;

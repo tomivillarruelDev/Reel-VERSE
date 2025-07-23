@@ -1,104 +1,125 @@
-<div class="container-fluid background-black" >
-    
-    <div class="animate__animated  animate__fadeIn"         
-        *ngIf="movie">
-        <div class="row" >
-            <div class="image-detail animate__animated  animate__fadeIn animate__delay-1s"  
-            [ngStyle]="{'background-image': ' url(http://image.tmdb.org/t/p/original' + (isLargeScreen ? movie.backdrop_path : movie.poster_path) + ')'}">
-            </div>
+<div class="container-fluid background-black">
+  <div class="animate__animated animate__fadeIn" *ngIf="movie">
+    <div>
+      <div
+        class="image-detail animate__animated animate__fadeIn animate__delay-1s flex justify-start items-end"
+        [ngStyle]="{
+          'background-image':
+            ' url(http://image.tmdb.org/t/p/original' +
+            (isLargeScreen ? movie.backdrop_path : movie.poster_path) +
+            ')'
+        }"
+      >
+        <div class="slide-content__title with-padding">
+          <ng-container *ngIf="movie.logo_path; else showTitle">
+            <img
+              [src]="'https://image.tmdb.org/t/p/original' + movie.logo_path"
+              alt="{{ movie.title }}"
+              loading="lazy"
+              class="slide-content__title__logo z-10"
+            />
+          </ng-container>
+          <ng-template #showTitle>
+            <p class="text-5xl font-semibold mb-2 z-10">
+              {{ movie.title | cut }}
+            </p>
+          </ng-template>
         </div>
-        <div class="row row-cols-1  with-padding">
-            <div class="col-6 col-md-3">
-                <p class="display-6">
-                    {{ movie.title }}
-                </p>
-            </div>
-            <div class="col mb-3">
-                <ul class="list-unstyled d-flex flex-row">
-                    <li class="me-3 transparent-white small fw-medium">
-                        {{movie.runtime | hoursMinutes}} 
-                    </li>
-                    <li class="me-3 transparent-white small text-uppercase fw-medium">
-                        {{ movie.genres[0].name }}
-                    </li>
-                    <li class="me-3 transparent-white small fw-medium">
-                        {{movie.release_date | date: 'yyyy'}}
-                    </li>
-                    <li class="me-3 transparent-white small fw-medium">
-                        HD
-                    </li>
-                    <li class="me-3 transparent-white small fw-medium">
-                        {{movie.vote_average | number: '1.1-1'}}
-                    </li>
-                  </ul>
-            </div>
-            <div class="col-9 col-md-7  pb-2">
-                <p class="transparent-white-75 fw-medium fs-6">
-                    {{ movie.overview }}
-                </p>
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="row with-padding py-5">
-        <div class="col" 
-            *ngIf=" recommendedMovies.length > 0">
-            <p class="fw-bold mb-2">
-                Más contenido como este
-            </p>
-        </div>
-        <div class="col">
-            <app-poster-swiper
-            *ngIf=" recommendedMovies.length > 0"
-            [data]="recommendedMovies"></app-poster-swiper>
-        </div>
+    <div class="grid grid-cols-1 gap-4 max-w-2xl with-padding">
+      <div class="mb-3 flex flex-col">
+        <ul class="flex flex-row">
+          <li class="me-3 text-xs font-normal text-white text-opacity-70">
+            {{ movie.runtime | hoursMinutes }}
+          </li>
+          <li
+            class="me-3 text-xs text-uppercase font-normal text-white text-opacity-70"
+          >
+            {{ movie.genres[0].name }}
+          </li>
+          <li class="me-3 text-xs font-normal text-white text-opacity-70">
+            {{ movie.release_date | date : "yyyy" }}
+          </li>
+          <li class="me-3 text-xs font-normal text-white text-opacity-70">
+            HD
+          </li>
+          <li class="me-3 text-xs font-normal text-white text-opacity-70">
+            {{ movie.vote_average | number : "1.1-1" }}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <app-see-now-button link="{{ movie.homepage }}"></app-see-now-button>
+      </div>
+      <div class="pb-2">
+        <p class="font-normal text-sm text-white text-opacity-85">
+          {{ movie.overview }}
+        </p>
+      </div>
     </div>
-    <div class="row with-padding gap-4 py-5">
-        <div class="col-10 col-md-5">
-            <p class="fw-semibold mb-2">
-                Elenco y equipo
-            </p>
-            <div class="row" *ngFor="let character of cast">
-                <div class="col-6 d-flex" >
-                    <p class="transparent-white fw-medium small mb-1">{{ character.character }}</p>
-                </div>
-                <div class="col-6">
-                    <p class="transparent-white fw-medium small mb-1">{{ character.name }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-10 col-md-5">
-            <p class="fw-semibold mb-2">
-                Productores
-            </p>
-            <div class="row" *ngFor="let producer of producers">
-                <div class="col-6">
-                    <p class="transparent-white fw-medium small mb-1">
-                        Productor
-                    </p>
-                </div>
-                <div class="col-6">
-                    <p class="transparent-white fw-medium small mb-1">
-                        {{ producer.name }}
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-10 col-md-5">
-            <p class="fw-semibold mb-2">
-                Directores
-            </p>
-            <div class="row" *ngFor="let director of directors">
-                <div class="col-6">
-                    <p class="transparent-white fw-medium small mb-1">
-                        Director
-                    </p>
-                </div>
-                <div class="col-6">
-                    <p class="transparent-white fw-medium small mb-1">
-                        {{ director.name }}
-                    </p>
-                </div>
-            </div>
-        </div>
+  </div>
+  <div class="with-padding py-5">
+    <div *ngIf="recommendedMovies.length > 0">
+      <div class="flex items-center gap-4 mb-4">
+        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-0">
+          Más contenido como este
+        </p>
+        <div class="flex-1 h-[1px] bg-white"></div>
+      </div>
     </div>
+    <div>
+      <app-poster-swiper
+        *ngIf="recommendedMovies.length > 0"
+        [data]="recommendedMovies"
+      ></app-poster-swiper>
+    </div>
+  </div>
+  <div class="with-padding py-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-40 gap-y-10 max-w-4xl">
+      <div>
+        <p class="font-semibold text-white text-opacity-85 text-sm mb-1">
+          Elenco y equipo
+        </p>
+        <div class="space-y-1" *ngFor="let character of cast">
+          <div class="grid grid-cols-2 gap-x-20">
+            <p class="transparent-white font-medium text-xs mb-1">
+              {{ character.character }}
+            </p>
+            <p class="transparent-white font-medium text-xs mb-1">
+              {{ character.name }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="font-semibold text-white text-opacity-85 text-sm mb-1">
+          Productores
+        </p>
+        <div class="space-y-1" *ngFor="let producer of producers">
+          <div class="grid grid-cols-2 gap-2">
+            <p class="transparent-white font-medium text-xs mb-1">Productor</p>
+            <p class="transparent-white font-medium text-xs mb-1">
+              {{ producer.name }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="font-semibold text-white text-opacity-85 text-sm mb-1">
+          Directores
+        </p>
+        <div class="space-y-1" *ngFor="let director of directors">
+          <div class="grid grid-cols-2 gap-2">
+            <p class="transparent-white font-medium text-xs mb-1">Director</p>
+            <p class="transparent-white font-medium text-xs mb-1">
+              {{ director.name }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

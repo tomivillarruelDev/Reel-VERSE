@@ -68,7 +68,7 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async ngOnInit() {
     try{
-      this.titleService.setTitle(this.title + ' • Reel VERSE');
+      this.titleService.setTitle(this.title + ' • ReelVERSE');
       const [ topRatedSeries, genres ] = await Promise.all([
         this.getTopRatedSeries(),
         this.getGenres()

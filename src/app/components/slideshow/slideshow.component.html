@@ -18,20 +18,24 @@
           <ng-container *ngIf="value.logo_path; else showTitle">
             <img
               [src]="'https://image.tmdb.org/t/p/original' + value.logo_path"
-              [alt]="value.title"
+              alt="{{ value.title }}"
+              loading="lazy"
+              class="slide-content__title__logo"
             />
           </ng-container>
           <ng-template #showTitle>
-            <p class="display-6 fw-semibold my-0">
+            <p class="text-5xl font-semibold my-0">
               {{ (value.title ? value.title : value.name) | cut }}
             </p>
           </ng-template>
         </div>
 
         <div class="slide-content__info">
-          <p class="slide-content__info-text text-xs text-transparent-white-80">
+          <p
+            class="slide-content__info-text text-[0.80rem] md:text-xs text-white text-opacity-80"
+          >
             <span>
-              {{ value.release_date | date : "yyyy" }}
+              {{ value.release_date ? (value.release_date | date : "yyyy") : (value.first_air_date | date : "yyyy") }}
             </span>
             <span>
               {{ value.genre_name }}
@@ -45,13 +49,13 @@
         </div>
         <div class="buttons-container">
           <span
-            class="buttons-container__button-play rounded-circle"
+            class="buttons-container__button-play rounded-full"
             (click)="onRedirectToDetailPage(value)"
           >
             <i class="fa-solid fa-play"></i>
           </span>
           <span
-            class="buttons-container__button-more-info rounded-1"
+            class="buttons-container__button-more-info rounded-md"
             (click)="onRedirectToDetailPage(value)"
           >
             <svg

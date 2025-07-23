@@ -17,6 +17,7 @@ import { Subscription, debounceTime, fromEvent } from 'rxjs';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import Swiper from 'swiper';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
+import { SeriesService } from '../../services/series.service';
 
 @Component({
   selector: 'app-slideshow',
@@ -62,7 +63,8 @@ export class SlideshowComponent
   constructor(
     private cdRef: ChangeDetectorRef,
     private router: Router,
-    private moviesService: MoviesService
+    private moviesService: MoviesService,
+    private seriesService: SeriesService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -106,17 +108,23 @@ export class SlideshowComponent
     }
   }
 
-  private async getMoviesLogo(): Promise<void> {
+  private async getLogos(mediaType: 'movie' | 'tv'): Promise<void> {
     const logoPaths = await Promise.all(
-      this.data.map((item) => this.moviesService.getMovieLogo(item.id))
+      this.data.map((item) => {
+        if (mediaType === 'movie') {
+          return this.moviesService.getMovieLogo(item.id);
+        } else {
+          return this.seriesService.getSerieLogo(item.id);
+        }
+      })
     );
     this.data.forEach((item, index) => {
       item.logo_path = logoPaths[index];
     });
   }
 
-  private async getGenreMovies(): Promise<void> {
-    // Recopilar todos los IDs de géneros únicos (solo el primero de cada película)
+  private async getGenres(mediaType: 'movie' | 'tv'): Promise<void> {
+    // Recopilar todos los IDs de géneros únicos (solo el primero de cada película/serie)
     const uniqueGenreIds = [
       ...new Set(
         this.data
@@ -125,9 +133,13 @@ export class SlideshowComponent
       ),
     ];
 
-    const genrePromises = uniqueGenreIds.map((genreId) =>
-      this.moviesService.getMovieGenresById(genreId)
-    );
+    const genrePromises = uniqueGenreIds.map((genreId) => {
+      if (mediaType === 'movie') {
+        return this.moviesService.getMovieGenresById(genreId);
+      } else {
+        return this.seriesService.getSerieGenresById(genreId);
+      }
+    });
 
     const uniqueGenres = await Promise.all(genrePromises);
 
@@ -139,7 +151,7 @@ export class SlideshowComponent
       }
     });
 
-    // Asignar el nombre del género a cada película basado en su primer genre_id
+    // Asignar el nombre del género a cada elemento basado en su primer genre_id
     this.data.forEach((item: Result) => {
       const firstGenreId = item.genre_ids[0];
       if (firstGenreId && genreMap.has(firstGenreId)) {
@@ -151,18 +163,37 @@ export class SlideshowComponent
   }
 
   private async getMoviesLogoAndGenreMovies(): Promise<void> {
-    if (!this.data) {
+    if (!this.data || this.data.length === 0) {
       return;
     }
-    await Promise.all([this.getMoviesLogo(), this.getGenreMovies()]);
-    // Marcar que los logos y géneros ya están cargados
+
+    // Determinar el tipo de contenido basado en el primer elemento
+    // o usar media_type si está disponible
+    const mediaType = this.determineMediaType();
+
+    // Cargar logos y géneros en paralelo
+    await Promise.all([this.getLogos(mediaType), this.getGenres(mediaType)]);
+
+    // Marcar que los datos del slideshow ya están cargados
     this.slideDataLoaded = true;
     this.cdRef.detectChanges();
 
-    // Iniciar Swiper ahora que el DOM (logos) está listo
+    console.log('Logos y géneros cargados:', this.data);
+
+    // Iniciar Swiper ahora que el DOM está listo
     setTimeout(() => {
       this.initSwiper();
       this.slideshowLoaded.emit();
     }, 0);
+  }
+
+  private determineMediaType(): 'movie' | 'tv' {
+    // Si hay media_type definido, usarlo
+    if (this.data[0]?.media_type) {
+      return this.data[0].media_type === 'tv' ? 'tv' : 'movie';
+    }
+
+    // Si no, determinar por la presencia de title (movie) o name (tv)
+    return this.data[0]?.title ? 'movie' : 'tv';
   }
 }

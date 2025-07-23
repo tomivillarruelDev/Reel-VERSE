@@ -138,17 +138,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     );
     seriesObserver.observe(this.seriesElement.nativeElement);
 
-    const topMoviesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.topMovies.length === 0) {
-          this.getTopRatedMovies();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    topMoviesObserver.observe(this.topElement.nativeElement);
+    // const topMoviesObserver = new IntersectionObserver(
+    //   (entries) => {
+    //     if (entries[0].isIntersecting && this.topMovies.length === 0) {
+    //       this.getTopRatedMovies();
+    //     }
+    //   },
+    //   {
+    //     rootMargin: '50px 0px',
+    //   }
+    // );
+    // topMoviesObserver.observe(this.topElement.nativeElement);
 
     const justAddedObserver = new IntersectionObserver(
       (entries) => {

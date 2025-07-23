@@ -24,6 +24,7 @@ export interface MovieDetailResponse {
     video:                 boolean;
     vote_average:          number;
     vote_count:            number;
+    logo_path?:                 string; // Optional property for the movie logo
 }
 
 export interface BelongsToCollection {

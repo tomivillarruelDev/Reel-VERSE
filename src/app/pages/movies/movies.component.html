@@ -1,144 +1,152 @@
-<div class="animate__animated animate__fadeIn animate__delay-1s" id="moviesPage">
-    <div>
-        <app-slideshow 
-        [data]="actionMovies"></app-slideshow>
+<div
+  class="animate__animated animate__fadeIn animate__delay-1s"
+  id="moviesPage"
+>
+  <div>
+    <app-slideshow [data]="actionMovies"></app-slideshow>
+  </div>
+
+  <div class="container-fluid with-padding background">
+    <div class="">
+      <div class="">
+        <app-genres
+          [genres]="genres"
+          [type]="'movie'"
+          (genreSelected)="onGenreSelected($event)"
+        ></app-genres>
+      </div>
     </div>
-    
-    <div class="container-fluid with-padding background">
-    
-        <div class="row">
-            <div class="col">
-                <app-genres
-                [genres]="genres"
-                [type]="'movie'"
-                (genreSelected)="onGenreSelected($event)"
-                ></app-genres>
-            </div>
+
+    <div *ngIf="!search">
+      <div class="py-2 mt-2" #trendingElement>
+        <div class="" *ngIf="trendingMovies.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
+          >
+            Cancela tus planes, es noche de películas
+          </p>
         </div>
-    
-        <div *ngIf=" !search ">
-            <div class="row py-2" #trendingElement>
-                <div class="col"
-                    *ngIf=" trendingMovies.length > 0">
-                    <p class="fw-bold mb-2">
-                        Cancela tus planes, es noche de películas
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper 
-                    *ngIf=" trendingMovies.length > 0"
-                    [data]="trendingMovies"></app-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-5" #topRatedElement>
-                <div class="col" 
-                    *ngIf=" topRatedMovies.length > 0">
-                    <p class="fw-bold mb-2">
-                        Éxitos de Hollywood
-                    </p>
-                </div>
-                <div class="col">
-                    <app-large-poster-swiper
-                    *ngIf=" topRatedMovies.length > 0"
-                    [data]="topRatedMovies"></app-large-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-2" #familyElement>
-                <div class="col"
-                    *ngIf=" familyMovies.length > 0">
-                    <p class="fw-bold my-0">
-                        Noche de películas en familia
-                    </p>
-                    <p class="small transparent-white mb-2">
-                        Tú pon los snacks, nosotros nos encargamos del entretenimiento.
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper 
-                    *ngIf=" familyMovies.length > 0"
-                    [data]="familyMovies"></app-poster-swiper>
-                </div>
-            </div>
-            
-            <div class="row py-4" #comedyElement>
-                <div class="col"
-                    *ngIf=" comedyMovies.length > 0">
-                    <p class="fw-bold mb-2">
-                        ¡Ja, ja, ja! *llora de risa*
-                    </p>
-                </div>
-                <div class="col"> 
-                    <app-poster-swiper
-                    *ngIf=" comedyMovies.length > 0"
-                    [data]="comedyMovies"
-                    ></app-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-3"  #horrorElement>
-                <div class="col"
-                    *ngIf=" horrorMovies.length > 0">
-                    <p class="fw-bold my-0">
-                        Noche de terror
-                    </p>
-                    <p class="small transparent-white mb-2">
-                        Hay quienes dicen que estos títulos están malditos...
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper 
-                    *ngIf=" horrorMovies.length > 0"
-                    [data]="horrorMovies"></app-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-3 "
-                *ngIf=" actionMovies.length > 0">
-                <div class="col">
-                    <p class="fw-bold my-0">
-                        ¡Acción ininterrumpida!
-                    </p>
-                    <p class="small transparent-white mb-2">
-                        ¡Prepárate, estos títulos te dejarán sin aliento!
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper 
-                    *ngIf=" actionMovies.length > 0"
-                    [data]="actionMovies"></app-poster-swiper>
-                </div>
-            </div>
-    
-            <div class="row py-3" 
-                #dramaElement>
-                <div class="col" 
-                    *ngIf=" dramaMovies.length > 0">
-                    <p class="fw-bold mb-2">
-                        Dramas destacados
-                    </p>
-                </div>
-                <div class="col">
-                    <app-poster-swiper
-                    *ngIf=" dramaMovies.length > 0"
-                    [data]="dramaMovies"></app-poster-swiper>
-                </div>
-            </div>
-    
+        <div class="">
+          <app-poster-swiper
+            *ngIf="trendingMovies.length > 0"
+            [data]="trendingMovies"
+          ></app-poster-swiper>
         </div>
-    
-        <div class="row py-3 "
-        *ngIf=" search ">
-            <div class="col-12"> 
-                <app-poster-grid
-                *ngIf=" results.length > 0 "
-                [data]=" results "
-                ></app-poster-grid>
-            </div>
+      </div>
+
+      <div class="py-5" #topRatedElement>
+        <div class="" *ngIf="topRatedMovies.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
+          >
+            Éxitos de Hollywood
+          </p>
         </div>
-    
+        <div class="">
+          <app-large-poster-swiper
+            *ngIf="topRatedMovies.length > 0"
+            [data]="topRatedMovies"
+          ></app-large-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-2" #familyElement>
+        <div class="" *ngIf="familyMovies.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0"
+          >
+            Noche de películas en familia
+          </p>
+          <p class="text-white text-opacity-65 text-sm mb-1">
+            Tú pon los snacks, nosotros nos encargamos del entretenimiento.
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="familyMovies.length > 0"
+            [data]="familyMovies"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-4" #comedyElement>
+        <div class="" *ngIf="comedyMovies.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
+          >
+            ¡Ja, ja, ja! *llora de risa*
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="comedyMovies.length > 0"
+            [data]="comedyMovies"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-3" #horrorElement>
+        <div class="" *ngIf="horrorMovies.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0"
+          >
+            Noche de terror
+          </p>
+          <p class="text-white text-opacity-65 text-sm mb-1">
+            Hay quienes dicen que estos títulos están malditos...
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="horrorMovies.length > 0"
+            [data]="horrorMovies"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-3" *ngIf="actionMovies.length > 0">
+        <div class="">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0"
+          >
+            ¡Acción ininterrumpida!
+          </p>
+          <p class="text-white text-opacity-65 text-sm mb-1">
+            ¡Prepárate, estos títulos te dejarán sin aliento!
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="actionMovies.length > 0"
+            [data]="actionMovies"
+          ></app-poster-swiper>
+        </div>
+      </div>
+
+      <div class="py-3" #dramaElement>
+        <div class="" *ngIf="dramaMovies.length > 0">
+          <p
+            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
+          >
+            Dramas destacados
+          </p>
+        </div>
+        <div class="">
+          <app-poster-swiper
+            *ngIf="dramaMovies.length > 0"
+            [data]="dramaMovies"
+          ></app-poster-swiper>
+        </div>
+      </div>
     </div>
+
+    <div class="py-3" *ngIf="search">
+      <div class="-12">
+        <app-poster-grid
+          *ngIf="results.length > 0"
+          [data]="results"
+        ></app-poster-grid>
+      </div>
+    </div>
+  </div>
 </div>
-
-

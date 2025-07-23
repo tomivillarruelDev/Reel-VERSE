@@ -1,24 +1,22 @@
-
 .movie-title {
-    font-size: 1rem;
-    color: white;
+  font-size: 1rem;
+  color: white;
 }
 
-
 .image-container {
-    position: relative;
-    border-radius: 2px;
-    transition: box-shadow 0.3s ease-in-out !important;
+  position: relative;
+  border-radius: 2px;
+  transition: box-shadow 0.3s ease-in-out !important;
 }
 
 .image-container:hover {
-    box-shadow: 0 0 0 3px var(--purple);
-    cursor: pointer;
+  box-shadow: 0 0 0 2px white;
+  cursor: pointer;
 }
 
 .image-border {
-    position: relative;
-    border-radius: 2px;
+  position: relative;
+  border-radius: 2px;
 }
 
 .swiper-slide {
@@ -48,4 +46,3 @@
     height: calc((100vw - 120px) / 6);
   }
 }
-

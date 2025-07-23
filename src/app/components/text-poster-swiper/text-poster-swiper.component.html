@@ -1,33 +1,35 @@
 <div class="container-fluid p-0">
-   
-    <div class="swiper swiper-text-poster">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide d-flex swiper-slide-first animate__animated  animate__fadeInRightBig"
-            >
-                <div class="d-flex flex-column justify-content-center">
-                  <p class="small my-0">
-                    {{ topText }}
-                  </p>
-                  <p class="fs-2 fw-semibold my-0">
-                    {{ middleText }}
-                  </p>
-                  <p class="small my-0">
-                    {{ bottomText }}
-                  </p>
-                </div>
-            </div>
-            <div class="swiper-slide movie-cover animate__animated  animate__fadeInRightBig" *ngFor=" let value of data ">
-                <div class="overlay"  
-                    (click)="onRedirectToDetailPage( value )">
-                </div>
-                <img [src]=" value.poster_path | poster" class="swiper-img animate__animated animate__fadeIn animate__delay-2s" alt="{{ value.title }}">
-                <a class="play-button rounded-circle">
-                    <i class="fa-solid fa-play"></i>
-                </a>
-            </div>
-    
+  <div class="swiper swiper-text-poster">
+    <div class="swiper-wrapper">
+      <div
+        class="swiper-slide flex justify-center content-center swiper-slide-first animate__animated animate__fadeInRightBig"
+      >
+        <div class="flex flex-col">
+          <p class="text-xs my-0">
+            {{ topText }}
+          </p>
+          <p class="text-2xl sm:text-3xl font-semibold my-0">
+            {{ middleText }}
+          </p>
+          <p class="text-[0.85rem] my-0">
+            {{ bottomText }}
+          </p>
         </div>
+      </div>
+      <div
+        class="swiper-slide movie-cover animate__animated animate__fadeInRightBig"
+        *ngFor="let value of data"
+      >
+        <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
+        <img
+          [src]="value.poster_path | poster"
+          class="swiper-img animate__animated animate__fadeIn animate__delay-2s"
+          alt="{{ value.title }}"
+        />
+        <a class="play-button rounded-full">
+          <i class="fa-solid fa-play"></i>
+        </a>
+      </div>
     </div>
+  </div>
 </div>
-
-

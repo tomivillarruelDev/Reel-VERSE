@@ -13,10 +13,9 @@ import { SeriesService } from 'src/app/services/series.service';
 @Component({
   selector: 'app-serie',
   templateUrl: './serie.component.html',
-  styleUrls: ['./serie.component.css']
+  styleUrls: ['./serie.component.css'],
 })
 export class SerieComponent implements OnInit, OnDestroy {
-
   public serie!: SerieDetailResponse;
 
   public isLargeScreen = window.innerWidth > 600;
@@ -27,15 +26,31 @@ export class SerieComponent implements OnInit, OnDestroy {
 
   public recommendedSeries: Result[] = [];
 
-  constructor( private activatedRoute: ActivatedRoute,
-               private loadingService: LoadingService,
-               private seriesService: SeriesService,
-               private titleService: Title,
-               private cdRef: ChangeDetectorRef ) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private loadingService: LoadingService,
+    private seriesService: SeriesService,
+    private titleService: Title,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    this.activatedRoute.paramMap.subscribe( async paramMap => {
+    this.activatedRoute.paramMap.subscribe(async (paramMap) => {
       this.loadingService.setLoading(true);
+
+            // Reset all data when changing route
+      // this.movie = null as any;
+      // this.recommendedMovies = [];
+      // this.cast = [];
+      // this.producers = [];
+      // this.directors = [];
+
+      this.serie = null as any;
+      this.recommendedSeries = [];
+      this.episodes = [];
+      
+
+
       const id = paramMap.get('id');
       if (id === null) {
         return;
@@ -43,15 +58,15 @@ export class SerieComponent implements OnInit, OnDestroy {
         try {
           this.checkScreenSize();
           this.resizeSubscription = fromEvent(window, 'resize')
-          .pipe(debounceTime(1000))
-          .subscribe(() => this.checkScreenSize());
+            .pipe(debounceTime(1000))
+            .subscribe(() => this.checkScreenSize());
           const [serie, episodes, recommendedSeries] = await Promise.all([
-            this.getSerieDetails( id ),
-            this.getAllEpisodes( id ),
-            this.getRecommendedSeries( id ),
+            this.getSerieDetails(id),
+            this.getAllEpisodes(id),
+            this.getRecommendedSeries(id),
           ]);
           this.serie = serie;
-          this.titleService.setTitle(this.serie.name + ' • Reel VERSE');
+          this.titleService.setTitle(this.serie.name + ' • ReelVERSE');
           this.episodes = episodes;
           this.recommendedSeries = recommendedSeries;
         } catch (error) {
@@ -70,9 +85,17 @@ export class SerieComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async getSerieDetails( id: string ): Promise<SerieDetailResponse> {
-    const resp = await this.seriesService.getSerieDetails( id );
-    return resp;
+  private async getSerieDetails(id: string): Promise<SerieDetailResponse> {
+    const resp = await Promise.all([
+      this.seriesService.getSerieDetails(id),
+      this.seriesService.getSerieLogo(+id),
+    ]);
+
+    if (resp[1]) {
+      resp[0].logo_path = resp[1];
+    }
+
+    return resp[0];
   }
 
   private checkScreenSize(): void {
@@ -80,16 +103,13 @@ export class SerieComponent implements OnInit, OnDestroy {
     this.cdRef.detectChanges();
   }
 
-  private async getAllEpisodes( id: string ): Promise<Episode[]> {
-    const resp = await this.seriesService.getAllEpisodes( id );
+  private async getAllEpisodes(id: string): Promise<Episode[]> {
+    const resp = await this.seriesService.getAllEpisodes(id);
     return resp.episodes;
-
   }
 
-  private async getRecommendedSeries( id: string ): Promise<Result[]> {
-    const resp = await this.seriesService.getRecommendedSeries( id );
+  private async getRecommendedSeries(id: string): Promise<Result[]> {
+    const resp = await this.seriesService.getRecommendedSeries(id);
     return resp.results;
   }
-
-
 }

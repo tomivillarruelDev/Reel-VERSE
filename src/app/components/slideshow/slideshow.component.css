@@ -11,9 +11,8 @@
   height: 100vh;
 }
 
-/* Contenedor para título/logo, centrar y limitar ancho */
 .slide-content__title {
-  height: 120px;
+  height: 150px;
   max-width: 100%;
   width: auto;
   display: flex;
@@ -21,8 +20,8 @@
   justify-content: start;
 }
 
-/* Ajuste de la imagen de logo dentro del contenedor */
-.slide-content__title img {
+
+.slide-content__title__logo {
   height: 100%;
   width: auto;
   max-width: 100%;
@@ -142,14 +141,14 @@
     text-align: center;
     padding-left: 0rem;
     width: 100%;
-    padding-bottom: 3rem;
+    padding-bottom: 0.6rem;
   }
 
   .slide-content__info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.5rem;
   }
 
   .slide-content__info__description {
