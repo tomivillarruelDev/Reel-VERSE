@@ -25,38 +25,25 @@
 
 body {
   scroll-behavior: smooth;
-  background-color: var(--dark-gray);
   font-size: 1.2rem;
-  color: white
-}
-
-.background {
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    167deg,
-    rgba(0, 0, 0, 1) 3%,
-    rgba(1, 0, 1, 1) 11%,
-    rgba(15, 5, 38, 1) 15%,
-    rgba(27, 6, 43, 1) 30%,
-    rgba(21, 5, 43, 1) 34%,
-    rgba(20, 5, 40, 1) 37%,
-    rgba(22, 5, 43, 1) 43%,
-    rgba(25, 5, 42, 1) 48%,
-    rgba(27, 6, 43, 1) 54%,
-    rgba(35, 7, 44, 1) 57%,
-    rgba(29, 5, 36, 1) 60%,
-    rgba(29, 5, 37, 1) 63%,
-    rgba(32, 6, 40, 1) 67%,
-    rgba(26, 4, 30, 1) 74%,
-    rgba(19, 3, 21, 1) 79%,
-    rgba(34, 7, 45, 1) 87%,
-    rgba(0, 0, 0, 1) 91%
-  );
+  color: white;
+  background-color: #0a0a0a;
   min-height: 100vh;
 }
 
+.background {
+  background-color: #0a0a0a; /* equivalente a bg-neutral-950 */
+  background-image: linear-gradient(to bottom, #0a0a0a 0%, transparent 10%),
+    radial-gradient(
+      ellipse 80% 80% at 50% -20%,
+      rgba(120, 119, 198, 0.3),
+      rgba(255, 255, 255, 0)
+    );
+  margin-top: -3rem;
+}
+
 .background-black {
-  background-color: black;
+  background-color: #0a0a0a;
 }
 
 .with-padding {
@@ -218,7 +205,7 @@ a {
   gap: 0.5rem;
   width: 18rem;
   height: 3rem;
-  background-color: #DDDD;
+  background-color: #dddd;
   color: black;
   font-weight: 700;
   font-size: 1rem;
@@ -252,9 +239,35 @@ a {
   overflow: hidden;
 }
 
+.image-detail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 40%,
+    rgba(10, 10, 10, 1) 100%
+  );
+  pointer-events: none;
+}
+
 @media (max-width: 768px) {
   .with-padding {
     padding-left: 2.25rem;
+  }
+
+  .image-detail::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.2) 40%,
+      rgba(10, 10, 10, 1) 90%
+    );
+    pointer-events: none;
   }
 
   .text-xs {

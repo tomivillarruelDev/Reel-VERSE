@@ -6,35 +6,29 @@
     <app-slideshow [data]="topRatedSeries"></app-slideshow>
   </div>
 
-  <div class="container-fluid with-padding background">
-    <div class="">
+  <app-genres
+    *ngIf="genres.length > 0"
+    [genres]="genres"
+    [type]="'serie'"
+    (genreSelected)="onGenreSelected($event)"
+  ></app-genres>
+
+  <div *ngIf="!search">
+    <div class="py-2 pb-20 with-padding" #trendingElement>
+      <div class="" *ngIf="trendingSeries.length > 0">
+        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1">
+          Lo que todos están viendo
+        </p>
+      </div>
       <div class="">
-        <app-genres
-          *ngIf="genres.length > 0"
-          [genres]="genres"
-          [type]="'serie'"
-          (genreSelected)="onGenreSelected($event)"
-        ></app-genres>
+        <app-poster-swiper
+          *ngIf="trendingSeries.length > 0"
+          [data]="trendingSeries"
+        ></app-poster-swiper>
       </div>
     </div>
 
-    <div *ngIf="!search">
-      <div class="py-2" #trendingElement>
-        <div class="" *ngIf="trendingSeries.length > 0">
-          <p
-            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
-          >
-            Lo que todos están viendo
-          </p>
-        </div>
-        <div class="">
-          <app-poster-swiper
-            *ngIf="trendingSeries.length > 0"
-            [data]="trendingSeries"
-          ></app-poster-swiper>
-        </div>
-      </div>
-
+    <div class="background with-padding">
       <div class="pb-1 pt-3" #newElement>
         <div class="" *ngIf="newEpisodes.length > 0">
           <p

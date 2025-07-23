@@ -6,34 +6,28 @@
     <app-slideshow [data]="actionMovies"></app-slideshow>
   </div>
 
-  <div class="container-fluid with-padding background">
-    <div class="">
+  <app-genres
+    [genres]="genres"
+    [type]="'movie'"
+    (genreSelected)="onGenreSelected($event)"
+  ></app-genres>
+
+  <div *ngIf="!search">
+    <div class="py-2 mt-2 pb-20 with-padding" #trendingElement>
+      <div class="" *ngIf="trendingMovies.length > 0">
+        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1">
+          Cancela tus planes, es noche de películas
+        </p>
+      </div>
       <div class="">
-        <app-genres
-          [genres]="genres"
-          [type]="'movie'"
-          (genreSelected)="onGenreSelected($event)"
-        ></app-genres>
+        <app-poster-swiper
+          *ngIf="trendingMovies.length > 0"
+          [data]="trendingMovies"
+        ></app-poster-swiper>
       </div>
     </div>
 
-    <div *ngIf="!search">
-      <div class="py-2 mt-2" #trendingElement>
-        <div class="" *ngIf="trendingMovies.length > 0">
-          <p
-            class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1"
-          >
-            Cancela tus planes, es noche de películas
-          </p>
-        </div>
-        <div class="">
-          <app-poster-swiper
-            *ngIf="trendingMovies.length > 0"
-            [data]="trendingMovies"
-          ></app-poster-swiper>
-        </div>
-      </div>
-
+    <div class="background with-padding">
       <div class="py-5" #topRatedElement>
         <div class="" *ngIf="topRatedMovies.length > 0">
           <p
