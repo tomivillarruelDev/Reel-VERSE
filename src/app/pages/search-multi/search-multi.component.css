@@ -1,47 +1,47 @@
- 
-.searchInput{
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 0.8rem 3rem;
-    border: none;
-    outline: none;
-    color: var(--transparent-white); 
-    font-size: 1.4rem;
-    font-weight: 500;
-    transition: all 0.3s ease-in-out;
+.searchInput {
+  width: 98%;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 3rem 0.8rem 4rem;
+  border: none;
+  outline: none;
+  color: var(--transparent-white);
+  font-size: 1.4rem;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
 }
 .search-container {
-    position: relative;
+  position: relative;
 }
 
 .search-icon {
-    position: absolute;
-    left: 26px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--transparent-white); 
-    font-size: 1.4rem;
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--transparent-white);
+  font-size: 1.4rem;
 }
 
 .search-active {
-    background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .searchInput:-webkit-autofill {
-    -webkit-text-fill-color: var(--transparent-white) !important;
-    font-size: 1.4rem !important;
-    transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: var(--transparent-white) !important;
+  font-size: 1.4rem !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .searchInput::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-    height: 1.4rem;
-    width: 1.4rem;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23FFFFFF" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>') no-repeat;
-    background-size: 1.4rem;
-    cursor: pointer;
+  -webkit-appearance: none;
+  height: 1.4rem;
+  width: 1.4rem;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23FFFFFF" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>')
+    no-repeat;
+  background-size: 1.4rem;
+  cursor: pointer;
 }
 
-.no-results{
-    height: 100vh;
+.no-results {
+  height: 100vh;
 }
