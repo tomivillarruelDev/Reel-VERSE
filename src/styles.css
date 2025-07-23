@@ -155,7 +155,7 @@ a {
 .movie-cover:hover,
 .poster:hover,
 .image-container:hover {
-  box-shadow: 0 0 0 3px var(--purple);
+  box-shadow: 0 0 0 2px white;
   cursor: pointer;
 }
 
