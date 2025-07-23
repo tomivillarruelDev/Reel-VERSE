@@ -79,6 +79,7 @@ export class GenresComponent implements OnInit, AfterViewInit {
         this.selectedGenre = genre;
         const resp = await this.moviesService.getMoviesByGenre(genre, 0);
         const results: Result[] = resp.results;
+        console.log('Buscando películas por género:', results);
         this.genreSelected.emit(results);
 
         break;

@@ -133,14 +133,14 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="py-3" *ngIf="search">
-      <div class="-12">
-        <app-poster-grid
-          *ngIf="results.length > 0"
-          [data]="results"
-        ></app-poster-grid>
-      </div>
+  <div class="py-3" *ngIf="search">
+    <div class="with-padding">
+      <app-poster-grid
+        *ngIf="results.length > 0"
+        [data]="results"
+      ></app-poster-grid>
     </div>
   </div>
 </div>
