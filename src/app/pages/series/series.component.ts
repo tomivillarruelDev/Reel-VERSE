@@ -1,18 +1,25 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Genre } from 'src/app/interfaces/genres.interface';
 
 import { LoadingService } from 'src/app/services/loading.service';
 import { SeriesService } from 'src/app/services/series.service';
+import { GenresCacheService } from 'src/app/services/genres-cache.service';
 
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
-  styleUrls: ['./series.component.css']
+  styleUrls: ['./series.component.css'],
 })
 export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
-
   public title: string = 'Series';
 
   public topRatedSeries: Result[] = [];
@@ -41,37 +48,43 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public results: Result[] = [];
 
-  @ViewChild('trendingElement',{read: ElementRef})trendingElement!: ElementRef;
+  @ViewChild('trendingElement', { read: ElementRef })
+  trendingElement!: ElementRef;
 
-  @ViewChild('newElement', {read: ElementRef})newElement!: ElementRef;
+  @ViewChild('newElement', { read: ElementRef }) newElement!: ElementRef;
 
-  @ViewChild('discoverElement',{read: ElementRef})discoverElement!: ElementRef;
+  @ViewChild('discoverElement', { read: ElementRef })
+  discoverElement!: ElementRef;
 
-  @ViewChild('actionElement',{read: ElementRef})actionElement!: ElementRef;
+  @ViewChild('actionElement', { read: ElementRef }) actionElement!: ElementRef;
 
-  @ViewChild('topElement',{read: ElementRef})topElement!: ElementRef;
+  @ViewChild('topElement', { read: ElementRef }) topElement!: ElementRef;
 
-  @ViewChild('latamElement',{read: ElementRef})latamElement!: ElementRef;
+  @ViewChild('latamElement', { read: ElementRef }) latamElement!: ElementRef;
 
-  @ViewChild('familyElement',{read: ElementRef})familyElement!: ElementRef;
+  @ViewChild('familyElement', { read: ElementRef }) familyElement!: ElementRef;
 
-  @ViewChild('dramaElement',{read: ElementRef})dramaElement!: ElementRef;
+  @ViewChild('dramaElement', { read: ElementRef }) dramaElement!: ElementRef;
 
-  @ViewChild('sciFiAndFantasYElement',{read: ElementRef})sciFiAndFantasYElement!: ElementRef;
+  @ViewChild('sciFiAndFantasYElement', { read: ElementRef })
+  sciFiAndFantasYElement!: ElementRef;
 
-  @ViewChild('warAndPoliticsElement',{read: ElementRef})warAndPoliticsElement!: ElementRef;
+  @ViewChild('warAndPoliticsElement', { read: ElementRef })
+  warAndPoliticsElement!: ElementRef;
 
-
-  constructor( private loadingService: LoadingService,
-               private seriesService: SeriesService,
-               private titleService: Title ) {}
+  constructor(
+    private loadingService: LoadingService,
+    private seriesService: SeriesService,
+    private titleService: Title,
+    private genresCacheService: GenresCacheService
+  ) {}
 
   async ngOnInit() {
-    try{
+    try {
       this.titleService.setTitle(this.title + ' • ReelVERSE');
-      const [ topRatedSeries, genres ] = await Promise.all([
+      const [topRatedSeries, genres] = await Promise.all([
         this.getTopRatedSeries(),
-        this.getGenres()
+        this.getGenres(),
       ]);
     } catch (error) {
       console.log(error);
@@ -81,85 +94,118 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
-    const trendingSeriesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.trendingSeries.length === 0){
+    const trendingSeriesObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && this.trendingSeries.length === 0) {
         this.getTrendingSeries();
       }
     });
-    trendingSeriesObserver.observe( this.trendingElement.nativeElement );
+    trendingSeriesObserver.observe(this.trendingElement.nativeElement);
 
-    const newEpisodesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.newEpisodes.length === 0){
-        this.getNewEpisodes();
+    const newEpisodesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.newEpisodes.length === 0) {
+          this.getNewEpisodes();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    newEpisodesObserver.observe( this.newElement.nativeElement );
+    );
+    newEpisodesObserver.observe(this.newElement.nativeElement);
 
-    const discoverSeriesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.discoverSeries.length === 0){
-        this.getDiscoverSeries();
+    const discoverSeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.discoverSeries.length === 0) {
+          this.getDiscoverSeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    discoverSeriesObserver.observe( this.discoverElement.nativeElement );
+    );
+    discoverSeriesObserver.observe(this.discoverElement.nativeElement);
 
-    const actionSeriesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.actionSeries.length === 0){
-        this.getActionSeries();
+    const actionSeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.actionSeries.length === 0) {
+          this.getActionSeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    actionSeriesObserver.observe( this.actionElement.nativeElement );
+    );
+    actionSeriesObserver.observe(this.actionElement.nativeElement);
 
-    const latamSeriesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.latamSeries.length === 0){
-        this.getLatamSeries();
+    const latamSeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.latamSeries.length === 0) {
+          this.getLatamSeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    latamSeriesObserver.observe( this.latamElement.nativeElement );
+    );
+    latamSeriesObserver.observe(this.latamElement.nativeElement);
 
-    const familySeriesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.familySeries.length === 0){
-        this.getFamilySeries();
+    const familySeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.familySeries.length === 0) {
+          this.getFamilySeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    familySeriesObserver.observe( this.familyElement.nativeElement );
+    );
+    familySeriesObserver.observe(this.familyElement.nativeElement);
 
-    const dramaSeriesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.dramaSeries.length === 0){
-        this.getDramaSeries();
+    const dramaSeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.dramaSeries.length === 0) {
+          this.getDramaSeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    dramaSeriesObserver.observe( this.dramaElement.nativeElement );
+    );
+    dramaSeriesObserver.observe(this.dramaElement.nativeElement);
 
-    const sciFiAndFantasySeriesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.sciFiAndFantasySeries.length === 0){
-        this.getSciFiAndFantasySeries();
+    const sciFiAndFantasySeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          this.sciFiAndFantasySeries.length === 0
+        ) {
+          this.getSciFiAndFantasySeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    sciFiAndFantasySeriesObserver.observe( this.sciFiAndFantasYElement.nativeElement );
+    );
+    sciFiAndFantasySeriesObserver.observe(
+      this.sciFiAndFantasYElement.nativeElement
+    );
 
-    const warAndPoliticsSeriesObserver = new IntersectionObserver( entries => {
-      if (entries[0].isIntersecting && this.warAndPoliticsSeries.length === 0){
-        this.getWarAndPoliticsSeries();
+    const warAndPoliticsSeriesObserver = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          this.warAndPoliticsSeries.length === 0
+        ) {
+          this.getWarAndPoliticsSeries();
+        }
+      },
+      {
+        rootMargin: '50px 0px',
       }
-    }, {
-      rootMargin: '50px 0px'
-    });
-    warAndPoliticsSeriesObserver.observe( this.warAndPoliticsElement.nativeElement );
+    );
+    warAndPoliticsSeriesObserver.observe(
+      this.warAndPoliticsElement.nativeElement
+    );
   }
 
   ngOnDestroy(): void {
@@ -172,7 +218,7 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async getGenres(): Promise<void> {
-    const resp = await this.seriesService.getSerieGenres();
+    const resp = await this.genresCacheService.getSerieGenres();
     this.genres = resp.genres;
   }
 
@@ -225,6 +271,4 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     const resp = await this.seriesService.getSeriesByGenre(10768);
     this.warAndPoliticsSeries = resp.results;
   }
-
 }
-

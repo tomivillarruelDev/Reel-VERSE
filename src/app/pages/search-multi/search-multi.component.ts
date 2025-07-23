@@ -9,14 +9,14 @@ import { LoadingService } from 'src/app/services/loading.service';
 
 import { MoviesService } from 'src/app/services/movies.service';
 import { SearchService } from 'src/app/services/search.service';
+import { GenresCacheService } from 'src/app/services/genres-cache.service';
 
 @Component({
   selector: 'app-search-multi',
   templateUrl: './search-multi.component.html',
-  styleUrls: ['./search-multi.component.css']
+  styleUrls: ['./search-multi.component.css'],
 })
 export class SearchMultiComponent implements OnInit, OnDestroy {
-
   public form!: FormGroup;
 
   public showSearch: boolean = false;
@@ -28,97 +28,97 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
   public trendingAll: Result[] = [];
 
   public loading = false;
-  
+
   public results: Result[] = [];
 
   public page: number = 1;
 
   @HostListener('window:scroll', ['$event'])
-  async onScroll(){
-    const position = (document.documentElement.scrollTop || document.body.scrollTop) + 1800; 
-    const max = (document.documentElement.scrollHeight || document.body.scrollHeight);
+  async onScroll() {
+    const position =
+      (document.documentElement.scrollTop || document.body.scrollTop) + 1800;
+    const max =
+      document.documentElement.scrollHeight || document.body.scrollHeight;
 
-    if ( position > max && !this.showSearch ) {
-      const resp = await this.getTrendingAll(++this.page);   
+    if (position > max && !this.showSearch) {
+      const resp = await this.getTrendingAll(++this.page);
     }
   }
 
-  constructor( private searchService: SearchService,
-               private moviesService: MoviesService,
-               private fb: FormBuilder,
-               private loadingService: LoadingService,
-               private titleService: Title ) {}
+  constructor(
+    private searchService: SearchService,
+    private moviesService: MoviesService,
+    private fb: FormBuilder,
+    private loadingService: LoadingService,
+    private titleService: Title,
+    private genresCacheService: GenresCacheService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.createInputSearch();
     try {
-      this.titleService.setTitle('Búsqueda • Reel VERSE');
-      const [ genres, trendingAll ] = await Promise.all([
-        this.getGenres(), 
-        this.getTrendingAll(this.page)
+      this.titleService.setTitle('Búsqueda • ReelVERSE');
+      const [genres, trendingAll] = await Promise.all([
+        this.getGenres(),
+        this.getTrendingAll(this.page),
       ]);
     } catch (error) {
       console.error(error);
     } finally {
       this.loadingService.setLoading(false);
     }
-
   }
 
   ngOnDestroy(): void {
     this.loadingService.setLoading(true);
   }
- 
+
   private createInputSearch(): void {
     this.form = this.fb.group({
-      searchInput: ['', [Validators.required, Validators.minLength(3)] ]
+      searchInput: ['', [Validators.required, Validators.minLength(3)]],
     });
     this.subscribeToInputChanges();
   }
 
   private subscribeToInputChanges(): void {
-    this.form.get('searchInput')?.valueChanges.pipe(
-      debounceTime(1000)
-    ).subscribe(async value => {
-      if (value.length) {
-        this.showSearch = true;
-        this.search(value)
-        this.searchInput = value;
-      } else {
-        this.showSearch = false;
-      }
-    });
+    this.form
+      .get('searchInput')
+      ?.valueChanges.pipe(debounceTime(1000))
+      .subscribe(async (value) => {
+        if (value.length) {
+          this.showSearch = true;
+          this.search(value);
+          this.searchInput = value;
+        } else {
+          this.showSearch = false;
+        }
+      });
   }
 
   private async search(value: string): Promise<void> {
-      this.loading = true;
-      this.results = await this.getSearchResults(value);
-      this.loading = false;
-    
+    this.loading = true;
+    this.results = await this.getSearchResults(value);
+    this.loading = false;
   }
-  
+
   private async getGenres(): Promise<void> {
-    const resp = await this.moviesService.getMovieGenres();
+    const resp = await this.genresCacheService.getMovieGenres();
     this.genres = resp.genres;
   }
 
   public onGenreSelected(results: Result[]): void {
     this.showSearch = true;
     this.results = results;
-    
   }
 
   private async getTrendingAll(page: number): Promise<void> {
     const resp = await this.moviesService.getTrendingAll(page);
     this.trendingAll.push(...resp.results);
-
   }
-  
-  private async getSearchResults( query: string ): Promise<Result[]> {
-    const resp  = await this.searchService.getSearchResults( query );
+
+  private async getSearchResults(query: string): Promise<Result[]> {
+    const resp = await this.searchService.getSearchResults(query);
     const results: Result[] = resp.results;
     return results;
   }
-  
-
 }

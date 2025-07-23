@@ -18,6 +18,7 @@ import { Result } from 'src/app/interfaces/API-response.interface';
 import Swiper from 'swiper';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
 import { SeriesService } from '../../services/series.service';
+import { GenresCacheService } from '../../services/genres-cache.service';
 
 @Component({
   selector: 'app-slideshow',
@@ -64,7 +65,8 @@ export class SlideshowComponent
     private cdRef: ChangeDetectorRef,
     private router: Router,
     private moviesService: MoviesService,
-    private seriesService: SeriesService
+    private seriesService: SeriesService,
+    private genresCacheService: GenresCacheService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -133,25 +135,13 @@ export class SlideshowComponent
       ),
     ];
 
-    const genrePromises = uniqueGenreIds.map((genreId) => {
-      if (mediaType === 'movie') {
-        return this.moviesService.getMovieGenresById(genreId);
-      } else {
-        return this.seriesService.getSerieGenresById(genreId);
-      }
-    });
+    // Usar el servicio de caché para obtener los géneros
+    const genreMap = await this.genresCacheService.getGenresByIds(
+      uniqueGenreIds,
+      mediaType
+    );
 
-    const uniqueGenres = await Promise.all(genrePromises);
-
-    // Crear un mapa de ID de género a nombre de género para acceso rápido
-    const genreMap = new Map<number, string>();
-    uniqueGenres.forEach((genre, index) => {
-      if (genre) {
-        genreMap.set(uniqueGenreIds[index], genre.name);
-      }
-    });
-
-    // Asignar el nombre del género a cada elemento basado en su primer genre_id
+    // Asignar el nombre del género a cada elemento usando el mapa
     this.data.forEach((item: Result) => {
       const firstGenreId = item.genre_ids[0];
       if (firstGenreId && genreMap.has(firstGenreId)) {
@@ -195,5 +185,20 @@ export class SlideshowComponent
 
     // Si no, determinar por la presencia de title (movie) o name (tv)
     return this.data[0]?.title ? 'movie' : 'tv';
+  }
+
+  // Método estático para limpiar el caché si es necesario
+  public static clearGenresCache(): void {
+    GenresCacheService.clearCache();
+  }
+
+  // Método para obtener información del caché (útil para debugging)
+  public static getCacheInfo(): {
+    moviesList: boolean;
+    seriesList: boolean;
+    moviesIndividual: number;
+    seriesIndividual: number;
+  } {
+    return GenresCacheService.getCacheInfo();
   }
 }
