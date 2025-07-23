@@ -20,7 +20,6 @@
   justify-content: start;
 }
 
-
 .slide-content__title__logo {
   height: 100%;
   width: auto;
@@ -131,7 +130,7 @@
   .swiper-slide::after {
     /* Sombreado superior e inferior en mobile */
     box-shadow: inset 0 100px 80px rgba(0, 0, 0, 0.7),
-      inset 0 -200px 100px rgba(0, 0, 0, 1);
+      inset 0 -300px 150px rgba(0, 0, 0, 1);
     background: none;
   }
   .slide-content {
@@ -141,7 +140,7 @@
     text-align: center;
     padding-left: 0rem;
     width: 100%;
-    padding-bottom: 0.6rem;
+    padding-bottom: 2.5rem;
   }
 
   .slide-content__info {

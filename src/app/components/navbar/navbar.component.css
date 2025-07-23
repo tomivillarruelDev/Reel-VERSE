@@ -1,93 +1,122 @@
- .navbar-scrolled {
+.navbar-scrolled {
+  background-color: rgb(0.11, 0.11, 0.11, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.5s ease-in-out;
+  animation: fadeInBackground 0.6s ease-in-out;
+}
+
+@keyframes fadeInBackground {
+  0% {
+    background-color: transparent;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  100% {
     background-color: rgb(0.11, 0.11, 0.11, 0.6);
-        backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    transition: background-color 0.5s ease-in-out;
+  }
 }
 
 .active-link {
-    border-bottom: 2px solid white;
-    padding-bottom: 4px;
-    color: white !important;
+  border-bottom: 2px solid white;
+  padding-bottom: 4px;
+  color: white !important;
 }
 
-nav{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5) 0.48%, rgba(0, 0, 0, 0.47) 3.73%, rgba(0, 0, 0, 0.443) 6.67%, rgba(0, 0, 0, 0.424) 9.29%, rgba(0, 0, 0, 0.404) 11.98%, rgba(0, 0, 0, 0.384) 14.88%, rgba(0, 0, 0, 0.37) 18.18%, rgba(0, 0, 0, 0.34) 25%, rgba(0, 0, 0, 0.32) 32.4%, rgba(0, 0, 0, 0.28) 39.23%, rgba(0, 0, 0, 0.24) 47.42%, rgba(0, 0, 0, 0.2) 57.17%, rgba(0, 0, 0, 0.12) 68.67%, rgba(0, 0, 0, 0.06) 82.12%, rgba(0, 0, 0, 0) 97.71%);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
+nav {
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5) 0.48%,
+    rgba(0, 0, 0, 0.47) 3.73%,
+    rgba(0, 0, 0, 0.443) 6.67%,
+    rgba(0, 0, 0, 0.424) 9.29%,
+    rgba(0, 0, 0, 0.404) 11.98%,
+    rgba(0, 0, 0, 0.384) 14.88%,
+    rgba(0, 0, 0, 0.37) 18.18%,
+    rgba(0, 0, 0, 0.34) 25%,
+    rgba(0, 0, 0, 0.32) 32.4%,
+    rgba(0, 0, 0, 0.28) 39.23%,
+    rgba(0, 0, 0, 0.24) 47.42%,
+    rgba(0, 0, 0, 0.2) 57.17%,
+    rgba(0, 0, 0, 0.12) 68.67%,
+    rgba(0, 0, 0, 0.06) 82.12%,
+    rgba(0, 0, 0, 0) 97.71%
+  );
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
+
+  & a,
+  .navbar-toggler {
+    border: none;
+    outline: none;
+    font-weight: 600;
+    text-decoration: none;
     transition: all 0.3s ease-in-out;
+    color: var(--gray);
 
-    & a, .navbar-toggler {
-        border: none;
-        outline: none;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s ease-in-out;
-        color: var(--gray);
-
-        &:hover {
-            color: white;
-        }
+    &:hover {
+      color: white;
     }
+  }
 
-    .fa-search {
-        font-size: 1.2rem;
-        color: var(--gray);
-        transition: color 0.3s ease-in-out;
+  .fa-search {
+    font-size: 1.2rem;
+    color: var(--gray);
+    transition: color 0.3s ease-in-out;
 
-        &:hover {
-            color: white;
-        }
+    &:hover {
+      color: white;
     }
+  }
 }
 
 .navbar-toggler .navbar-toggler-icon {
-    border: none;
-    outline: none;
-  }
-
-.logo{
-    position: absolute;
-    left: 50%;
-    top:0;
-    transform: translateX(-50%);
-    z-index: 10;
-
-    .navbar-icon{
-        font-size: 1.2rem;
-        color: var(--gray);
-        width: 9rem;
-        transition: color 0.3s ease-in-out;
-        &:hover {
-            color: white;
-        }
-
-    }
+  border: none;
+  outline: none;
 }
 
+.logo {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 10;
+
+  .navbar-icon {
+    font-size: 1.2rem;
+    color: var(--gray);
+    width: 9rem;
+    transition: color 0.3s ease-in-out;
+    &:hover {
+      color: white;
+    }
+  }
+}
 
 .offcanvas-navbar {
-    background-color: var(--dark-gray);
-    width: 25%;
+  background-color: var(--dark-gray);
+  width: 25%;
 }
 
 @media (max-width: 992px) {
-    .offcanvas-navbar {
-        width: 25%;
-    }
+  .offcanvas-navbar {
+    width: 25%;
+  }
 }
 
 @media (max-width: 768px) {
-    .offcanvas-navbar {
-        width: 50%;
-    }
+  .offcanvas-navbar {
+    width: 50%;
+  }
 }
 
 @media (max-width: 576px) {
-    .offcanvas-navbar {
-        width: 75%;
-    }
+  .offcanvas-navbar {
+    width: 75%;
+  }
 }
