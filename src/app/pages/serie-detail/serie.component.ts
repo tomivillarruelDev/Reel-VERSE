@@ -45,7 +45,7 @@ export class SerieComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.activatedRoute.paramMap.subscribe(async (paramMap) => {
-      this.loadingService.setLoading(true);
+      this.loadingService.setLoading(true, 'serie-detail');
 
       // Reset all data when changing route
       this.serie = null;
@@ -55,6 +55,7 @@ export class SerieComponent implements OnInit, OnDestroy {
 
       const id = paramMap.get('id');
       if (id === null) {
+        this.loadingService.setLoading(false, 'serie-detail');
         return;
       } else {
         try {
@@ -79,14 +80,14 @@ export class SerieComponent implements OnInit, OnDestroy {
         } catch (error) {
           console.error(error);
         } finally {
-          this.loadingService.setLoading(false);
+          this.loadingService.setLoading(false, 'serie-detail');
         }
       }
     });
   }
 
   ngOnDestroy(): void {
-    this.loadingService.setLoading(true);
+    this.loadingService.setLoading(false, 'serie-detail');
     if (this.resizeSubscription) {
       this.resizeSubscription.unsubscribe();
     }

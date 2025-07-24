@@ -97,6 +97,7 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   async ngOnInit() {
+    this.loadingService.setLoading(true, 'series');
     try {
       this.titleService.setTitle(this.title + ' • ReelVERSE');
       const [topRatedSeries, genres] = await Promise.all([
@@ -106,7 +107,7 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     } catch (error) {
       console.log(error);
     } finally {
-      this.loadingService.setLoading(false);
+      this.loadingService.setLoading(false, 'series');
     }
   }
 
@@ -187,7 +188,7 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.loadingService.setLoading(true);
+    this.loadingService.setLoading(false, 'series');
     // Limpieza de observers usando el helper
     SeriesObserverHelper.disconnectAllObservers(this.observers);
   }

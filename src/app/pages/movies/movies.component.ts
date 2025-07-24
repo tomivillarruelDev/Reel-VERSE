@@ -88,6 +88,7 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.loadingService.setLoading(true, 'movies');
     try {
       this.titleService.setTitle(this.title + ' • ReelVERSE');
       const [actionMovies, genres] = await Promise.all([
@@ -97,7 +98,7 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
     } catch (error) {
       console.log(error);
     } finally {
-      this.loadingService.setLoading(false);
+      this.loadingService.setLoading(false, 'movies');
     }
   }
 
@@ -160,7 +161,7 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.loadingService.setLoading(true);
+    this.loadingService.setLoading(false, 'movies');
     // Limpieza de observers usando el helper
     MoviesObserverHelper.disconnectAllObservers(this.observers);
   }

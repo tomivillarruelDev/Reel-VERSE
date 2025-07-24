@@ -1,8 +1,13 @@
-<div class="container-fluid background-black overflow-x-hidden">
-  <div class="animate__animated animate__fadeIn" *ngIf="serie">
+<div
+  class="container-fluid background-black overflow-x-hidden overflow-y-hidden min-h-screen"
+>
+  <div
+    class="animate__animated animate__fadeIn overflow-y-hidden"
+    *ngIf="serie"
+  >
     <div>
       <div
-        class="image-detail animate__animated animate__fadeIn animate__delay-1s flex justify-start items-end"
+        class="image-detail animate__animated animate__fadeIn animate__delay-1s flex justify-start items-end min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] bg-gray-900"
         [ngStyle]="{
           'background-image':
             ' url(http://image.tmdb.org/t/p/original' +
@@ -19,11 +24,13 @@
               alt="{{ serie.name }}"
               loading="lazy"
               decoding="async"
-              class="slide-content__title__logo lazy-image"
+              class="slide-content__title__logo lazy-image animate__animated animate__fadeInUp animate__delay-2s"
             />
           </ng-container>
           <ng-template #showTitle>
-            <p class="text-5xl font-semibold mb-2">
+            <p
+              class="text-5xl font-semibold mb-2 animate__animated animate__fadeInUp animate__delay-2s"
+            >
               {{ serie.name | cut }}
             </p>
           </ng-template>
@@ -31,10 +38,15 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-4 max-w-2xl with-padding pt-4">
-      <div class="mb-3 flex flex-col">
+    <div
+      class="grid grid-cols-1 gap-4 max-w-2xl with-padding pt-4 animate__animated animate__fadeInUp animate__delay-1s"
+    >
+      <div
+        class="mb-3 flex flex-col animate__animated animate__fadeInLeft animate__delay-2s"
+      >
         <ul class="flex flex-row">
           <li
+            *ngIf="serie.genres && serie.genres.length > 0"
             class="me-3 text-xs text-uppercase font-normal text-white text-opacity-70"
           >
             {{ serie.genres[0].name }}
@@ -50,21 +62,25 @@
           </li>
         </ul>
       </div>
-      <div>
+      <div class="animate__animated animate__fadeInLeft animate__delay-2s">
         <app-see-now-button link="{{ serie.homepage }}"></app-see-now-button>
       </div>
-      <div class="pb-2">
+      <div class="pb-2 animate__animated animate__fadeIn animate__delay-3s">
         <p class="font-normal text-sm text-white text-opacity-85">
           {{ serie.overview }}
         </p>
       </div>
     </div>
   </div>
-  <div class="row with-padding">
+  <div
+    class="row with-padding animate__animated animate__fadeInUp animate__delay-2s overflow-y-hidden"
+  >
     <app-backdrop-grid [data]="episodes"> </app-backdrop-grid>
   </div>
 
-  <div class="with-padding py-5">
+  <div
+    class="with-padding py-5 animate__animated animate__fadeInUp animate__delay-3s overflow-y-hidden"
+  >
     <div *ngIf="recommendedSeries.length > 0">
       <div class="flex items-center gap-4 mb-4">
         <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-0">
@@ -73,7 +89,7 @@
         <div class="flex-1 h-[1px] bg-white"></div>
       </div>
     </div>
-    <div>
+    <div class="overflow-hidden">
       <app-poster-swiper
         *ngIf="recommendedSeries.length > 0"
         [data]="recommendedSeries"

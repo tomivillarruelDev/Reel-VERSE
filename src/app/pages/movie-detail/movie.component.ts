@@ -49,7 +49,7 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.activatedRoute.paramMap.subscribe(async (paramMap) => {
-      this.loadingService.setLoading(true);
+      this.loadingService.setLoading(true, 'movie-detail');
 
       // Reset all data when changing route
       this.movie = null;
@@ -61,6 +61,7 @@ export class MovieComponent implements OnInit, OnDestroy {
 
       const id = paramMap.get('id');
       if (id === null) {
+        this.loadingService.setLoading(false, 'movie-detail');
         return;
       } else {
         try {
@@ -90,14 +91,14 @@ export class MovieComponent implements OnInit, OnDestroy {
         } catch (error) {
           console.error(error);
         } finally {
-          this.loadingService.setLoading(false);
+          this.loadingService.setLoading(false, 'movie-detail');
         }
       }
     });
   }
 
   ngOnDestroy(): void {
-    this.loadingService.setLoading(true);
+    this.loadingService.setLoading(false, 'movie-detail');
     if (this.resizeSubscription) {
       this.resizeSubscription.unsubscribe();
     }

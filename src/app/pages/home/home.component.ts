@@ -113,13 +113,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.loadingService.setLoading(true, 'home');
     try {
       this.titleService.setTitle('ReelVERSE');
       await this.getPlayingNowMovies();
     } catch (error) {
       console.error(error);
     } finally {
-      this.loadingService.setLoading(false);
+      this.loadingService.setLoading(false, 'home');
     }
   }
 
@@ -236,7 +237,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.loadingService.setLoading(true);
+    // Limpiar el loading específico de home
+    this.loadingService.setLoading(false, 'home');
     // Limpieza de observers para evitar memory leaks
     this.observers.forEach((observer) => {
       observer.disconnect();

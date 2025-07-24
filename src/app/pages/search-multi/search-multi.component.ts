@@ -64,7 +64,7 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.loadingService.setLoading(true);
+    this.loadingService.setLoading(true, 'search');
     this.createInputSearch();
     try {
       this.titleService.setTitle('Búsqueda • ReelVERSE');
@@ -76,12 +76,12 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error(error);
     } finally {
-      this.loadingService.setLoading(false);
+      this.loadingService.setLoading(false, 'search');
     }
   }
 
   ngOnDestroy(): void {
-    this.loadingService.setLoading(true);
+    this.loadingService.setLoading(false, 'search');
   }
 
   private createInputSearch(): void {

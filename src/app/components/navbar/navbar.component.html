@@ -1,13 +1,13 @@
 <nav
-  class="fixed top-0 left-0 right-0 z-10 transition-all duration-300 text-white"
+  class="fixed top-0 left-0 right-0 z-10 transition-all duration-300 text-white animate__animated animate__fadeIn overflow-hidden"
   [ngClass]="{
     'bg-gradient-to-b from-black/50 to-transparent': !isScrolled,
     'navbar-scrolled': isScrolled
   }"
 >
-  <div class="flex items-center justify-between px-4 py-4 relative">
+  <div class="flex items-center justify-between px-4 py-4 relative overflow-hidden">
     <!-- Logo -->
-    <a routerLink="/home">
+    <a routerLink="/home" class="animate__animated animate__fadeInLeft animate__delay-1s">
       <img
         src="./assets/reelVERSE.svg"
         alt="Logo"
@@ -18,9 +18,9 @@
 
     <!-- Menú centrado -->
     <ul
-      class="flex gap-6 text-sm md:text-base font-semibold absolute left-1/2 -translate-x-1/2"
+      class="flex gap-6 text-sm md:text-base font-semibold absolute left-1/2 -translate-x-1/2 animate__animated animate__fadeIn animate__delay-1s"
     >
-      <li>
+      <li class="animate__animated animate__fadeIn animate__delay-2s">
         <a
           routerLink="/home"
           routerLinkActive="active-link"
@@ -29,7 +29,7 @@
           >Inicio</a
         >
       </li>
-      <li>
+      <li class="animate__animated animate__fadeIn animate__delay-3s">
         <a
           routerLink="/movies"
           routerLinkActive="active-link"
@@ -37,7 +37,7 @@
           >Películas</a
         >
       </li>
-      <li>
+      <li class="animate__animated animate__fadeIn animate__delay-4s">
         <a
           routerLink="/series"
           routerLinkActive="active-link"
@@ -50,7 +50,7 @@
     <!-- Búsqueda -->
     <button
       (click)="goToSearch()"
-      class="text-gray-400 hover:text-white transition"
+      class="text-gray-400 hover:text-white transition animate__animated animate__fadeInRight animate__delay-1s"
     >
       <i class="fa fa-search text-lg"></i>
     </button>

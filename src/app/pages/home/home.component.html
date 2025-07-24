@@ -37,7 +37,7 @@
           Nuevas y populares
         </p>
       </div>
-      <div class="animate__animated animate__zoomIn animate__delay-2s">
+      <div class="animate__animated animate__fadeInUp animate__delay-2s overflow-hidden">
         <app-square-poster-swiper
           *ngIf="popularMovies.length > 0"
           [data]="popularMovies"
@@ -46,7 +46,7 @@
     </div>
 
     <div
-      class="py-3 animate__animated animate__fadeInUp animate__delay-3s"
+      class="py-3 animate__animated animate__fadeInUp animate__delay-3s overflow-hidden"
       #seriesElement
     >
       <div class="" *ngIf="series.length > 0">
@@ -61,7 +61,7 @@
           Streaming exclusivo del mejor contenido, solo aquí.
         </p>
       </div>
-      <div class="animate__animated animate__slideInRight animate__delay-3s">
+      <div class="animate__animated animate__fadeInUp animate__delay-3s overflow-hidden">
         <app-poster-swiper
           *ngIf="series.length > 0"
           [data]="series"
@@ -81,7 +81,7 @@
       </div>
     </div> -->
 
-    <div class="py-1 animate__animated animate__fadeInUp" #justAddedElement>
+    <div class="py-1 animate__animated animate__fadeInUp overflow-hidden" #justAddedElement>
       <div class="" *ngIf="justAdded.length > 0">
         <p
           class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0 animate__animated animate__fadeInLeft"
