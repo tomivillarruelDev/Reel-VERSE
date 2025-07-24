@@ -10,7 +10,7 @@
             ')'
         }"
       >
-        <div class="slide-content__title with-padding">
+        <div class="slide-content__title with-padding z-10">
           <ng-container *ngIf="movie.logo_path; else showTitle">
             <img
               [appLazyImage]="
@@ -19,18 +19,18 @@
               alt="{{ movie.title }}"
               loading="lazy"
               decoding="async"
-              class="slide-content__title__logo z-10 lazy-image"
+              class="slide-content__title__logo lazy-image"
             />
           </ng-container>
           <ng-template #showTitle>
-            <p class="text-5xl font-semibold mb-2 z-10">
+            <p class="text-5xl font-semibold mb-2">
               {{ movie.title | cut }}
             </p>
           </ng-template>
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 gap-4 max-w-2xl with-padding">
+    <div class="grid grid-cols-1 gap-4 max-w-2xl with-padding pt-4">
       <div class="mb-3 flex flex-col">
         <ul class="flex flex-row">
           <li class="me-3 text-xs font-normal text-white text-opacity-70">
