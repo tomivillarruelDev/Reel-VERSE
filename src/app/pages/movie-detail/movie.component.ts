@@ -50,11 +50,12 @@ export class MovieComponent implements OnInit, OnDestroy {
       this.loadingService.setLoading(true);
 
       // Reset all data when changing route
-      this.movie = null as any;
+      this.movie = null;
       this.recommendedMovies = [];
       this.cast = [];
       this.producers = [];
       this.directors = [];
+      this.cdRef.detectChanges();
 
       const id = paramMap.get('id');
       if (id === null) {
@@ -79,6 +80,7 @@ export class MovieComponent implements OnInit, OnDestroy {
           this.cast = cast;
           this.producers = producer;
           this.directors = directors;
+          this.cdRef.detectChanges();
         } catch (error) {
           console.error(error);
         } finally {

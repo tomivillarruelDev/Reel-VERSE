@@ -23,7 +23,7 @@ import { SeriesService } from 'src/app/services/series.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SerieComponent implements OnInit, OnDestroy {
-  public serie!: SerieDetailResponse;
+  public serie: SerieDetailResponse | null = null;
 
   public isLargeScreen = window.innerWidth > 600;
 
@@ -46,15 +46,10 @@ export class SerieComponent implements OnInit, OnDestroy {
       this.loadingService.setLoading(true);
 
       // Reset all data when changing route
-      // this.movie = null as any;
-      // this.recommendedMovies = [];
-      // this.cast = [];
-      // this.producers = [];
-      // this.directors = [];
-
-      this.serie = null as any;
+      this.serie = null;
       this.recommendedSeries = [];
       this.episodes = [];
+      this.cdRef.detectChanges();
 
       const id = paramMap.get('id');
       if (id === null) {
@@ -74,6 +69,7 @@ export class SerieComponent implements OnInit, OnDestroy {
           this.titleService.setTitle(this.serie.name + ' • ReelVERSE');
           this.episodes = episodes;
           this.recommendedSeries = recommendedSeries;
+          this.cdRef.detectChanges();
         } catch (error) {
           console.error(error);
         } finally {
