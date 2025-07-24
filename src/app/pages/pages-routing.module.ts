@@ -4,7 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies.component';
 import { SeriesComponent } from './series/series.component';
 import { MovieComponent } from './movie-detail/movie.component';
-import { SerieComponent } from './serie/serie.component';
+import { SerieComponent } from './serie-detail/serie.component';
 import { SearchMultiComponent } from './search-multi/search-multi.component';
 
 const routes: Routes = [

@@ -6,7 +6,7 @@ import { ComponentsModule } from '../components/components.module';
 import { SearchMultiComponent } from './search-multi/search-multi.component';
 import { SeriesComponent } from './series/series.component';
 import { MoviesComponent } from './movies/movies.component';
-import { SerieComponent } from './serie/serie.component';
+import { SerieComponent } from './serie-detail/serie.component';
 import { MovieComponent } from './movie-detail/movie.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { PagesRoutingModule } from './pages-routing.module';
