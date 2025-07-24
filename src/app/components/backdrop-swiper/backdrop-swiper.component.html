@@ -9,8 +9,10 @@
           <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
           <div class="image-border">
             <img
-              [src]="value.backdrop_path | poster"
+              [appLazyImage]="value.backdrop_path | poster : 'w780'"
+              class="swiper-img lazy-image"
               loading="lazy"
+              decoding="async"
               alt="{{ value.title ? value.title : value.name }}"
             />
           </div>

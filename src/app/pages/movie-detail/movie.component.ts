@@ -15,6 +15,7 @@ import { MovieDetailResponse } from 'src/app/interfaces/movie-detail-response.in
 
 import { LoadingService } from 'src/app/services/loading.service';
 import { MoviesService } from 'src/app/services/movies.service';
+import { BaseImagePreloadService } from '../../services/base-image-preload.service';
 
 @Component({
   selector: 'app-movie',
@@ -42,7 +43,8 @@ export class MovieComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private moviesService: MoviesService,
     private titleService: Title,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private baseImagePreloadService: BaseImagePreloadService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -80,6 +82,10 @@ export class MovieComponent implements OnInit, OnDestroy {
           this.cast = cast;
           this.producers = producer;
           this.directors = directors;
+
+          // Preload de imágenes recomendadas
+          this.preloadRecommendedImages();
+
           this.cdRef.detectChanges();
         } catch (error) {
           console.error(error);
@@ -113,6 +119,16 @@ export class MovieComponent implements OnInit, OnDestroy {
   private checkScreenSize(): void {
     this.isLargeScreen = window.innerWidth > 600;
     this.cdRef.detectChanges();
+  }
+
+  private preloadRecommendedImages(): void {
+    if (this.recommendedMovies && this.recommendedMovies.length > 0) {
+      const config = BaseImagePreloadService.getPreloadConfig('poster');
+      this.baseImagePreloadService.preloadSwiperImages(
+        this.recommendedMovies,
+        config
+      );
+    }
   }
 
   private async getRecommendedMovies(id: string): Promise<Result[]> {

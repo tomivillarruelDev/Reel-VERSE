@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
+import { BaseImagePreloadService } from '../../services/base-image-preload.service';
 
 import Swiper from 'swiper';
 
@@ -21,7 +22,10 @@ export class SquarePosterSwiperComponent implements OnInit, AfterViewInit {
   @Input() data!: Result[];
   swiper!: Swiper;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private baseImagePreloadService: BaseImagePreloadService
+  ) {}
 
   // TrackBy function para optimizar ngFor
   trackByMovieId = (index: number, item: Result): number => {
@@ -54,6 +58,15 @@ export class SquarePosterSwiperComponent implements OnInit, AfterViewInit {
           },
         },
       });
+
+      // Preload optimizado usando configuración predefinida
+      if (this.data && this.data.length > 0) {
+        const config = BaseImagePreloadService.getPreloadConfig('backdrop');
+        // Ajustar para square poster (menos imágenes visibles)
+        config.visibleCount = 4;
+        config.preloadCount = 2;
+        this.baseImagePreloadService.preloadSwiperImages(this.data, config);
+      }
     }, 0);
   }
 

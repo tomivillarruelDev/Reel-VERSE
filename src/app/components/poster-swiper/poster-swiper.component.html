@@ -1,5 +1,5 @@
 <div class="container-fluid p-0">
-  <div class="swiper swiper-poster-grid">
+  <div class="swiper swiper-poster-grid swiper-poster">
     <div class="swiper-wrapper">
       <div
         class="swiper-slide movie-cover animate__animated animate__fadeInRightBig"
@@ -9,9 +9,12 @@
         <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
         <div style="position: relative">
           <img
-            [src]="value.poster_path | poster"
+            [appLazyImage]="value.poster_path | poster : 'w342'"
+            [alt]="value.title || value.name"
+            class="swiper-img animate__animated animate__fadeIn animate__delay-2s lazy-image"
+            decoding="async"
             loading="lazy"
-            alt="{{ value.title }}"
+            (click)="onRedirectToDetailPage(value)"
           />
         </div>
         <a class="play-button rounded-full">

@@ -7,10 +7,11 @@
       >
         <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
         <img
-          [src]="value.poster_path | poster"
-          class="swiper-img animate__animated animate__fadeIn animate__delay-2s"
+          [appLazyImage]="value.poster_path | poster : 'w500'"
+          class="swiper-img animate__animated animate__fadeIn animate__delay-2s lazy-image"
           alt="{{ value.title }}"
           loading="lazy"
+          decoding="async"
         />
         <a class="play-button rounded-full">
           <i class="fa-solid fa-play"></i>

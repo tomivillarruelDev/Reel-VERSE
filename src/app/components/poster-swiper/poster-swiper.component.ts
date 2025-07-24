@@ -7,6 +7,7 @@ import {
 import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
+import { BaseImagePreloadService } from '../../services/base-image-preload.service';
 
 import Swiper from 'swiper';
 
@@ -26,7 +27,10 @@ export class PosterSwiperComponent implements AfterViewInit {
     return item.id || index;
   };
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private baseImagePreloadService: BaseImagePreloadService
+  ) {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -54,6 +58,10 @@ export class PosterSwiperComponent implements AfterViewInit {
           },
         },
       });
+
+      // Preload optimizado usando configuración predefinida
+      const config = BaseImagePreloadService.getPreloadConfig('poster');
+      this.baseImagePreloadService.preloadSwiperImages(this.data, config);
     }, 0);
   }
 

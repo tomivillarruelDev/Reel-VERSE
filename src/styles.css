@@ -259,6 +259,58 @@ a {
   pointer-events: none;
 }
 
+/* Global Lazy Loading Styles - Sin conflictos de opacity */
+.lazy-image,
+img.lazy-image {
+  transition: opacity 0.4s ease-in-out, filter 0.4s ease-in-out;
+}
+
+.lazy-loading,
+img.lazy-loading {
+  opacity: 0 !important; /* Completamente invisible mientras carga */
+  filter: blur(2px) !important;
+  background: linear-gradient(
+    90deg,
+    #16161f 25%,
+    #2a2a3a 50%,
+    #16161f 75%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: shimmer 1.5s infinite !important;
+}
+
+.lazy-loaded,
+img.lazy-loaded {
+  filter: none !important;
+  background: none !important;
+  animation: fadeInImage 2s ease-out forwards !important;
+}
+
+/* Animación personalizada para fadeIn elegante */
+@keyframes fadeInImage {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* WebP Support Enhancement */
+.webp .lazy-image {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+}
+
 @media (max-width: 768px) {
   .with-padding {
     padding-left: 2.25rem;

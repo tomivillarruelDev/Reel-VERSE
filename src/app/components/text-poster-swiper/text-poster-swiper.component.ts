@@ -7,6 +7,7 @@ import {
 import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
+import { BaseImagePreloadService } from '../../services/base-image-preload.service';
 
 import Swiper from 'swiper';
 
@@ -25,7 +26,10 @@ export class TextPosterSwiperComponent implements AfterViewInit {
 
   swiper!: Swiper;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private baseImagePreloadService: BaseImagePreloadService
+  ) {}
 
   // TrackBy function para optimizar ngFor
   trackByMovieId = (index: number, item: Result): number => {
@@ -57,6 +61,12 @@ export class TextPosterSwiperComponent implements AfterViewInit {
           },
         },
       });
+
+      // Preload optimizado usando configuración predefinida
+      if (this.data && this.data.length > 0) {
+        const config = BaseImagePreloadService.getPreloadConfig('poster');
+        this.baseImagePreloadService.preloadSwiperImages(this.data, config);
+      }
     }, 0);
   }
 

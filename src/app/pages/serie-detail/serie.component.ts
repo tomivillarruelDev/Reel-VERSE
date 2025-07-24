@@ -15,6 +15,7 @@ import { SerieDetailResponse } from 'src/app/interfaces/serie-detail-response.in
 
 import { LoadingService } from 'src/app/services/loading.service';
 import { SeriesService } from 'src/app/services/series.service';
+import { BaseImagePreloadService } from '../../services/base-image-preload.service';
 
 @Component({
   selector: 'app-serie',
@@ -38,7 +39,8 @@ export class SerieComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private seriesService: SeriesService,
     private titleService: Title,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private baseImagePreloadService: BaseImagePreloadService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -69,6 +71,10 @@ export class SerieComponent implements OnInit, OnDestroy {
           this.titleService.setTitle(this.serie.name + ' • ReelVERSE');
           this.episodes = episodes;
           this.recommendedSeries = recommendedSeries;
+
+          // Preload de imágenes recomendadas y episodios
+          this.preloadSerieImages();
+
           this.cdRef.detectChanges();
         } catch (error) {
           console.error(error);
@@ -112,5 +118,27 @@ export class SerieComponent implements OnInit, OnDestroy {
   private async getRecommendedSeries(id: string): Promise<Result[]> {
     const resp = await this.seriesService.getRecommendedSeries(id);
     return resp.results;
+  }
+
+  private preloadSerieImages(): void {
+    // Preload series recomendadas
+    if (this.recommendedSeries && this.recommendedSeries.length > 0) {
+      const config = BaseImagePreloadService.getPreloadConfig('poster');
+      this.baseImagePreloadService.preloadSwiperImages(
+        this.recommendedSeries,
+        config
+      );
+    }
+
+    // Preload episodios (usar backdrop config por still_path)
+    if (this.episodes && this.episodes.length > 0) {
+      const config = BaseImagePreloadService.getPreloadConfig('backdrop');
+      // Convertir episodes a Result[] para usar el servicio base
+      const episodeResults: any[] = this.episodes.map((ep) => ({
+        ...ep,
+        backdrop_path: ep.still_path,
+      }));
+      this.baseImagePreloadService.preloadSwiperImages(episodeResults, config);
+    }
   }
 }

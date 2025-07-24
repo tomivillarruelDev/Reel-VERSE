@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Person } from 'src/app/interfaces/person.interface';
+import { BaseImagePreloadService } from '../../services/base-image-preload.service';
 
 import Swiper from 'swiper';
 
@@ -23,7 +24,10 @@ export class LargePosterSwiperComponent implements OnInit, AfterViewInit {
   @Input() people!: Person[];
   swiper!: Swiper;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private baseImagePreloadService: BaseImagePreloadService
+  ) {}
 
   // TrackBy functions para optimizar ngFor
   trackByMovieId = (index: number, item: Result): number => {
@@ -61,6 +65,12 @@ export class LargePosterSwiperComponent implements OnInit, AfterViewInit {
           },
         },
       });
+
+      // Preload optimizado usando configuración predefinida
+      if (this.data && this.data.length > 0) {
+        const config = BaseImagePreloadService.getPreloadConfig('large-poster');
+        this.baseImagePreloadService.preloadSwiperImages(this.data, config);
+      }
     }, 0);
   }
 

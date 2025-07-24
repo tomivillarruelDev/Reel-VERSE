@@ -30,7 +30,7 @@
 }
 
 @media screen and (min-width: 441px) and (max-width: 600px) {
-  .image-containerimg {
+  .image-container img {
     height: calc((100vw - 30px) / 2 * 0.55);
   }
 }

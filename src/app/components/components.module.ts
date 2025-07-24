@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { PipesModule } from '../pipes/pipes.module';
+import { DirectivesModule } from '../directives/directives.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SlideshowComponent } from './slideshow/slideshow.component';
 import { PosterGridComponent } from './poster-grid/poster-grid.component';
@@ -46,8 +47,8 @@ import { SeeNowButtonComponent } from './see-now-button/see-now-button.component
     GenresComponent,
     BackdropGridComponent,
     LoadingComponent,
-    SeeNowButtonComponent
+    SeeNowButtonComponent,
   ],
-  imports: [CommonModule, RouterModule, PipesModule],
+  imports: [CommonModule, RouterModule, PipesModule, DirectivesModule],
 })
 export class ComponentsModule {}

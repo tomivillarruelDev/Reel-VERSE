@@ -9,10 +9,11 @@
           <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
           <div class="image-border">
             <img
-              [src]="value.backdrop_path | poster"
-              class="swiper-img animate__animated animate__fadeIn animate__delay-2s"
+              [appLazyImage]="value.backdrop_path | poster : 'w780'"
+              class="swiper-img animate__animated animate__fadeIn animate__delay-2s lazy-image"
               alt="{{ value.title }}"
               loading="lazy"
+              decoding="async"
             />
           </div>
           <a class="play-button rounded-full">

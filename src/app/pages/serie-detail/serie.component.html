@@ -13,10 +13,13 @@
         <div class="slide-content__title with-padding">
           <ng-container *ngIf="serie.logo_path; else showTitle">
             <img
-              [src]="'https://image.tmdb.org/t/p/original' + serie.logo_path"
+              [appLazyImage]="
+                'https://image.tmdb.org/t/p/original' + serie.logo_path
+              "
               alt="{{ serie.name }}"
               loading="lazy"
-              class="slide-content__title__logo z-10"
+              decoding="async"
+              class="slide-content__title__logo z-10 lazy-image"
             />
           </ng-container>
           <ng-template #showTitle>

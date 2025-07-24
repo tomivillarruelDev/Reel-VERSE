@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
+import { BaseImagePreloadService } from '../../services/base-image-preload.service';
 
 import Swiper from 'swiper';
 
@@ -18,7 +19,10 @@ import Swiper from 'swiper';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BackdropSwiperComponent implements OnInit, AfterViewInit {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private baseImagePreloadService: BaseImagePreloadService
+  ) {}
 
   @Input() data!: Result[];
   swiper!: Swiper;
@@ -56,6 +60,10 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
           },
         },
       });
+
+      // Preload optimizado usando configuración predefinida
+      const config = BaseImagePreloadService.getPreloadConfig('backdrop');
+      this.baseImagePreloadService.preloadSwiperImages(this.data, config);
     }, 0);
   }
 

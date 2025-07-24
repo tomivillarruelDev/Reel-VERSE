@@ -16,6 +16,7 @@ import { MoviesService } from 'src/app/services/movies.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
 import { Result } from 'src/app/interfaces/API-response.interface';
+import { BaseImagePreloadService } from '../../services/base-image-preload.service';
 import Swiper from 'swiper';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
 import { SeriesService } from '../../services/series.service';
@@ -74,7 +75,8 @@ export class SlideshowComponent
     private router: Router,
     private moviesService: MoviesService,
     private seriesService: SeriesService,
-    private genresCacheService: GenresCacheService
+    private genresCacheService: GenresCacheService,
+    private baseImagePreloadService: BaseImagePreloadService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -179,6 +181,10 @@ export class SlideshowComponent
     // Iniciar Swiper ahora que el DOM está listo
     setTimeout(() => {
       this.initSwiper();
+
+      // Preload de imágenes del slideshow para mejor UX
+      this.preloadSlideshowImages();
+
       this.slideshowLoaded.emit();
     }, 0);
   }
@@ -206,5 +212,16 @@ export class SlideshowComponent
     seriesIndividual: number;
   } {
     return GenresCacheService.getCacheInfo();
+  }
+
+  private preloadSlideshowImages(): void {
+    if (this.data && this.data.length > 0) {
+      // Preload todas las imágenes backdrop del slideshow
+      const config = BaseImagePreloadService.getPreloadConfig('backdrop');
+      // Personalizar para slideshow - cargar todas las imágenes
+      config.visibleCount = this.data.length;
+      config.preloadCount = 0; // No hay "siguientes" en slideshow
+      this.baseImagePreloadService.preloadSwiperImages(this.data, config);
+    }
   }
 }

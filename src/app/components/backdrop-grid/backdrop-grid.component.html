@@ -11,10 +11,11 @@
           <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
           <div class="image-border">
             <img
-              [src]="value.backdrop_path | poster"
-              class="grid-img animate__animated animate__fadeIn animate__delay-2s"
+              [appLazyImage]="value.backdrop_path | poster : 'w780'"
+              class="grid-img animate__animated animate__fadeIn animate__delay-2s lazy-image"
               alt="{{ value.title ? value.title : value.name }}"
               loading="lazy"
+              decoding="async"
             />
           </div>
         </ng-container>
@@ -23,10 +24,11 @@
           <div class="overlay"></div>
           <div class="image-border">
             <img
-              [src]="value.still_path | poster"
-              class="grid-img animate__animated animate__fadeIn animate__delay-2s"
+              [appLazyImage]="value.still_path | poster"
+              class="grid-img animate__animated animate__fadeIn animate__delay-2s lazy-image"
               alt="{{ value.name }}"
               loading="lazy"
+              decoding="async"
             />
           </div>
         </ng-container>
