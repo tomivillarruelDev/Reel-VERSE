@@ -64,6 +64,7 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.loadingService.setLoading(true);
     this.createInputSearch();
     try {
       this.titleService.setTitle('Búsqueda • ReelVERSE');
@@ -71,6 +72,7 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
         this.getGenres(),
         this.getTrendingAll(this.page),
       ]);
+      this.cdr.detectChanges();
     } catch (error) {
       console.error(error);
     } finally {
@@ -101,33 +103,41 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
         } else {
           this.showSearch = false;
         }
+        this.cdr.detectChanges();
       });
   }
 
   private async search(value: string): Promise<void> {
     this.loading = true;
+    this.cdr.detectChanges();
     this.results = await this.getSearchResults(value);
     this.loading = false;
+    this.cdr.detectChanges();
   }
 
   private async getGenres(): Promise<void> {
     const resp = await this.genresCacheService.getMovieGenres();
     this.genres = resp.genres;
+    this.cdr.detectChanges();
   }
 
   public onGenreSelected(results: Result[]): void {
     this.showSearch = true;
     this.results = results;
+    this.cdr.detectChanges();
   }
 
   private async getTrendingAll(page: number): Promise<void> {
     const resp = await this.moviesService.getTrendingAll(page);
     this.trendingAll.push(...resp.results);
+    this.cdr.detectChanges();
   }
 
   private async getSearchResults(query: string): Promise<Result[]> {
     const resp = await this.searchService.getSearchResults(query);
-    const results: Result[] = resp.results;
+    const results: Result[] = resp.results.filter(
+      (item) => (item.name || item.title) && item.popularity >= 1
+    );
     return results;
   }
 }

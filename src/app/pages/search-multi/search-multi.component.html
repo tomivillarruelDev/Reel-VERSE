@@ -1,57 +1,73 @@
-<div class="with-padding py-5 pt-20 background">
-  <div class="justify-center py-14">
-    <div class="search-container">
-      <form *ngIf="form" [formGroup]="form">
-        <input
-          class="searchInput rounded-1 mx-auto"
-          type="search"
-          name="searchInput"
-          placeholder="¿Qué estas buscando?"
-          formControlName="searchInput"
-          [ngClass]="{ 'search-active': showSearch }"
-        />
-        <i class="fa fa-search search-icon"></i>
-      </form>
+<div class="overflow-hidden">
+  <div
+    class="with-padding py-5 pt-20 background animate__animated animate__fadeIn animate__delay-1s"
+  >
+    <div
+      class="justify-center py-14 animate__animated animate__fadeInUp animate__delay-1s"
+    >
+      <div class="search-container">
+        <form *ngIf="form" [formGroup]="form">
+          <input
+            class="searchInput rounded-1 mx-auto animate__animated animate__zoomIn animate__delay-1s"
+            type="search"
+            name="searchInput"
+            placeholder="¿Qué estas buscando?"
+            formControlName="searchInput"
+            [ngClass]="{ 'search-active': showSearch }"
+          />
+          <i class="fa fa-search search-icon"></i>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <div>
-    <div>
-      <app-genres
-        *ngIf="genres.length > 0"
-        [genres]="genres"
-        (genreSelected)="onGenreSelected($event)"
-      ></app-genres>
+    <div class="animate__animated animate__fadeInUp animate__delay-2s">
+      <div>
+        <app-genres
+          *ngIf="genres.length > 0"
+          [genres]="genres"
+          (genreSelected)="onGenreSelected($event)"
+        ></app-genres>
+      </div>
     </div>
-  </div>
 
-  <div class="py-3" *ngIf="!showSearch">
-    <div>
-      <p class="font-semibold mb-2">Nuevas y populares</p>
+    <div
+      class="py-3 animate__animated animate__fadeInUp animate__delay-3s"
+      *ngIf="!showSearch"
+    >
+      <div>
+        <p
+          class="font-semibold mb-2 animate__animated animate__fadeInLeft animate__delay-3s"
+        >
+          Nuevas y populares
+        </p>
+      </div>
+      <div class="animate__animated animate__zoomIn animate__delay-3s">
+        <app-poster-grid
+          *ngIf="trendingAll.length > 0"
+          [data]="trendingAll"
+        ></app-poster-grid>
+      </div>
     </div>
-    <div>
-      <app-poster-grid
-        *ngIf="trendingAll.length > 0"
-        [data]="trendingAll"
-      ></app-poster-grid>
-    </div>
-  </div>
 
-  <div class="py-3" *ngIf="showSearch">
-    <div>
-      <app-backdrop-grid
-        *ngIf="results.length > 0; else noResults"
-        [data]="results"
-      ></app-backdrop-grid>
+    <div class="py-3 animate__animated animate__fadeInUp" *ngIf="showSearch">
+      <div>
+        <app-backdrop-grid
+          *ngIf="results.length > 0; else noResults"
+          [data]="results"
+        ></app-backdrop-grid>
 
-      <ng-template #noResults>
-        <div class="no-results" *ngIf="!loading">
-          <p>
-            No encontramos nada relacionado con "{{ searchInput }}". Puedes
-            buscar por título, género, actores, directores y guionistas
-          </p>
-        </div>
-      </ng-template>
+        <ng-template #noResults>
+          <div
+            class="no-results animate__animated animate__fadeIn"
+            *ngIf="!loading"
+          >
+            <p>
+              No encontramos nada relacionado con "{{ searchInput }}". Puedes
+              buscar por título, género, actores, directores y guionistas
+            </p>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>
