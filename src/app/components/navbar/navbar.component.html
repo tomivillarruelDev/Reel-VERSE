@@ -5,8 +5,9 @@
     'navbar-scrolled': isScrolled
   }"
 >
+  <!-- Layout para Desktop: Una sola fila -->
   <div
-    class="flex items-center justify-between px-4 py-4 relative overflow-hidden"
+    class="hidden md:flex items-center justify-between px-4 py-4 relative overflow-hidden"
   >
     <!-- Logo -->
     <a
@@ -59,5 +60,67 @@
     >
       <i class="fa fa-search text-lg"></i>
     </button>
+  </div>
+
+  <!-- Layout para Mobile: Dos filas -->
+  <div class="md:hidden">
+    <!-- Primera fila: Logo y Búsqueda -->
+    <div
+      class="flex items-center justify-between px-4 pt-4 pb-2 overflow-hidden"
+    >
+      <!-- Logo -->
+      <a
+        routerLink="/home"
+        class="animate__animated animate__fadeInLeft animate__delay-1s"
+      >
+        <img
+          src="./assets/reelVERSE.svg"
+          alt="Logo"
+          class="h-6 transition-all duration-300"
+          loading="lazy"
+        />
+      </a>
+
+      <!-- Búsqueda -->
+      <button
+        (click)="goToSearch()"
+        class="text-gray-400 hover:text-white transition animate__animated animate__fadeInRight animate__delay-1s"
+      >
+        <i class="fa fa-search text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Segunda fila: Menú centrado -->
+    <div class="flex justify-center px-4 pb-4 overflow-hidden">
+      <ul
+        class="flex gap-6 text-sm font-semibold animate__animated animate__fadeIn animate__delay-1s"
+      >
+        <li class="animate__animated animate__fadeIn animate__delay-2s">
+          <a
+            routerLink="/home"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="hover:text-white text-gray-300 transition"
+            >Inicio</a
+          >
+        </li>
+        <li class="animate__animated animate__fadeIn animate__delay-3s">
+          <a
+            routerLink="/movies"
+            routerLinkActive="active-link"
+            class="hover:text-white text-gray-300 transition"
+            >Películas</a
+          >
+        </li>
+        <li class="animate__animated animate__fadeIn animate__delay-4s">
+          <a
+            routerLink="/series"
+            routerLinkActive="active-link"
+            class="hover:text-white text-gray-300 transition"
+            >Series</a
+          >
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
