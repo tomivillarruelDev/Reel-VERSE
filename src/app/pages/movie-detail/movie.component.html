@@ -65,8 +65,12 @@
       <div class="animate__animated animate__fadeInLeft animate__delay-2s">
         <app-see-now-button link="{{ movie.homepage }}"></app-see-now-button>
       </div>
-      <div class="pb-2 animate__animated animate__fadeIn animate__delay-3s">
-        <p class="font-normal text-sm text-white text-opacity-85">
+      <div
+        class="pb-2 animate__animated animate__fadeIn animate__delay-3s w-4/5 md:max-w-none"
+      >
+        <p
+          class="font-normal text-[0.75rem] md:text-sm text-white text-opacity-85"
+        >
           {{ movie.overview }}
         </p>
       </div>
