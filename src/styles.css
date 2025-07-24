@@ -353,8 +353,8 @@ img.lazy-loaded {
     z-index: 1;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.2) 40%,
-      rgba(10, 10, 10, 1) 90%
+      rgba(0, 0, 0, 0.2) 30%,
+      rgba(10, 10, 10, 1) 78%
     );
     pointer-events: none;
   }
