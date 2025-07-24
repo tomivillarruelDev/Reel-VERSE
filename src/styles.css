@@ -283,8 +283,8 @@ img.lazy-image {
 
 .lazy-loading,
 img.lazy-loading {
-  opacity: 0 !important; /* Completamente invisible mientras carga */
-  filter: blur(2px) !important;
+  opacity: 0.7 !important; /* Ligeramente visible para reducir el contraste */
+  filter: blur(1px) !important; /* Menos blur para mejor performance */
   background: linear-gradient(
     90deg,
     #16161f 25%,
@@ -292,14 +292,14 @@ img.lazy-loading {
     #16161f 75%
   ) !important;
   background-size: 200% 100% !important;
-  animation: shimmer 1.5s infinite !important;
+  animation: shimmer 2s ease-in-out 2 !important; /* Solo 2 repeticiones en lugar de infinite */
 }
 
 .lazy-loaded,
 img.lazy-loaded {
   filter: none !important;
   background: none !important;
-  animation: fadeInImage 2s ease-out forwards !important;
+  animation: fadeInImage 1.5s ease-out forwards !important; /* Más rápido */
 }
 
 /* Animación personalizada para fadeIn elegante */
@@ -318,6 +318,20 @@ img.lazy-loaded {
   }
   100% {
     background-position: 200% 0;
+  }
+}
+
+/* Optimización para móviles - reducir animaciones */
+@media (max-width: 768px) {
+  .lazy-loading,
+  img.lazy-loading {
+    animation: shimmer 2.5s ease-in-out 1 !important; /* Solo 1 repetición en móviles */
+    filter: blur(0.5px) !important; /* Menos blur para mejor performance */
+  }
+
+  .lazy-loaded,
+  img.lazy-loaded {
+    animation: fadeInImage 1s ease-out forwards !important; /* Más rápido en móviles */
   }
 }
 
