@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
@@ -10,6 +10,7 @@ import Swiper from 'swiper';
   selector: 'app-large-poster-swiper',
   templateUrl: './large-poster-swiper.component.html',
   styleUrls: ['./large-poster-swiper.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LargePosterSwiperComponent implements OnInit, AfterViewInit {
   @Input() data!: Result[];

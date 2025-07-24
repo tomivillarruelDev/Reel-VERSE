@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
@@ -9,6 +9,7 @@ import Swiper from 'swiper';
   selector: 'app-poster-swiper',
   templateUrl: './poster-swiper.component.html',
   styleUrls: ['./poster-swiper.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PosterSwiperComponent implements AfterViewInit {
   @Input() data!: Result[];

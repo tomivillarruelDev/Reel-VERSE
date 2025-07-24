@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { debounceTime } from 'rxjs';
@@ -15,6 +15,7 @@ import { GenresCacheService } from 'src/app/services/genres-cache.service';
   selector: 'app-search-multi',
   templateUrl: './search-multi.component.html',
   styleUrls: ['./search-multi.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchMultiComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
@@ -51,7 +52,8 @@ export class SearchMultiComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private loadingService: LoadingService,
     private titleService: Title,
-    private genresCacheService: GenresCacheService
+    private genresCacheService: GenresCacheService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {

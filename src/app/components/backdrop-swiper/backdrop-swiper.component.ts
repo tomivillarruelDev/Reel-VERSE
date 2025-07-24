@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
@@ -9,6 +9,7 @@ import Swiper from 'swiper';
   selector: 'app-backdrop-swiper',
   templateUrl: './backdrop-swiper.component.html',
   styleUrls: ['./backdrop-swiper.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BackdropSwiperComponent implements OnInit, AfterViewInit {
   constructor(private router: Router) {}

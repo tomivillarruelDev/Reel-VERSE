@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Result } from 'src/app/interfaces/API-response.interface';
 import { Episode } from 'src/app/interfaces/episode-serie-response.interface';
@@ -7,6 +7,7 @@ import { Episode } from 'src/app/interfaces/episode-serie-response.interface';
   selector: 'app-backdrop-grid',
   templateUrl: './backdrop-grid.component.html',
   styleUrls: ['./backdrop-grid.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BackdropGridComponent {
   @Input() data: (Result | Episode)[] = [];

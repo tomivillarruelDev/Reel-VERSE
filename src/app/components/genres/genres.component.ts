@@ -5,6 +5,7 @@ import {
   Input,
   OnInit,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { Result } from 'src/app/interfaces/API-response.interface';
@@ -20,6 +21,7 @@ import Swiper from 'swiper';
   selector: 'app-genres',
   templateUrl: './genres.component.html',
   styleUrls: ['./genres.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenresComponent implements OnInit, AfterViewInit {
   @Input() genres!: Genre[];

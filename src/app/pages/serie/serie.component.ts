@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
@@ -14,6 +14,7 @@ import { SeriesService } from 'src/app/services/series.service';
   selector: 'app-serie',
   templateUrl: './serie.component.html',
   styleUrls: ['./serie.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SerieComponent implements OnInit, OnDestroy {
   public serie!: SerieDetailResponse;

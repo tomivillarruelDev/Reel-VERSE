@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Result } from 'src/app/interfaces/API-response.interface';
 
@@ -6,6 +6,7 @@ import { Result } from 'src/app/interfaces/API-response.interface';
   selector: 'app-poster-grid',
   templateUrl: './poster-grid.component.html',
   styleUrls: ['./poster-grid.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PosterGridComponent {
   @Input() data: Result[] = [];

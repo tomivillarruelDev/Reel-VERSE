@@ -9,6 +9,7 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MoviesService } from 'src/app/services/movies.service';
@@ -24,6 +25,7 @@ import { GenresCacheService } from '../../services/genres-cache.service';
   selector: 'app-slideshow',
   templateUrl: './slideshow.component.html',
   styleUrls: ['./slideshow.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SlideshowComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
