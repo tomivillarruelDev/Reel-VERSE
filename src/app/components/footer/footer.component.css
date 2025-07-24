@@ -1,6 +1,6 @@
-.copyright{
-    color: var(--transparent-white);
-    text-align: end;
+.copyright {
+  color: var(--transparent-white);
+  text-align: end;
 }
 ul {
   list-style: none;
@@ -16,7 +16,7 @@ ul {
 }
 
 .footer-size::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: -100%;
