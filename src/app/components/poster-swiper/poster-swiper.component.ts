@@ -1,4 +1,9 @@
-import { AfterViewInit, Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Result } from 'src/app/interfaces/API-response.interface';

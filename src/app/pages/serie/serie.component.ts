@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
@@ -39,7 +45,7 @@ export class SerieComponent implements OnInit, OnDestroy {
     this.activatedRoute.paramMap.subscribe(async (paramMap) => {
       this.loadingService.setLoading(true);
 
-            // Reset all data when changing route
+      // Reset all data when changing route
       // this.movie = null as any;
       // this.recommendedMovies = [];
       // this.cast = [];
@@ -49,8 +55,6 @@ export class SerieComponent implements OnInit, OnDestroy {
       this.serie = null as any;
       this.recommendedSeries = [];
       this.episodes = [];
-      
-
 
       const id = paramMap.get('id');
       if (id === null) {
