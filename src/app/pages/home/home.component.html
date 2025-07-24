@@ -1,5 +1,5 @@
 <div
-  class="animate__animated animate__fadeIn animate__delay-1s overflow-x-hidden"
+  class="animate__animated animate__fadeIn animate__delay-1s overflow-x-hidden min-h-screen"
 >
   <div id="home">
     <div *ngIf="playingNowMovies.length > 0">
@@ -8,7 +8,7 @@
   </div>
 
   <div
-    class="with-padding pb-20 animate__animated animate__fadeInUp animate__delay-1s"
+    class="with-padding pb-20 animate__animated animate__fadeInUp animate__delay-1s swiper-container-placeholder"
     #recommendedElement
   >
     <div class="" *ngIf="recommendedMovies.length > 0">
@@ -25,7 +25,7 @@
       ></app-backdrop-swiper>
     </div>
   </div>
-  <div class="background with-padding">
+  <div class="background with-padding" style="min-height: 100vh;">
     <div
       class="py-1 animate__animated animate__fadeInUp animate__delay-2s"
       #popularElement
