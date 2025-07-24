@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @import "~swiper/swiper-bundle.css";
+
+/* Prevenir scroll horizontal durante animaciones */
+html,
+body {
+  overflow-x: hidden;
+}
+
 :root {
   --manrope: "Manrope", sans-serif;
 

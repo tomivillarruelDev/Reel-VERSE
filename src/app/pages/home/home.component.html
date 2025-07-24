@@ -1,17 +1,24 @@
-<div class="animate__animated animate__fadeIn animate__delay-1s">
+<div
+  class="animate__animated animate__fadeIn animate__delay-1s overflow-x-hidden"
+>
   <div id="home">
     <div *ngIf="playingNowMovies.length > 0">
       <app-slideshow [data]="playingNowMovies"></app-slideshow>
     </div>
   </div>
 
-  <div class="with-padding pb-20" #recommendedElement>
+  <div
+    class="with-padding pb-20 animate__animated animate__fadeInUp animate__delay-1s"
+    #recommendedElement
+  >
     <div class="" *ngIf="recommendedMovies.length > 0">
-      <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1">
+      <p
+        class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1 animate__animated animate__fadeInLeft animate__delay-1s"
+      >
         Solo para ti
       </p>
     </div>
-    <div class="">
+    <div class="animate__animated animate__fadeInUp animate__delay-1s">
       <app-backdrop-swiper
         *ngIf="recommendedMovies.length > 0"
         [data]="recommendedMovies"
@@ -19,13 +26,18 @@
     </div>
   </div>
   <div class="background with-padding">
-    <div class="py-1" #popularElement>
+    <div
+      class="py-1 animate__animated animate__fadeInUp animate__delay-2s"
+      #popularElement
+    >
       <div class="" *ngIf="popularMovies.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1 animate__animated animate__fadeInLeft animate__delay-2s"
+        >
           Nuevas y populares
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__zoomIn animate__delay-2s">
         <app-square-poster-swiper
           *ngIf="popularMovies.length > 0"
           [data]="popularMovies"
@@ -33,16 +45,23 @@
       </div>
     </div>
 
-    <div class="py-3" #seriesElement>
+    <div
+      class="py-3 animate__animated animate__fadeInUp animate__delay-3s"
+      #seriesElement
+    >
       <div class="" *ngIf="series.length > 0">
-        <p class="text-[0.95rem] text-white text-opacity-85 my-0">
+        <p
+          class="text-[0.95rem] text-white text-opacity-85 my-0 animate__animated animate__fadeInLeft animate__delay-3s"
+        >
           Solo en <span class="font-extrabold">reel</span>VERSE
         </p>
-        <p class="text-sm text-white text-opacity-65 mb-1">
+        <p
+          class="text-sm text-white text-opacity-65 mb-1 animate__animated animate__fadeInLeft animate__delay-3s"
+        >
           Streaming exclusivo del mejor contenido, solo aquí.
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__slideInRight animate__delay-3s">
         <app-poster-swiper
           *ngIf="series.length > 0"
           [data]="series"
@@ -62,16 +81,20 @@
       </div>
     </div> -->
 
-    <div class="py-1" #justAddedElement>
+    <div class="py-1 animate__animated animate__fadeInUp" #justAddedElement>
       <div class="" *ngIf="justAdded.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0 animate__animated animate__fadeInLeft"
+        >
           Recién añadidos.
         </p>
-        <p class="text-sm text-white text-opacity-65 mb-1">
+        <p
+          class="text-sm text-white text-opacity-65 mb-1 animate__animated animate__fadeInLeft"
+        >
           No seas el último en verlos.
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__slideInLeft">
         <app-large-poster-swiper
           *ngIf="justAdded.length > 0"
           [data]="justAdded"
@@ -79,7 +102,7 @@
       </div>
     </div>
 
-    <div class="py-5" #trendingElement>
+    <div class="py-5 animate__animated animate__fadeInUp" #trendingElement>
       <div class="" *ngIf="trendingAll.length > 0">
         <app-text-poster-swiper
           *ngIf="trendingAll.length > 0"
@@ -94,13 +117,15 @@
       </div>
     </div>
 
-    <div class="py-1">
+    <div class="py-1 animate__animated animate__fadeInUp">
       <div class="" *ngIf="playingNowMovies.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1 animate__animated animate__fadeInLeft"
+        >
           Del cine a tu casa
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__slideInRight">
         <app-poster-swiper
           *ngIf="playingNowMovies.length > 0"
           [data]="playingNowMovies"
@@ -108,13 +133,18 @@
       </div>
     </div>
 
-    <div class="md:py-2 py-4" #upComingElement>
+    <div
+      class="md:py-2 py-4 animate__animated animate__fadeInUp"
+      #upComingElement
+    >
       <div class="" *ngIf="upComingMovies.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1 animate__animated animate__fadeInLeft"
+        >
           Próximamente
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__zoomIn">
         <app-backdrop-swiper
           *ngIf="upComingMovies.length > 0"
           [data]="upComingMovies"
@@ -122,16 +152,20 @@
       </div>
     </div>
 
-    <div class="md:py-2 py-4" #kidsElement>
+    <div class="md:py-2 py-4 animate__animated animate__fadeInUp" #kidsElement>
       <div class="" *ngIf="kidsSeries.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0 animate__animated animate__fadeInLeft"
+        >
           Zona de juegos
         </p>
-        <p class="text-white text-opacity-65 text-sm mb-1">
+        <p
+          class="text-white text-opacity-65 text-sm mb-1 animate__animated animate__fadeInLeft"
+        >
           ¡Series que te dejarán asombrado!
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__slideInLeft">
         <app-poster-swiper
           *ngIf="kidsSeries.length > 0"
           [data]="kidsSeries"
@@ -139,16 +173,23 @@
       </div>
     </div>
 
-    <div class="md:py-1 py-4" #heroesElement>
+    <div
+      class="md:py-1 py-4 animate__animated animate__fadeInUp"
+      #heroesElement
+    >
       <div class="" *ngIf="heroesMovies.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0 animate__animated animate__fadeInLeft"
+        >
           ¡Salvar el mundo puede ser muy divertido!
         </p>
-        <p class="text-white text-opacity-65 text-sm mb-1">
+        <p
+          class="text-white text-opacity-65 text-sm mb-1 animate__animated animate__fadeInLeft"
+        >
           ¡Están salvando al mundo antes de poder dirigirlo!
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__slideInRight">
         <app-poster-swiper
           *ngIf="heroesMovies.length > 0"
           [data]="heroesMovies"
@@ -156,49 +197,69 @@
       </div>
     </div>
 
-    <div class="py-4" #sciFiAndFantasyElement>
+    <div
+      class="py-4 animate__animated animate__fadeInUp"
+      #sciFiAndFantasyElement
+    >
       <div class="" *ngIf="sciFiAndFantasySeries.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0 animate__animated animate__fadeInLeft"
+        >
           Fantasía y Sci-Fi a la carta
         </p>
-        <p class="text-white text-opacity-65 text-sm mb-1">
+        <p
+          class="text-white text-opacity-65 text-sm mb-1 animate__animated animate__fadeInLeft"
+        >
           Siéntate, relájate y deja que tus sueños más increíbles se hagan
           realidad
         </p>
-        <app-large-poster-swiper
-          *ngIf="sciFiAndFantasySeries.length > 0"
-          [data]="sciFiAndFantasySeries"
-        >
-        </app-large-poster-swiper>
+        <div class="animate__animated animate__zoomIn">
+          <app-large-poster-swiper
+            *ngIf="sciFiAndFantasySeries.length > 0"
+            [data]="sciFiAndFantasySeries"
+          >
+          </app-large-poster-swiper>
+        </div>
       </div>
     </div>
 
-    <div class="md:py-1 py-4" #actionElement>
+    <div
+      class="md:py-1 py-4 animate__animated animate__fadeInUp"
+      #actionElement
+    >
       <div class="" *ngIf="actionMovies.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0 animate__animated animate__fadeInLeft"
+        >
           Acción pura
         </p>
-        <p class="text-white text-opacity-65 text-sm mb-1">
+        <p
+          class="text-white text-opacity-65 text-sm mb-1 animate__animated animate__fadeInLeft"
+        >
           Si quieres adrenalina y desenfreno, es por aquí.
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__slideInLeft">
         <app-poster-swiper
           *ngIf="actionMovies.length > 0"
           [data]="actionMovies"
         ></app-poster-swiper>
       </div>
     </div>
-    <div class="py-1" #comedyElement>
+    <div class="py-1 animate__animated animate__fadeInUp" #comedyElement>
       <div class="" *ngIf="comedySeries.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 my-0 animate__animated animate__fadeInLeft"
+        >
           Comedias que mejoraran tu ánimo.
         </p>
-        <p class="text-white text-opacity-65 text-sm mb-1">
+        <p
+          class="text-white text-opacity-65 text-sm mb-1 animate__animated animate__fadeInLeft"
+        >
           Deja todas las preocupaciones atrás, este es tu espacio seguro.
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__zoomIn">
         <app-backdrop-swiper
           *ngIf="comedySeries.length > 0"
           [data]="comedySeries"
@@ -206,13 +267,18 @@
       </div>
     </div>
 
-    <div class="md:py-2 py-4" #horrorElement>
+    <div
+      class="md:py-2 py-4 animate__animated animate__fadeInUp"
+      #horrorElement
+    >
       <div class="" *ngIf="horrorMovies.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 my-2">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 my-2 animate__animated animate__fadeInLeft"
+        >
           Una de terror siempre es una opción
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__slideInRight">
         <app-large-poster-swiper
           *ngIf="horrorMovies.length > 0"
           [data]="horrorMovies"
@@ -220,13 +286,15 @@
       </div>
     </div>
 
-    <div class="py-4" #crimeElement>
+    <div class="py-4 animate__animated animate__fadeInUp" #crimeElement>
       <div class="" *ngIf="crimeSeries.length > 0">
-        <p class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1">
+        <p
+          class="font-semibold text-[0.95rem] text-white text-opacity-85 mb-1 animate__animated animate__fadeInLeft"
+        >
           Crónicas criminales
         </p>
       </div>
-      <div class="">
+      <div class="animate__animated animate__slideInLeft">
         <app-poster-swiper
           *ngIf="crimeSeries.length > 0"
           [data]="crimeSeries"
