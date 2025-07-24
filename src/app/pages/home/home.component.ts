@@ -5,6 +5,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Result } from 'src/app/interfaces/API-response.interface';
@@ -14,11 +16,14 @@ import { LoadingService } from 'src/app/services/loading.service';
 
 import { MoviesService } from 'src/app/services/movies.service';
 import { SeriesService } from 'src/app/services/series.service';
+import { HomeObserverHelper } from './home-observer.helper';
+import { trackByMovieId } from 'src/app/pipes/track-by.pipe';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('recommendedElement', { read: ElementRef })
@@ -55,6 +60,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('crimeElement', { read: ElementRef }) crimeElement!: ElementRef;
 
+  // Array para manejar todos los observers
+  private observers: IntersectionObserver[] = [];
+
   public playingNowMovies: Result[] = [];
 
   public recommendedMovies: Result[] = [];
@@ -87,11 +95,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public people: Person[] = [];
 
+  // Funciones TrackBy para optimizar ngFor
+  trackByMovieId = (index: number, item: Result): number => {
+    return item.id || index;
+  };
+
+  trackByPersonId = (index: number, item: Person): number => {
+    return item.id || index;
+  };
+
   constructor(
     private moviesService: MoviesService,
     private seriesService: SeriesService,
     private loadingService: LoadingService,
-    private titleService: Title
+    private titleService: Title,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -106,248 +124,274 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    const recommendedMoviesObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && this.recommendedMovies.length === 0) {
-        const movieId = this.getRotatingMovieId();
-        this.getRecommended(movieId);
-      }
-    });
-    recommendedMoviesObserver.observe(this.recommendedElement.nativeElement);
+    this.setupIntersectionObservers();
+  }
 
-    const popularMoviesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.popularMovies.length === 0) {
-          this.getPopularMovies();
-        }
-      },
+  private setupIntersectionObservers(): void {
+    // Configuración de observers para todas las secciones
+    const observerConfigs = [
       {
+        element: this.recommendedElement,
+        callback: () => {
+          const movieId = this.getRotatingMovieId();
+          this.getRecommended(movieId);
+        },
+        condition: () => this.recommendedMovies.length === 0,
         rootMargin: '0px 0px',
-      }
-    );
-    popularMoviesObserver.observe(this.popularElement.nativeElement);
-
-    const seriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.series.length === 0) {
-          this.getSeries();
-        }
       },
       {
-        rootMargin: '50px 0px',
-      }
-    );
-    seriesObserver.observe(this.seriesElement.nativeElement);
-
-    // const topMoviesObserver = new IntersectionObserver(
-    //   (entries) => {
-    //     if (entries[0].isIntersecting && this.topMovies.length === 0) {
-    //       this.getTopRatedMovies();
-    //     }
-    //   },
-    //   {
-    //     rootMargin: '50px 0px',
-    //   }
-    // );
-    // topMoviesObserver.observe(this.topElement.nativeElement);
-
-    const justAddedObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.justAdded.length === 0) {
-          this.getJustAdded();
-        }
+        element: this.popularElement,
+        callback: () => this.getPopularMovies(),
+        condition: () => this.popularMovies.length === 0,
+        rootMargin: '0px 0px',
       },
       {
+        element: this.seriesElement,
+        callback: () => this.getSeries(),
+        condition: () => this.series.length === 0,
         rootMargin: '50px 0px',
-      }
-    );
-    justAddedObserver.observe(this.justAddedElement.nativeElement);
-
-    const trendingAllObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.trendingAll.length === 0) {
-          this.getTrendingAll();
-        }
       },
       {
+        element: this.justAddedElement,
+        callback: () => this.getJustAdded(),
+        condition: () => this.justAdded.length === 0,
         rootMargin: '50px 0px',
-      }
-    );
-    trendingAllObserver.observe(this.trendingElement.nativeElement);
-
-    const upComingMoviesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.upComingMovies.length === 0) {
-          this.getUpComingMovies();
-        }
       },
       {
+        element: this.trendingElement,
+        callback: () => this.getTrendingAll(),
+        condition: () => this.trendingAll.length === 0,
         rootMargin: '50px 0px',
-      }
-    );
-    upComingMoviesObserver.observe(this.upComingElement.nativeElement);
+      },
+      {
+        element: this.upComingElement,
+        callback: () => this.getUpComingMovies(),
+        condition: () => this.upComingMovies.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.kidsElement,
+        callback: () => this.getKidsSeries(),
+        condition: () => this.kidsSeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.heroesElement,
+        callback: () => this.getHeroesMovies(),
+        condition: () => this.heroesMovies.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.sciFiAndFantasyElement,
+        callback: () => this.getSciFiAndFantasySeries(),
+        condition: () => this.sciFiAndFantasySeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.actionElement,
+        callback: () => this.getActionMovies(),
+        condition: () => this.actionMovies.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.comedyElement,
+        callback: () => this.getComedySeries(),
+        condition: () => this.comedySeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.horrorElement,
+        callback: () => this.getHorrorMovies(),
+        condition: () => this.horrorMovies.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.crimeElement,
+        callback: () => this.getCrimeSeries(),
+        condition: () => this.crimeSeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+    ];
 
-    const kidsSeriesObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && this.kidsSeries.length === 0) {
-        this.getKidsSeries();
+    observerConfigs.forEach((config) => {
+      try {
+        if (config.element && config.element.nativeElement) {
+          const observer = HomeObserverHelper.createObserver(
+            config.callback,
+            config.condition,
+            config.rootMargin
+          );
+          HomeObserverHelper.setupObserver(
+            observer,
+            config.element,
+            this.observers
+          );
+        } else {
+          console.warn('Element not found for observer setup:', config);
+        }
+      } catch (error) {
+        console.error('Error setting up observer:', error, config);
       }
     });
-    kidsSeriesObserver.observe(this.kidsElement.nativeElement);
-
-    const heroesMoviesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.heroesMovies.length === 0) {
-          this.getHeroesMovies();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    heroesMoviesObserver.observe(this.heroesElement.nativeElement);
-
-    const sciFiAndFantasySeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (
-          entries[0].isIntersecting &&
-          this.sciFiAndFantasySeries.length === 0
-        ) {
-          this.getSciFiAndFantasySeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    sciFiAndFantasySeriesObserver.observe(
-      this.sciFiAndFantasyElement.nativeElement
-    );
-
-    const actionMoviesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.actionMovies.length === 0) {
-          this.getActionMovies();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    actionMoviesObserver.observe(this.actionElement.nativeElement);
-
-    const comedySeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.comedySeries.length === 0) {
-          this.getComedySeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    comedySeriesObserver.observe(this.comedyElement.nativeElement);
-
-    const horrorMoviesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.horrorMovies.length === 0) {
-          this.getHorrorMovies();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    horrorMoviesObserver.observe(this.horrorElement.nativeElement);
-
-    const crimeSeries = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.crimeSeries.length === 0) {
-          this.getCrimeSeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    crimeSeries.observe(this.crimeElement.nativeElement);
   }
 
   ngOnDestroy(): void {
     this.loadingService.setLoading(true);
+    // Limpieza de observers para evitar memory leaks
+    this.observers.forEach((observer) => {
+      observer.disconnect();
+    });
+    this.observers = [];
   }
 
   private async getPlayingNowMovies(): Promise<void> {
-    const resp = await this.moviesService.getPlayingNowMovies();
-    this.playingNowMovies = resp.results;
+    try {
+      const resp = await this.moviesService.getPlayingNowMovies();
+      this.playingNowMovies = resp.results;
+      this.cdr.markForCheck(); // Marca para verificación de cambios
+    } catch (error) {
+      console.error('Error loading playing now movies:', error);
+    }
   }
 
   private async getRecommended(id: string): Promise<void> {
-    const resp = await this.moviesService.getRecommendedMovies(id);
-    this.recommendedMovies = resp.results;
+    try {
+      const resp = await this.moviesService.getRecommendedMovies(id);
+      this.recommendedMovies = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading recommended movies:', error);
+    }
   }
 
   private async getPopularMovies(): Promise<void> {
-    const resp = await this.moviesService.getPopularMovies();
-    this.popularMovies = resp.results;
+    try {
+      const resp = await this.moviesService.getPopularMovies();
+      this.popularMovies = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading popular movies:', error);
+    }
   }
 
   private async getSeries(): Promise<void> {
-    const resp = await this.seriesService.getTrendingSeries();
-    this.series = resp.results;
+    try {
+      const resp = await this.seriesService.getTrendingSeries();
+      this.series = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading series:', error);
+    }
   }
 
   private async getTopRatedMovies(): Promise<void> {
-    const resp = await this.moviesService.getTopRatedMovies();
-    this.topMovies = resp.results;
+    try {
+      const resp = await this.moviesService.getTopRatedMovies();
+      this.topMovies = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading top rated movies:', error);
+    }
   }
 
   private async getJustAdded(): Promise<void> {
-    const resp = await this.moviesService.getMoviesFromNYearsAgo(2);
-    this.justAdded = resp.results;
+    try {
+      const resp = await this.moviesService.getMoviesFromNYearsAgo(2);
+      this.justAdded = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading just added movies:', error);
+    }
   }
 
   private async getTrendingAll(): Promise<void> {
-    const resp = await this.moviesService.getTrendingAll();
-    this.trendingAll = resp.results;
+    try {
+      const resp = await this.moviesService.getTrendingAll();
+      this.trendingAll = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading trending all:', error);
+    }
   }
 
   private async getUpComingMovies(): Promise<void> {
-    const resp = await this.moviesService.getMoviesFromNYearsAgo(1);
-    this.upComingMovies = resp.results;
+    try {
+      const resp = await this.moviesService.getMoviesFromNYearsAgo(1);
+      this.upComingMovies = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading upcoming movies:', error);
+    }
   }
 
   private async getKidsSeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(10762);
-    this.kidsSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(10762);
+      this.kidsSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading kids series:', error);
+    }
   }
 
   private async getHeroesMovies(): Promise<void> {
-    const resp = await this.moviesService.getMoviesByGenre(16, 1);
-    this.heroesMovies = resp.results;
+    try {
+      const resp = await this.moviesService.getMoviesByGenre(16, 1);
+      this.heroesMovies = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading heroes movies:', error);
+    }
   }
 
   private async getSciFiAndFantasySeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(10765);
-    this.sciFiAndFantasySeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(10765);
+      this.sciFiAndFantasySeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading sci-fi and fantasy series:', error);
+    }
   }
 
   private async getActionMovies(): Promise<void> {
-    const resp = await this.moviesService.getMoviesByGenre(28);
-    this.actionMovies = resp.results;
+    try {
+      const resp = await this.moviesService.getMoviesByGenre(28);
+      this.actionMovies = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading action movies:', error);
+    }
   }
 
   private async getComedySeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(35);
-    this.comedySeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(35);
+      this.comedySeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading comedy series:', error);
+    }
   }
 
   private async getHorrorMovies(): Promise<void> {
-    const resp = await this.moviesService.getMoviesByGenre(27);
-    this.horrorMovies = resp.results;
+    try {
+      const resp = await this.moviesService.getMoviesByGenre(27);
+      this.horrorMovies = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading horror movies:', error);
+    }
   }
 
   private async getCrimeSeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(80, 1);
-    this.crimeSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(80, 1);
+      this.crimeSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading crime series:', error);
+    }
   }
 
   private getRotatingMovieId(): string {

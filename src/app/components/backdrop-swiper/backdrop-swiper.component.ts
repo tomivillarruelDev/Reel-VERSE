@@ -16,6 +16,11 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
   @Input() data!: Result[];
   swiper!: Swiper;
 
+  // Función TrackBy para optimizar ngFor
+  trackByMovieId = (index: number, item: Result): number => {
+    return item.id || index;
+  };
+
   ngOnInit(): void {}
 
   ngAfterViewInit() {

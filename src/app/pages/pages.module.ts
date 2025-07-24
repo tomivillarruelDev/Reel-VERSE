@@ -9,6 +9,7 @@ import { MoviesComponent } from './movies/movies.component';
 import { SerieComponent } from './serie/serie.component';
 import { MovieComponent } from './movie-detail/movie.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { PagesRoutingModule } from './pages-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,12 @@ import { PipesModule } from '../pipes/pipes.module';
     SerieComponent,
     MovieComponent,
   ],
-  imports: [CommonModule, ComponentsModule, ReactiveFormsModule, PipesModule],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    ReactiveFormsModule,
+    PipesModule,
+    PagesRoutingModule,
+  ],
 })
 export class PagesModule {}

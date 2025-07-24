@@ -4,7 +4,7 @@
   >
     <div
       class="p-2 grid-item animate__animated animate__fadeIn mb-3"
-      *ngFor="let value of data"
+      *ngFor="let value of data; trackBy: trackByMovieId"
     >
       <div class="image-container">
         <ng-container *ngIf="isResult(value)">

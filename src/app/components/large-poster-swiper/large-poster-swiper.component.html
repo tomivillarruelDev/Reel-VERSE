@@ -3,7 +3,7 @@
     <div class="swiper-wrapper">
       <div
         class="swiper-slide movie-cover animate__animated animate__fadeInRightBig"
-        *ngFor="let value of data"
+        *ngFor="let value of data; trackBy: trackByMovieId"
       >
         <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
         <img

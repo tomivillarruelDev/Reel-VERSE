@@ -6,6 +6,7 @@ import { Genre, GenreResponse } from '../interfaces/genres.interface';
 import { APIResponse } from '../interfaces/API-response.interface';
 import { MovieDetailResponse } from '../interfaces/movie-detail-response.interface';
 import { CastResponse } from '../interfaces/cast-response.interface';
+import { CacheService } from './cache.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class MoviesService {
 
   public loading: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cacheService: CacheService) {}
 
   get params() {
     return {
@@ -26,29 +27,59 @@ export class MoviesService {
   }
 
   public async getPlayingNowMovies(): Promise<APIResponse> {
+    const cacheKey = 'playing-now-movies';
+
+    // Verificar caché primero
+    const cachedData = this.cacheService.get<APIResponse>(cacheKey);
+    if (cachedData) {
+      return cachedData;
+    }
+
     const resp = await firstValueFrom(
       this.http.get<APIResponse>(`${this.url}movie/now_playing?`, {
         params: this.params,
       })
     );
+
+    // Guardar en caché por 10 minutos
+    this.cacheService.set(cacheKey, resp, 10 * 60 * 1000);
     return resp;
   }
 
   public async getRecommendedMovies(id: string): Promise<APIResponse> {
+    const cacheKey = `recommended-movies-${id}`;
+
+    const cachedData = this.cacheService.get<APIResponse>(cacheKey);
+    if (cachedData) {
+      return cachedData;
+    }
+
     const resp = await firstValueFrom(
       this.http.get<APIResponse>(`${this.url}movie/${id}/recommendations?`, {
         params: this.params,
       })
     );
+
+    // Caché más largo para recomendaciones
+    this.cacheService.set(cacheKey, resp, 30 * 60 * 1000);
     return resp;
   }
 
   public async getPopularMovies(): Promise<APIResponse> {
+    const cacheKey = 'popular-movies';
+
+    const cachedData = this.cacheService.get<APIResponse>(cacheKey);
+    if (cachedData) {
+      return cachedData;
+    }
+
     const resp = await firstValueFrom(
       this.http.get<APIResponse>(`${this.url}movie/popular?`, {
         params: this.params,
       })
     );
+
+    this.cacheService.set(cacheKey, resp, 15 * 60 * 1000);
     return resp;
   }
 

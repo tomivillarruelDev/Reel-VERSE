@@ -3,7 +3,7 @@
     <div class="swiper-wrapper">
       <div
         class="swiper-slide grid-item animate__animated animate__fadeInRightBig"
-        *ngFor="let value of data"
+        *ngFor="let value of data; trackBy: trackByMovieId"
       >
         <div class="image-container">
           <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
@@ -21,7 +21,7 @@
         </div>
         <div class="movie-title font-semibold">
           <p class="font-semibold text-xs mt-1 text-white text-opacity-80">
-            {{ (value.title ? value.title : value.name) }}
+            {{ value.title ? value.title : value.name }}
           </p>
         </div>
       </div>

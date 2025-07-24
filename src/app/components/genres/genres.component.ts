@@ -40,6 +40,11 @@ export class GenresComponent implements OnInit, AfterViewInit {
     private genresCacheService: GenresCacheService
   ) {}
 
+  // TrackBy function para optimizar ngFor
+  trackByGenreId = (index: number, item: Genre): number => {
+    return item.id || index;
+  };
+
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {

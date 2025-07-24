@@ -5,7 +5,7 @@
   >
     <div
       class="swiper-slide large-screen"
-      *ngFor="let value of data"
+      *ngFor="let value of data; trackBy: trackByMovieId"
       [ngStyle]="{
         'background-image':
           'url(https://image.tmdb.org/t/p/original' +
@@ -35,7 +35,11 @@
             class="slide-content__info-text text-[0.80rem] md:text-xs text-white text-opacity-80"
           >
             <span>
-              {{ value.release_date ? (value.release_date | date : "yyyy") : (value.first_air_date | date : "yyyy") }}
+              {{
+                value.release_date
+                  ? (value.release_date | date : "yyyy")
+                  : (value.first_air_date | date : "yyyy")
+              }}
             </span>
             <span>
               {{ value.genre_name }}

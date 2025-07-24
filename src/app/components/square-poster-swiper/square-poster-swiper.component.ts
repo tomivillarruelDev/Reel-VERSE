@@ -8,20 +8,23 @@ import Swiper from 'swiper';
 @Component({
   selector: 'app-square-poster-swiper',
   templateUrl: './square-poster-swiper.component.html',
-  styleUrls: ['./square-poster-swiper.component.css']
+  styleUrls: ['./square-poster-swiper.component.css'],
 })
 export class SquarePosterSwiperComponent implements OnInit, AfterViewInit {
-
   @Input() data!: Result[];
   swiper!: Swiper;
 
-  constructor( private router: Router ) { }
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-  }
+  // TrackBy function para optimizar ngFor
+  trackByMovieId = (index: number, item: Result): number => {
+    return item.id || index;
+  };
+
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    setTimeout( () => {
+    setTimeout(() => {
       this.swiper = new Swiper('.swiper-square-poster', {
         loop: false,
         freeMode: false,
@@ -41,21 +44,19 @@ export class SquarePosterSwiperComponent implements OnInit, AfterViewInit {
           1100: {
             slidesPerView: 6,
             spaceBetween: 10,
-          }
-        }
+          },
+        },
       });
-    }, 0)
+    }, 0);
   }
 
-  onRedirectToDetailPage( object: Result ){
-    if ( object ) {
+  onRedirectToDetailPage(object: Result) {
+    if (object) {
       if (object.title) {
-        this.router.navigate([ '/movie', object.id ]);
-
+        this.router.navigate(['/movie', object.id]);
       } else if (object.name) {
-        this.router.navigate([ '/serie', object.id ]);
+        this.router.navigate(['/serie', object.id]);
       }
     }
-  } 
-
+  }
 }

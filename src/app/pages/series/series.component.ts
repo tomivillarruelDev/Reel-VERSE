@@ -5,6 +5,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Result } from 'src/app/interfaces/API-response.interface';
@@ -13,11 +15,13 @@ import { Genre } from 'src/app/interfaces/genres.interface';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SeriesService } from 'src/app/services/series.service';
 import { GenresCacheService } from 'src/app/services/genres-cache.service';
+import { SeriesObserverHelper } from './series-observer.helper';
 
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
   styleUrls: ['./series.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   public title: string = 'Series';
@@ -72,11 +76,24 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('warAndPoliticsElement', { read: ElementRef })
   warAndPoliticsElement!: ElementRef;
 
+  // Array para manejar todos los observers
+  private observers: IntersectionObserver[] = [];
+
+  // Funciones TrackBy para optimizar ngFor
+  trackBySeriesId = (index: number, item: Result): number => {
+    return item.id || index;
+  };
+
+  trackByGenreId = (index: number, item: Genre): number => {
+    return item.id || index;
+  };
+
   constructor(
     private loadingService: LoadingService,
     private seriesService: SeriesService,
     private titleService: Title,
-    private genresCacheService: GenresCacheService
+    private genresCacheService: GenresCacheService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -94,127 +111,95 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const trendingSeriesObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && this.trendingSeries.length === 0) {
-        this.getTrendingSeries();
-      }
+    this.setupIntersectionObservers();
+  }
+
+  private setupIntersectionObservers(): void {
+    const observerConfigs = [
+      {
+        element: this.trendingElement,
+        callback: () => this.getTrendingSeries(),
+        condition: () => this.trendingSeries.length === 0,
+        rootMargin: '0px 0px',
+      },
+      {
+        element: this.newElement,
+        callback: () => this.getNewEpisodes(),
+        condition: () => this.newEpisodes.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.discoverElement,
+        callback: () => this.getDiscoverSeries(),
+        condition: () => this.discoverSeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.actionElement,
+        callback: () => this.getActionSeries(),
+        condition: () => this.actionSeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.latamElement,
+        callback: () => this.getLatamSeries(),
+        condition: () => this.latamSeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.familyElement,
+        callback: () => this.getFamilySeries(),
+        condition: () => this.familySeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.dramaElement,
+        callback: () => this.getDramaSeries(),
+        condition: () => this.dramaSeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.sciFiAndFantasYElement,
+        callback: () => this.getSciFiAndFantasySeries(),
+        condition: () => this.sciFiAndFantasySeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+      {
+        element: this.warAndPoliticsElement,
+        callback: () => this.getWarAndPoliticsSeries(),
+        condition: () => this.warAndPoliticsSeries.length === 0,
+        rootMargin: '50px 0px',
+      },
+    ];
+
+    observerConfigs.forEach((config) => {
+      const observer = SeriesObserverHelper.createObserver(
+        config.callback,
+        config.condition,
+        config.rootMargin
+      );
+      SeriesObserverHelper.setupObserver(
+        observer,
+        config.element,
+        this.observers
+      );
     });
-    trendingSeriesObserver.observe(this.trendingElement.nativeElement);
-
-    const newEpisodesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.newEpisodes.length === 0) {
-          this.getNewEpisodes();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    newEpisodesObserver.observe(this.newElement.nativeElement);
-
-    const discoverSeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.discoverSeries.length === 0) {
-          this.getDiscoverSeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    discoverSeriesObserver.observe(this.discoverElement.nativeElement);
-
-    const actionSeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.actionSeries.length === 0) {
-          this.getActionSeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    actionSeriesObserver.observe(this.actionElement.nativeElement);
-
-    const latamSeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.latamSeries.length === 0) {
-          this.getLatamSeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    latamSeriesObserver.observe(this.latamElement.nativeElement);
-
-    const familySeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.familySeries.length === 0) {
-          this.getFamilySeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    familySeriesObserver.observe(this.familyElement.nativeElement);
-
-    const dramaSeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && this.dramaSeries.length === 0) {
-          this.getDramaSeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    dramaSeriesObserver.observe(this.dramaElement.nativeElement);
-
-    const sciFiAndFantasySeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (
-          entries[0].isIntersecting &&
-          this.sciFiAndFantasySeries.length === 0
-        ) {
-          this.getSciFiAndFantasySeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    sciFiAndFantasySeriesObserver.observe(
-      this.sciFiAndFantasYElement.nativeElement
-    );
-
-    const warAndPoliticsSeriesObserver = new IntersectionObserver(
-      (entries) => {
-        if (
-          entries[0].isIntersecting &&
-          this.warAndPoliticsSeries.length === 0
-        ) {
-          this.getWarAndPoliticsSeries();
-        }
-      },
-      {
-        rootMargin: '50px 0px',
-      }
-    );
-    warAndPoliticsSeriesObserver.observe(
-      this.warAndPoliticsElement.nativeElement
-    );
   }
 
   ngOnDestroy(): void {
     this.loadingService.setLoading(true);
+    // Limpieza de observers usando el helper
+    SeriesObserverHelper.disconnectAllObservers(this.observers);
   }
 
   async getTopRatedSeries(): Promise<void> {
-    const resp = await this.seriesService.getTopRatedSeries();
-    this.topRatedSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getTopRatedSeries();
+      this.topRatedSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading top rated series:', error);
+    }
   }
 
   async getGenres(): Promise<void> {
@@ -228,47 +213,92 @@ export class SeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async getTrendingSeries(): Promise<void> {
-    const resp = await this.seriesService.getTrendingSeries();
-    this.trendingSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getTrendingSeries();
+      this.trendingSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading trending series:', error);
+    }
   }
 
   async getNewEpisodes(): Promise<void> {
-    const resp = await this.seriesService.getSeriesFromNYearsAgo(2);
-    this.newEpisodes = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesFromNYearsAgo(2);
+      this.newEpisodes = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading new episodes:', error);
+    }
   }
 
   async getDiscoverSeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesFromNYearsAgo(1);
-    this.discoverSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesFromNYearsAgo(1);
+      this.discoverSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading discover series:', error);
+    }
   }
 
   async getActionSeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(10759);
-    this.actionSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(10759);
+      this.actionSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading action series:', error);
+    }
   }
 
   async getFamilySeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(10751);
-    this.familySeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(10751);
+      this.familySeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading family series:', error);
+    }
   }
 
   async getLatamSeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByRegion('ARG');
-    this.latamSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByRegion('ARG');
+      this.latamSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading LATAM series:', error);
+    }
   }
 
   async getDramaSeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(18);
-    this.dramaSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(18);
+      this.dramaSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading drama series:', error);
+    }
   }
 
   async getSciFiAndFantasySeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(10765);
-    this.sciFiAndFantasySeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(10765);
+      this.sciFiAndFantasySeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading sci-fi and fantasy series:', error);
+    }
   }
 
   async getWarAndPoliticsSeries(): Promise<void> {
-    const resp = await this.seriesService.getSeriesByGenre(10768);
-    this.warAndPoliticsSeries = resp.results;
+    try {
+      const resp = await this.seriesService.getSeriesByGenre(10768);
+      this.warAndPoliticsSeries = resp.results;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading war and politics series:', error);
+    }
   }
 }

@@ -4,7 +4,7 @@
   >
     <div
       class="mb-4 animate__animated animate__fadeIn"
-      *ngFor="let value of data"
+      *ngFor="let value of data; trackBy: trackByMovieId"
     >
       <div class="poster">
         <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>

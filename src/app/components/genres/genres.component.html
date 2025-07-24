@@ -1,7 +1,10 @@
 <div class="container-fluid p-0">
   <div class="swiper swiper-genre">
     <div class="swiper-wrapper">
-      <div class="swiper-slide py-3 text-center" *ngFor="let genre of genres">
+      <div
+        class="swiper-slide py-3 text-center"
+        *ngFor="let genre of genres; trackBy: trackByGenreId"
+      >
         <a
           class="font-semibold gender-button"
           (click)="searchByGenre(genre.id)"

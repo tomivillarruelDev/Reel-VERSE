@@ -38,6 +38,12 @@ export class SlideshowComponent
   private resizeSubscription!: Subscription;
 
   private swiper!: Swiper;
+
+  // Función TrackBy para optimizar ngFor
+  trackByMovieId = (index: number, item: Result): number => {
+    return item.id || index;
+  };
+
   // Inicializa Swiper cuando el DOM está listo con los logos
   private initSwiper(): void {
     this.swiper = new Swiper('.swiper-large-screen', {
