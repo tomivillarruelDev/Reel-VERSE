@@ -35,28 +35,37 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       this.swiper = new Swiper('.swiper-backdrop', {
         loop: false,
         freeMode: false,
-        speed: 800,
+        speed: 400, // Reducido para mejor responsividad
+        // Optimizaciones para Android/móviles
+        touchRatio: 1,
+        touchAngle: 45,
+        grabCursor: true,
+        preventInteractionOnTransition: true,
         breakpoints: {
           0: {
             slidesPerView: 1.5,
             spaceBetween: 10,
+            resistanceRatio: 0.85,
           },
           440: {
             slidesPerView: 2,
             spaceBetween: 10,
+            resistanceRatio: 0.85,
           },
           600: {
             slidesPerView: 3,
             spaceBetween: 10,
+            resistanceRatio: 0.75,
           },
           1100: {
             slidesPerGroup: 2,
             slidesPerView: 4,
             spaceBetween: 10,
+            resistanceRatio: 0.5,
           },
         },
       });
@@ -64,7 +73,7 @@ export class BackdropSwiperComponent implements OnInit, AfterViewInit {
       // Preload optimizado usando configuración predefinida
       const config = BaseImagePreloadService.getPreloadConfig('backdrop');
       this.baseImagePreloadService.preloadSwiperImages(this.data, config);
-    }, 0);
+    });
   }
 
   onRedirectToDetailPage(object: Result) {

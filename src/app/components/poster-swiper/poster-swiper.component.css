@@ -3,11 +3,30 @@
   width: 100%;
   object-fit: cover;
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.2s ease-out; /* Optimizar transición */
+  transform: translateZ(0); /* Aceleración por hardware */
+  will-change: transform; /* Optimización de rendering */
 }
 
 .swiper-slide {
   height: auto !important;
+  /* Optimización para rendering */
+  transform: translateZ(0);
+  contain: layout style paint; /* Optimización de contenido */
+}
+
+/* Optimizaciones específicas para móviles Android */
+@media screen and (max-width: 768px) {
+  .swiper-slide img {
+    /* Reducir shadow en móviles para mejor performance */
+    box-shadow: 2px 2px 8px -2px rgba(0, 0, 0, 0.3);
+    transition: none; /* Eliminar transiciones en móviles */
+  }
+
+  .swiper-slide {
+    /* Optimizar contenido en móviles */
+    contain: layout paint;
+  }
 }
 
 @media screen and (max-width: 440px) {

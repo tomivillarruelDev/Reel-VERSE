@@ -7,13 +7,15 @@
       >
         <div class="image-container">
           <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
-          <div class="image-border">
+          <div class="image-border" style="transform: translateZ(0)">
             <img
               [appLazyImage]="value.backdrop_path | poster : 'w780'"
               class="swiper-img animate__animated animate__fadeIn animate__delay-2s lazy-image"
               alt="{{ value.title }}"
               loading="lazy"
               decoding="async"
+              importance="low"
+              style="transform: translateZ(0); will-change: auto"
             />
           </div>
           <a class="play-button rounded-full">

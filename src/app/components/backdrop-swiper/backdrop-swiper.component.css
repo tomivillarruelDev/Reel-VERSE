@@ -1,26 +1,43 @@
 .image-container {
   position: relative;
   border-radius: 2px;
-  transition: box-shadow 0.3s ease-in-out !important;
+  transition: transform 0.2s ease-out !important; /* Optimizar transición */
+  transform: translateZ(0); /* Aceleración por hardware */
+  will-change: transform; /* Optimización de rendering */
 }
 
 .image-container:hover {
-  box-shadow: 0 0 0 2px white;
+  transform: translateZ(0) scale(1.02); /* Usar transform en lugar de box-shadow */
   cursor: pointer;
 }
 
 .image-border {
   position: relative;
   border-radius: 2px;
+  transform: translateZ(0); /* Aceleración por hardware */
 }
+
 .swiper-slide img {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  transform: translateZ(0); /* Aceleración por hardware */
 }
 
 .image-container {
   height: auto !important;
+  contain: layout style paint; /* Optimización de contenido */
+}
+
+/* Optimizaciones para móviles */
+@media screen and (max-width: 768px) {
+  .image-container {
+    transition: none !important; /* Eliminar transiciones en móviles */
+  }
+
+  .image-container:hover {
+    transform: translateZ(0); /* Eliminar hover effects en móviles */
+  }
 }
 
 @media screen and (max-width: 440px) {

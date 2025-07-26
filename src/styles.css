@@ -8,20 +8,53 @@
 html,
 body {
   overflow-x: hidden;
+  /* Optimización de scroll */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Mejor scroll en iOS */
 }
 
 /* Prevenir layout shift en componentes que se cargan */
 .swiper-container-placeholder {
   min-height: 200px; /* Altura mínima para swipers */
+  contain: layout style paint; /* Optimización de contenido */
 }
 
 .grid-container-placeholder {
   min-height: 300px; /* Altura mínima para grids */
+  contain: layout style paint; /* Optimización de contenido */
 }
 
 /* Estabilizar altura de contenedores principales */
 .with-padding {
   contain: layout style;
+  transform: translateZ(0); /* Aceleración por hardware */
+}
+
+/* Optimizaciones globales para performance */
+* {
+  font-family: var(--manrope);
+  /* Optimizar rendering de texto */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed; /* Priorizar velocidad sobre calidad en móviles */
+}
+
+/* Optimizaciones específicas para móviles */
+@media (max-width: 768px) {
+  * {
+    /* En móviles, priorizar velocidad */
+    text-rendering: optimizeSpeed;
+  }
+
+  .with-padding {
+    contain: layout; /* Menos estricto en móviles */
+  }
+
+  /* Reducir effects complejos en móviles */
+  .background {
+    background-image: linear-gradient(to bottom, #0a0a0a 0%, transparent 10%);
+    /* Simplificar gradientes en móviles */
+  }
 }
 
 :root {
@@ -163,6 +196,34 @@ a {
 
 .swiper-wrapper {
   padding: 0.2rem;
+  /* Optimizaciones para rendering en móviles */
+  transform: translateZ(0); /* Aceleración por hardware */
+  will-change: transform; /* Optimización de rendering */
+}
+
+/* Optimizaciones específicas para Swiper en móviles */
+@media (max-width: 768px) {
+  .swiper-wrapper {
+    padding: 0.1rem; /* Reducir padding en móviles */
+  }
+
+  .swiper-slide {
+    /* Optimizar slides individuales */
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Simplificar botones de navegación en móviles */
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important; /* Ocultar en móviles para mejor performance */
+  }
+
+  .swiper-pagination-bullet {
+    width: 4px !important;
+    height: 4px !important;
+    margin: 0 6px !important;
+  }
 }
 .movie-cover,
 .poster {
@@ -172,13 +233,16 @@ a {
   border-radius: 2px;
   box-shadow: none;
   overflow: hidden;
-  transition: box-shadow 0.3s ease-in-out !important;
+  /* Optimizar transiciones para mejor performance */
+  transition: transform 0.2s ease-out !important;
+  transform: translateZ(0); /* Aceleración por hardware */
+  will-change: transform; /* Optimización de rendering */
 }
 
 .movie-cover:hover,
 .poster:hover,
 .image-container:hover {
-  box-shadow: 0 0 0 2px white;
+  transform: translateZ(0) scale(1.02); /* Usar transform en lugar de box-shadow */
   cursor: pointer;
 }
 
@@ -195,8 +259,9 @@ a {
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.2s ease-out; /* Más rápido */
   z-index: 1;
+  transform: translateZ(0); /* Aceleración por hardware */
 }
 
 .play-button {
@@ -275,40 +340,46 @@ a {
   pointer-events: none;
 }
 
-/* Global Lazy Loading Styles - Sin conflictos de opacity */
+/* Global Lazy Loading Styles - Optimizado para performance */
 .lazy-image,
 img.lazy-image {
-  transition: opacity 0.4s ease-in-out, filter 0.4s ease-in-out;
+  /* Usar transform en lugar de filter para mejor performance en mobile */
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transform: translateZ(0); /* Forzar aceleración por hardware */
+  will-change: opacity, transform; /* Optimización para animaciones */
 }
 
 .lazy-loading,
 img.lazy-loading {
-  opacity: 0.7 !important; /* Ligeramente visible para reducir el contraste */
-  filter: blur(1px) !important; /* Menos blur para mejor performance */
+  opacity: 0.8 !important; /* Menos contraste para reducir redraws */
+  transform: translateZ(0) scale(1.01) !important; /* Micro-scale más eficiente que blur */
   background: linear-gradient(
     90deg,
-    #16161f 25%,
-    #2a2a3a 50%,
-    #16161f 75%
+    #0a0a0a 25%,
+    #1a1a1a 50%,
+    #0a0a0a 75%
   ) !important;
   background-size: 200% 100% !important;
-  animation: shimmer 2s ease-in-out 2 !important; /* Solo 2 repeticiones en lugar de infinite */
+  animation: shimmer 1.5s ease-in-out 1 !important; /* Solo 1 iteración, más rápido */
 }
 
 .lazy-loaded,
 img.lazy-loaded {
-  filter: none !important;
+  transform: translateZ(0) scale(1) !important; /* Reset scale sin blur */
   background: none !important;
-  animation: fadeInImage 1.5s ease-out forwards !important; /* Más rápido */
+  animation: fadeInImage 0.8s ease-out forwards !important; /* Más rápido */
+  will-change: auto; /* Liberar recursos una vez cargado */
 }
 
-/* Animación personalizada para fadeIn elegante */
+/* Animación personalizada para fadeIn más eficiente */
 @keyframes fadeInImage {
   0% {
     opacity: 0;
+    transform: translateZ(0) scale(1.01);
   }
   100% {
     opacity: 1;
+    transform: translateZ(0) scale(1);
   }
 }
 
@@ -321,24 +392,53 @@ img.lazy-loaded {
   }
 }
 
-/* Optimización para móviles - reducir animaciones */
+/* Optimización específica para móviles - performance crítico */
 @media (max-width: 768px) {
   .lazy-loading,
   img.lazy-loading {
-    animation: shimmer 2.5s ease-in-out 1 !important; /* Solo 1 repetición en móviles */
-    filter: blur(0.5px) !important; /* Menos blur para mejor performance */
+    animation: shimmer 1s ease-in-out 1 !important; /* Aún más rápido en móviles */
+    transform: translateZ(0) !important; /* Solo aceleración HW, sin scale */
   }
 
   .lazy-loaded,
   img.lazy-loaded {
-    animation: fadeInImage 1s ease-out forwards !important; /* Más rápido en móviles */
+    animation: fadeInImage 0.5s ease-out forwards !important; /* Ultra rápido en móviles */
+  }
+
+  /* Reducir transiciones en elementos hover para móviles */
+  .movie-cover,
+  .poster,
+  .image-container {
+    transition: transform 0.2s ease-out !important; /* Más rápido */
+  }
+
+  .swiper-slide img {
+    transition: transform 0.2s ease-out !important; /* Optimizar transiciones de imágenes */
   }
 }
 
-/* WebP Support Enhancement */
+/* Optimización específica para Android */
+@media (max-width: 768px) and (-webkit-min-device-pixel-ratio: 1) {
+  .lazy-loading,
+  img.lazy-loading {
+    /* En Android, evitar animaciones complejas */
+    animation: none !important;
+    opacity: 0.9 !important;
+    transform: translateZ(0) !important;
+  }
+
+  .lazy-loaded,
+  img.lazy-loaded {
+    animation: none !important;
+    transition: opacity 0.3s ease-out !important;
+  }
+}
+
+/* WebP Support Enhancement con optimización */
 .webp .lazy-image {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: optimize-contrast;
+  transform: translateZ(0); /* Aceleración por hardware */
 }
 
 @media (max-width: 768px) {
@@ -367,5 +467,65 @@ img.lazy-loaded {
 @media (max-width: 576px) {
   .with-padding {
     padding-left: 1.75rem;
+  }
+}
+
+/* Optimizaciones dinámicas basadas en dispositivo */
+.mobile-optimized * {
+  /* Reducir complejidad de rendering en móviles */
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.mobile-optimized .swiper-slide {
+  /* Optimización específica para slides en móviles */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.reduce-animations * {
+  /* Reducir animaciones en dispositivos lentos */
+  animation-duration: 0.3s !important;
+  transition-duration: 0.2s !important;
+}
+
+.reduce-animations .animate__animated {
+  /* Simplificar animaciones de Animate.css */
+  animation-duration: 0.5s !important;
+}
+
+.low-end-device * {
+  /* Configuraciones para dispositivos de gama baja */
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.low-end-device .lazy-loading,
+.low-end-device img.lazy-loading {
+  /* Sin efectos de carga en dispositivos de gama baja */
+  animation: none !important;
+  opacity: 1 !important;
+  background: #0a0a0a !important;
+}
+
+.low-end-device .swiper-slide img {
+  /* Sin sombras ni efectos en dispositivos de gama baja */
+  box-shadow: none !important;
+}
+
+/* Optimización de contenido para diferentes dispositivos */
+@media (max-width: 480px) and (-webkit-min-device-pixel-ratio: 1) {
+  /* Optimizaciones específicas para Android de gama baja */
+  .swiper-wrapper {
+    /* Reducir complejidad de rendering */
+    will-change: auto;
+  }
+
+  .movie-cover,
+  .poster {
+    /* Eliminar efectos complejos */
+    will-change: auto;
   }
 }

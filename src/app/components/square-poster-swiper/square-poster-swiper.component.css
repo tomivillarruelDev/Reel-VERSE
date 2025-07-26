@@ -6,21 +6,54 @@
 .image-container {
   position: relative;
   border-radius: 2px;
-  transition: box-shadow 0.3s ease-in-out !important;
+  transition: transform 0.2s ease-out !important; /* Optimizar transición */
+  transform: translateZ(0); /* Aceleración por hardware */
+  will-change: transform; /* Optimización de rendering */
+  overflow: hidden;
 }
 
 .image-container:hover {
-  box-shadow: 0 0 0 2px white;
+  transform: translateZ(0) scale(1.02); /* Usar transform en lugar de box-shadow */
   cursor: pointer;
 }
 
 .image-border {
   position: relative;
   border-radius: 2px;
+  transform: translateZ(0); /* Aceleración por hardware */
 }
 
 .swiper-slide {
   height: auto !important;
+  /* Optimizaciones para rendering */
+  transform: translateZ(0);
+  contain: layout style paint;
+}
+
+.swiper-slide img {
+  /* Optimizaciones para imágenes */
+  transform: translateZ(0);
+  will-change: transform;
+  transition: transform 0.2s ease-out;
+}
+
+/* Optimizaciones para móviles */
+@media screen and (max-width: 768px) {
+  .image-container {
+    transition: none !important; /* Eliminar transiciones en móviles */
+  }
+
+  .image-container:hover {
+    transform: translateZ(0); /* Eliminar hover effects en móviles */
+  }
+
+  .swiper-slide img {
+    transition: none; /* Eliminar transiciones en móviles */
+  }
+
+  .swiper-slide {
+    contain: layout paint; /* Optimización reducida para móviles */
+  }
 }
 
 @media screen and (max-width: 440px) {

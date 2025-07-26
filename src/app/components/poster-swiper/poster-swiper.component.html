@@ -7,14 +7,16 @@
         #poster
       >
         <div class="overlay" (click)="onRedirectToDetailPage(value)"></div>
-        <div style="position: relative">
+        <div style="position: relative; transform: translateZ(0)">
           <img
             [appLazyImage]="value.poster_path | poster : 'w342'"
             [alt]="value.title || value.name"
             class="swiper-img animate__animated animate__fadeIn animate__delay-2s lazy-image"
             decoding="async"
             loading="lazy"
+            importance="low"
             (click)="onRedirectToDetailPage(value)"
+            style="transform: translateZ(0); will-change: auto"
           />
         </div>
         <a class="play-button rounded-full">
