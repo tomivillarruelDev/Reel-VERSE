@@ -274,6 +274,10 @@ a {
   background-color: var(--gray);
   transition: all 0.2s ease-in-out;
   z-index: 2;
+  /* Preparar para animaciones */
+  opacity: 0;
+  transform: translateZ(0) scale(0.8);
+  animation-fill-mode: forwards;
 }
 
 .play-button i {
@@ -284,6 +288,34 @@ a {
   background-color: #fff;
   width: 3.1rem;
   height: 3.1rem;
+  transform: translateZ(0) scale(1.1);
+}
+
+/* Animación de entrada para el botón de play */
+@keyframes playButtonFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateZ(0) scale(0.6);
+  }
+  50% {
+    transform: translateZ(0) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateZ(0) scale(1);
+  }
+}
+
+/* Animación de salida para el botón de play */
+@keyframes playButtonFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateZ(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateZ(0) scale(0.6);
+  }
 }
 
 .see-now-button {
@@ -321,6 +353,14 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: playButtonFadeIn 0.3s ease-out forwards;
+}
+
+/* Animación de salida cuando se quita el hover */
+.movie-cover .play-button,
+.poster .play-button,
+.grid-item .play-button {
+  animation: playButtonFadeOut 0.2s ease-in forwards;
 }
 
 .no-scroll {
@@ -414,6 +454,22 @@ img.lazy-loaded {
 
   .swiper-slide img {
     transition: transform 0.2s ease-out !important; /* Optimizar transiciones de imágenes */
+  }
+
+  /* Simplificar animaciones del botón de play en móviles */
+  .play-button {
+    animation-duration: 0.2s !important;
+  }
+
+  @keyframes playButtonFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateZ(0) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: translateZ(0) scale(1);
+    }
   }
 }
 
@@ -513,6 +569,18 @@ img.lazy-loaded {
 .low-end-device .swiper-slide img {
   /* Sin sombras ni efectos en dispositivos de gama baja */
   box-shadow: none !important;
+}
+
+/* En dispositivos de gama baja, el botón aparece sin animación */
+.low-end-device .movie-cover:hover .play-button,
+.low-end-device .poster:hover .play-button,
+.low-end-device .grid-item:hover .play-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
 }
 
 /* Optimización de contenido para diferentes dispositivos */
